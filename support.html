@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ادعم المشروع · اختبارات قرآنية</title>
+<meta name="description" content="ادعم استمرار اختبارات قرآنية: اختبارات يومية مجانية بلا إعلانات لحافظي القرآن.">
+<meta name="theme-color" content="#0E6B57">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Changa:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<script>
+try { var t = JSON.parse(localStorage.getItem('mut-theme')); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<style>
+:root{--bg:#EDF1EE;--surface:#FBFCFB;--ink:#15241F;--muted:#5C6E68;--line:#CCD8D3;--accent:#0E6B57;
+  --f-display:"Changa","IBM Plex Sans Arabic",sans-serif;--f-ui:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0E1614;--surface:#15201D;--ink:#E5EEEA;--muted:#93A6A0;--line:#2A3934;--accent:#3DB592;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1614;--surface:#15201D;--ink:#E5EEEA;--muted:#93A6A0;--line:#2A3934;--accent:#3DB592;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.75}
+.wrap{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:24px 56px}
+h1{font-family:var(--f-display);color:var(--accent);font-size:1.9rem;margin:0 0 4px}
+h2{font-family:var(--f-display);font-size:1.15rem;margin:26px 0 6px}
+p,li{margin:0 0 8px}
+ul{padding-inline-start:1.3em;margin:0 0 8px}
+.meta{color:var(--muted);font-size:.9rem}
+.back{display:inline-block;margin-bottom:18px;color:var(--accent);font-weight:600;text-decoration:none}
+hr{border:none;border-top:1px solid var(--line);margin:40px 0}
+[lang="en"]{direction:ltr;text-align:left}
+a{color:var(--accent)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0 6px;text-align:center}
+.addr{font-family:ui-monospace,Consolas,monospace;direction:ltr;font-size:1.15rem;font-weight:600;word-break:break-all;margin:4px 0 12px}
+.btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;border-radius:10px;padding:9px 18px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;text-decoration:none}
+:root[data-theme="dark"] .btn{color:#06120F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#06120F}}
+.btn.ghost{background:transparent;color:var(--accent)}
+.done{min-height:1.6em;color:var(--accent);font-size:.9rem;margin:8px 0 0}
+.small{color:var(--muted);font-size:.9rem}
+.thanks{text-align:center;font-family:var(--f-display);color:var(--accent);font-size:1.2rem;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./">← العودة إلى الاختبارات</a>
+
+  <h1>ادعم المشروع</h1>
+  <p>«اختبارات قرآنية» مجانية للجميع، بلا إعلانات ولا حسابات، وستبقى كذلك بإذن الله.</p>
+  <p>إن أحببت أن تُعين على استمرارها، فدعمك يساعد على:</p>
+  <ul>
+    <li>تكاليف النطاق والاستضافة.</li>
+    <li>إصدار التطبيق على متجر Google Play.</li>
+    <li>إضافة اختبارات جديدة ومراجعة الأسئلة وتدقيقها.</li>
+  </ul>
+
+  <h2>التحويل عبر InstaPay</h2>
+  <div class="box">
+    <p class="small">عنوان الدفع</p>
+    <p class="addr" id="addr"></p>
+    <div class="btns">
+      <button type="button" class="btn" id="copy">نسخ العنوان</button>
+      <a class="btn ghost" id="open" target="_blank" rel="noopener" hidden>افتح InstaPay</a>
+    </div>
+    <p class="done" id="done" aria-live="polite"></p>
+  </div>
+  <p class="small">من تطبيق InstaPay أو تطبيق البنك: اختر التحويل إلى عنوان دفع، والصق العنوان، واكتب المبلغ الذي تريده. أي مبلغ يُعين على الاستمرار.</p>
+
+  <h2>وإن لم تستطع، فيمكنك الدعم بغير المال</h2>
+  <ul>
+    <li>شارك نتيجتك مع من يحفظ القرآن.</li>
+    <li>أبلغنا عن أي خطأ تجده في الأسئلة.</li>
+    <li>ادعُ لنا ولكل من شارك في هذا العمل.</li>
+  </ul>
+
+  <p class="thanks">جزاكم الله خيرًا، وتقبّل منا ومنكم</p>
+</div>
+<script>
+// ---- the only place to edit: your InstaPay payment address, and (optional) your InstaPay payment link ----
+var INSTAPAY = 'islamkhaled1991@instapay';
+var INSTAPAY_LINK = '';
+document.getElementById('addr').textContent = INSTAPAY;
+if (INSTAPAY_LINK) { var o = document.getElementById('open'); o.href = INSTAPAY_LINK; o.hidden = false; }
+document.getElementById('copy').addEventListener('click', function () {
+  var ok = function () { document.getElementById('done').textContent = 'تم نسخ العنوان'; };
+  var fail = function () { document.getElementById('done').textContent = 'انسخ العنوان من الأعلى: ' + INSTAPAY; };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(INSTAPAY).then(ok, fail); else fail();
+});
+</script>
+</body>
+</html>

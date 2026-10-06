@@ -149,6 +149,14 @@ header .head-side{display:contents}
 .ast.ok{color:var(--ok)} .ast.bad{color:var(--bad)} .ast.new{color:var(--muted)} .ast.cur{color:var(--gold)}
 .btn-link{display:inline-flex;align-items:center;justify-content:center;font-weight:600;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 16px;text-decoration:none}
 .btn-link.ghostlink{background:transparent;color:var(--accent)}
+.istrip{display:flex;align-items:center;gap:8px;margin:8px 0 2px;padding:7px 10px;border:1px solid var(--accent);border-radius:12px;background:var(--surface);font-size:.85rem;line-height:1.5}
+.istrip .ist{flex:1;color:var(--ink)} .istrip .ist b{color:var(--accent)}
+.istrip .isbtns{display:flex;gap:6px;flex:none}
+.istrip a.sm{display:inline-block;padding:6px 10px;font-size:.88rem;border-radius:10px;text-decoration:none;font-weight:600}
+.istrip a.gold{background:var(--gold);color:#fff}
+:root[data-theme="dark"] .istrip a.gold{color:#1A1408}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .istrip a.gold{color:#1A1408}}
+#ihelpList li.mine{font-weight:600} #ihelpList li.mine b{color:var(--accent)}
 .ibar{position:fixed;left:12px;right:12px;bottom:12px;max-width:596px;margin-inline:auto;z-index:9;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--accent);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:10px 12px}
 body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
 .itext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:.9rem}
@@ -160,6 +168,13 @@ body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
 .atitle{font-family:var(--f-display);font-size:1.25rem;margin:0 0 -8px;color:var(--accent)}
 .go-ic{width:52px;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
 .sharenote{margin:0;text-align:center;font-size:.8rem;color:var(--muted)}
+.support{margin:12px 0 0;padding:12px 14px;text-align:center;font-size:.9rem;line-height:1.7;color:var(--ink);background:var(--hint-bg);border:1px solid var(--gold);border-radius:14px}
+.support p{margin:0 0 10px} .support b{color:var(--gold)}
+.support .sbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.support .sbtn1{font:inherit;padding:8px 18px;border-radius:10px;background:var(--accent);color:var(--accent-ink);border:none;font-weight:700;cursor:pointer}
+.support .sbtn2{display:inline-block;padding:8px 18px;border-radius:10px;background:var(--gold);color:#fff;font-weight:700;text-decoration:none}
+:root[data-theme="dark"] .support .sbtn2{color:#1A1408}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .support .sbtn2{color:#1A1408}}
 .tick{color:var(--ok);font-weight:700} .tick.bad{color:var(--bad)}
 .today{margin:0;text-align:center;font-size:.95rem;color:var(--muted)} .today a{color:var(--accent);font-weight:600} .today b{color:var(--ok)}
 .acts{display:flex;align-items:center;gap:6px;flex:none}
@@ -330,6 +345,11 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <button type="button" class="help-btn ghost" id="themeBtn" aria-label="الوضع الداكن"></button>
     <button type="button" class="help-btn ghost" id="helpBtn" aria-label="طريقة الاختبار">؟</button></div>
   </header>
+  <div class="istrip" id="istrip" role="region" aria-label="ثبّت التطبيق وادعم المشروع" hidden>
+    <span class="ist"><b>اختبارات قرآنية مجاني وبلا إعلانات</b><br><span id="istInst">ثبّته على هاتفك، وادعم استمراره</span><span id="istSup">إن نفعك فادعم استمراره</span></span>
+    <span class="isbtns"><button type="button" class="sm" id="istripGo">ثبّت</button><a class="sm gold" href="support.html">ادعم</a></span>
+    <button type="button" class="ix" id="istripX" aria-label="إخفاء">×</button>
+  </div>
 
   <nav class="modes" aria-label="نوع الاختبار">
     <button type="button" class="mbtn" id="modeDaily"><span class="mt">اختبار اليوم</span><span class="ms">لحافظي القرآن</span></button>
@@ -396,7 +416,10 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <button type="button" id="share">نسخ النتيجة</button>
       <a class="btn-link ghostlink" id="shareNative" href="#" target="_blank" rel="noopener">مشاركة</a>
     </div>
-    <p class="sharenote">لتظهر صورة الموقع في واتساب: انسخ النتيجة ثم الصقها في المحادثة.</p>
+    <div class="support">
+      <p><b>«اختبارات قرآنية» مجانية وبلا إعلانات</b><br>إن نفعك الموقع، فساعد على استمراره وتطويره.</p>
+      <div class="sbtns"><a class="sbtn2" href="support.html">ادعم المشروع</a></div>
+    </div>
     <p class="next" id="next"></p>
     <a class="report" id="report" href="#">أبلغ عن خطأ في هذا السؤال</a>
     <div class="stats" id="stats"></div>
@@ -406,7 +429,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <footer class="credits">
     التلاوة: الشيخ محمود خليل الحصري، عبر <a href="https://alquran.cloud" target="_blank" rel="noopener">Islamic Network</a> ·
     النص: مصحف المدينة (حفص) من <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil Project</a> (tanzil.net) ·
-    <a href="https://quranic-verses.github.io/quranic-tests/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a>
+    <a href="https://quranic-verses.github.io/quranic-tests/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> ·
+    <a href="support.html">ادعم المشروع</a>
   </footer>
 </div>
 
@@ -444,6 +468,19 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <p class="small"><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها، وتدرّب عليها متى شئت.</p>
     <p class="small">زر «؟» أعلى الصفحة يشرح طريقة كل اختبار.</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
+  </div>
+</div>
+<div class="overlay" id="ihelp" role="dialog" aria-modal="true" aria-labelledby="ihelpTitle" hidden>
+  <div class="panel" dir="rtl" lang="ar">
+    <button type="button" class="x" id="ihelpX" aria-label="إغلاق">×</button>
+    <h2 id="ihelpTitle">ثبّت التطبيق</h2>
+    <p class="lead">أضف «اختبارات قرآنية» إلى شاشتك الرئيسية، فيفتح كتطبيق بضغطة واحدة ويعمل بدون إنترنت.</p>
+    <ul id="ihelpList">
+      <li data-os="ios"><b>آيفون وآيباد:</b> افتح الموقع في Safari، واضغط زر المشاركة <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="زر المشاركة" style="vertical-align:-2px"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg>، ثم «إضافة إلى الشاشة الرئيسية».</li>
+      <li data-os="android"><b>أندرويد:</b> من Chrome اضغط القائمة ⋮، ثم «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».</li>
+      <li data-os="pc"><b>الكمبيوتر:</b> في Chrome أو Edge اضغط أيقونة التثبيت في شريط العنوان، أو اختر «تثبيت» من القائمة.</li>
+    </ul>
+    <button type="button" id="ihelpGo" class="start">حسنًا</button>
   </div>
 </div>
 <div class="ibar" id="ibar" role="region" aria-label="تثبيت التطبيق" hidden>
@@ -924,7 +961,7 @@ function roundHtml(Q, a, removed, opt){
   }).join('');
   const note = a && GAME === 'makki' && Q.disputed ? '<p class="inote2">على ما في مصحف المدينة، وفيها خلاف بين العلماء.</p>' : '';
   const verse = keep && GAME !== 'makki' && !opt.noVerse ? '<div class="answers">' + openVerse(Q) + '</div>' : '';
-  const sub = `<p class="qask qsub">${Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
+  const sub = `<p class="qask qsub">${GAME === 'tartib' ? (Q.dir > 0 ? '٢. ما السورة التي بعدها في المصحف؟' : '١. ما السورة التي قبلها في المصحف؟') : Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
   const head = opt.noCard ? sub : `<section class="card">${questionHtml(Q)}</section>` + (GAME === 'qabl' ? sub : '');
   return `${head}<div class="choices${GAME === 'qabl' ? ' long' : ''}${GAME === 'lam' ? ' three' : ''}${SURAH_OPTS.includes(GAME) || GAME === 'makki' ? ' names' : ''}">${btns}</div>${note}${verse}`;
 }
@@ -938,7 +975,11 @@ function renderMcq(){
         + roundHtml(question(it, 1), a2, a2 ? (a2.rm || []) : [], { noVerse: true, noCard: true })
         + '<div class="answers">' + trioCard(it, a1, a2) + '</div>'; }).join('');
   } else if (S.done && KEEP.includes(GAME)) {
-    $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [])).join('');
+    $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [], { noCard: GAME === 'tartib' && k > 0 })).join('');
+  } else if (GAME === 'tartib' && S.ans.length === 1) {
+    // «ترتيب السور»: the first answer stays on screen (marked), and the second question follows right under it
+    const a0 = S.ans[0];
+    $('stage').innerHTML = roundHtml(question(...R[0]), a0, a0.rm || []) + roundHtml(question(...R[1]), null, S.hidden, { noCard: true });
   } else if (S.done) {
     $('stage').innerHTML = '<div class="answers">' + (GAME === 'qabl'
       ? S.items.map((it, k) => trioCard(it, S.ans[2 * k], S.ans[2 * k + 1])).join('')
@@ -1018,9 +1059,9 @@ function choose(o){
   $('msg').textContent = ok ? 'صحيح' : 'خطأ، الصحيح: ' + (GAME === 'naqisa' || GAME === 'lam' || GAME === 'makki' ? Q.opts[Q.right] : SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[Q.right]] : '');
   $('msg').className = 'msg ' + (ok ? 'ok' : 'bad');
   if (GAME === 'qabl' && !ok) $('msg').textContent = 'خطأ، والصحيح في الآية أدناه';
-  if (C.per === 1) { S.showing = false; finishIfOver(); }
+  if (C.per === 1 || GAME === 'tartib') { S.showing = false; finishIfOver(); }   // ترتيب السور: no «next» button between its two questions
   save(); render();
-  sfx(C.per === 1 ? (ok ? 'win' : 'lose') : ok ? 'ok' : 'bad');
+  sfx(S.done ? (isWon() ? 'win' : 'lose') : ok ? 'ok' : 'bad');
 }
 function nextRound(){
   S.showing = false; $('msg').textContent = ''; $('msg').className = 'msg';
@@ -1472,7 +1513,7 @@ const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)'
 const IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 function maybeInstallBar(){
   if (STANDALONE || store.get('mut-installed', 0) || Date.now() < store.get('mut-install-later', 0)) return;
-  if (!S || S.practice || S.archive || !S.done) return;
+  if (!S || !S.done) return;
   if (installEvt) { $('ihow').textContent = 'بضغطة واحدة، ويعمل بدون إنترنت'; $('ibtn').hidden = false; }
   else if (IOS) { $('ihow').innerHTML = 'من Safari: اضغط زر المشاركة <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="زر المشاركة" style="vertical-align:-2px"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg> ثم «إضافة إلى الشاشة الرئيسية»'; $('ibtn').hidden = true; }
   else return;
@@ -1482,12 +1523,34 @@ function doInstall(){
   if (!installEvt) return;
   installEvt.prompt();
   installEvt.userChoice.then(c => { if (c && c.outcome === 'accepted') store.set('mut-installed', 1); }).catch(() => {})
-    .finally(() => { installEvt = null; $('ibar').hidden = true; $('installBtn').hidden = true; });
+    .finally(() => { installEvt = null; $('ibar').hidden = true; showStrip(); $('installBtn').hidden = true; });
 }
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('installBtn').hidden = false; maybeInstallBar(); });
 window.addEventListener('appinstalled', () => { installEvt = null; store.set('mut-installed', 1); $('ibar').hidden = true; });
 $('ibtn').addEventListener('click', doInstall);
-$('ix').addEventListener('click', () => { $('ibar').hidden = true; store.set('mut-install-later', Date.now() + 30 * 86400000); });
+$('ix').addEventListener('click', () => { $('ibar').hidden = true; store.set('mut-install-later', Date.now() + 7 * 86400000); });
+// ---------- «ثبّت» strip under the header: on every page until the app is installed (× hides it for a week) ----------
+if (STANDALONE) store.set('mut-installed', 1);
+function showStrip(){
+  const inst = !(STANDALONE || store.get('mut-installed', 0));
+  $('istInst').hidden = $('istripGo').hidden = !inst; $('istSup').hidden = inst;
+  $('istrip').hidden = Date.now() < store.get('mut-istrip-later', 0);
+}
+function howInstall(){
+  const os = IOS ? 'ios' : /android/i.test(navigator.userAgent) ? 'android' : 'pc';
+  const ul = $('ihelpList'), mine = ul.querySelector('[data-os="' + os + '"]');
+  ul.prepend(mine); ul.querySelectorAll('li').forEach(li => li.classList.toggle('mine', li === mine));
+  $('ihelp').hidden = false; $('ihelpGo').focus();
+}
+const hideHow = () => { $('ihelp').hidden = true; };
+$('istripGo').addEventListener('click', () => installEvt ? doInstall() : howInstall());
+$('istripX').addEventListener('click', () => { $('istrip').hidden = true; store.set('mut-istrip-later', Date.now() + 7 * 86400000); });
+$('ihelpGo').addEventListener('click', hideHow);
+$('ihelpX').addEventListener('click', hideHow);
+$('ihelp').addEventListener('click', e => { if (e.target === $('ihelp')) hideHow(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('ihelp').hidden) hideHow(); });
+window.addEventListener('appinstalled', () => { showStrip(); });
+showStrip();
 $('installBtn').addEventListener('click', doInstall);
 if (STANDALONE) $('installNote').hidden = true;
 
