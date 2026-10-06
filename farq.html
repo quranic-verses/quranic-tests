@@ -264,7 +264,7 @@ details p{margin:.4em 0}
 .ptab.on{background:var(--accent);color:var(--accent-ink)}
 .pick-go{display:grid;grid-template-columns:2fr 1fr;gap:8px}
 .psetup .small{font-size:.85rem;color:var(--muted);margin:0;line-height:1.6} .psetup .pick-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.9rem}
-.wrap.picking > :not(header):not(.modes):not(#pick):not(footer){display:none!important}
+.wrap.picking > :not(header):not(.istrip):not(.modes):not(#pick):not(footer){display:none!important}
 .games.many{display:flex;flex-wrap:wrap} .games.many .gbtn{flex:1 1 30%;border-top:1px solid var(--line);margin-top:-1px}
 .sections{display:grid;grid-template-columns:repeat(3,1fr);gap:0;overflow:visible} .sbtn{padding:6px 4px 8px;font-size:clamp(.82rem,3.6vw,1.05rem);white-space:normal;text-align:center;line-height:1.35;display:flex;align-items:flex-end;justify-content:center}
 .tab{font-size:.9rem}
@@ -342,9 +342,10 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <button type="button" class="ix" id="istripX" aria-label="إخفاء">×</button>
   </div>
 
-  <nav class="modes" aria-label="نوع الاختبار">
+  <nav class="modes three" aria-label="نوع الاختبار">
     <button type="button" class="mbtn" id="modeDaily"><span class="mt">اختبار اليوم</span><span class="ms">لحافظي القرآن</span></button>
     <button type="button" class="mbtn" id="modeTrain"><span class="mt">تدرّب</span><span class="ms">على ما حفظته</span></button>
+    <a class="mbtn teach" id="modeTeach" href="#teach"><span class="mt">للمُعلّمين</span><span class="ms">أنشئ تكليفًا</span></a>
   </nav>
 
   <section class="psetup" id="pick" aria-labelledby="pickTitle" hidden>
@@ -365,6 +366,90 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <div class="pick-foot"><span id="pickCount"></span><button type="button" class="link" id="pickClear">مسح الأجزاء</button></div>
     <div class="pick-go"><button type="button" id="pickGo" class="start">ابدأ</button><button type="button" class="ghost" id="pickX">إلغاء</button></div>
   </section>
+<style>
+/* «للمعلّمين»: everything inside #teach (the page's own styles stay untouched) */
+.wrap.teaching > :not(header):not(.istrip):not(.modes):not(#teach):not(footer){display:none!important}
+#teach .tstep{margin:20px 0 8px;font-family:var(--f-display);font-size:1.08rem}
+#teach .tchips{display:flex;flex-wrap:wrap;gap:6px}
+#teach .tchips label{cursor:pointer}
+#teach .tchips input{position:absolute;opacity:0;pointer-events:none}
+#teach .tchips span{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.92rem}
+#teach .tchips input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+#teach .tchips input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+#teach .tchips.juz span{min-width:2.6em;text-align:center;padding:6px 8px}
+#teach .grp{color:var(--muted);font-size:.85rem;margin:10px 0 4px}
+#teach .tsmall{color:var(--muted);font-size:.88rem}
+#teach input[type=text], #teach textarea{width:100%;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+#teach textarea{min-height:140px;font-size:.9rem;resize:vertical} #teach textarea.names{min-height:80px}
+#teach .tgo{display:block;width:100%;margin-top:20px}
+#teach .terr{color:var(--bad);font-weight:600;min-height:1.4em;margin:8px 0 0}
+#teach .tout{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:14px;margin-top:14px}
+#teach .tbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+#teach .tbtns a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:700;border-radius:12px;padding:10px 14px;border:1.5px solid var(--accent)}
+#teach .tbtns a.fill{background:var(--accent);color:var(--accent-ink)} #teach .tbtns a.line{background:transparent;color:var(--accent)}
+#teach .tres h3{font-family:var(--f-display);font-size:1.12rem;margin:18px 0 4px;color:var(--accent)}
+#teach .tres .meta{color:var(--muted);font-size:.86rem;margin:0 0 8px}
+#teach table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);font-size:.93rem}
+#teach th, #teach td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+#teach th{font-size:.8rem;color:var(--muted);font-weight:600}
+#teach td.num{white-space:nowrap;font-weight:700}
+#teach tr.low td.num{color:var(--bad)} #teach tr.full td.num{color:var(--accent)}
+#teach tr.miss td{color:var(--muted)} #teach td.part{white-space:nowrap;font-size:.86rem}
+#teach .bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-inline-start:6px;opacity:.7}
+#teach ol.top{padding-inline-start:1.4em} #teach ol.top li{margin:0 0 4px}
+#teach .tpane[hidden]{display:none}
+</style>
+  <section class="psetup" id="teach" aria-labelledby="teachTitle" hidden>
+    <h2 id="teachTitle">للمُعلّمين</h2>
+    <div class="tabs" id="teachTabs" style="grid-template-columns:1fr 1fr">
+      <button type="button" class="ptab on" data-tt="make">أنشئ تكليفًا</button>
+      <button type="button" class="ptab" data-tt="res">نتائج الطلاب</button>
+    </div>
+
+    <div class="tpane" id="t-make">
+      <p class="tsmall">اختر الاختبارات والأجزاء، وأرسل الرابط لطلابك. كل طالب يكتب اسمه ويحل الأسئلة نفسها، ثم يرسل لك نتيجته في واتساب مع ما أخطأ فيه.</p>
+      <p class="tstep">١. عنوان التكليف <span class="tsmall">(اختياري)</span></p>
+      <input type="text" id="t-title" maxlength="60" placeholder="مثال: واجب الأسبوع · حلقة الفجر">
+      <p class="tstep">٢. الاختبارات <span class="tsmall">(اختر واحدًا أو أكثر)</span></p>
+      <p class="grp">متشابهات القرآن الكريم</p>
+      <div class="tchips"><label><input type="checkbox" name="tg" value="surah"><span>أين ورد؟</span></label><label><input type="checkbox" name="tg" value="farq"><span>ميّز بينهما</span></label></div>
+      <p class="grp">تثبيت الحفظ</p>
+      <div class="tchips"><label><input type="checkbox" name="tg" value="akhir"><span>آخر الآية</span></label><label><input type="checkbox" name="tg" value="qabl" checked><span>ما قبلها؟ ما بعدها؟</span></label><label><input type="checkbox" name="tg" value="rattib"><span>رتّب الآيات</span></label></div>
+      <p class="tstep">٣. الأجزاء والسور</p>
+      <p class="grp">الأجزاء</p>
+      <div class="tchips juz"><label><input type="checkbox" name="tj" value="1"><span>١</span></label><label><input type="checkbox" name="tj" value="2"><span>٢</span></label><label><input type="checkbox" name="tj" value="3"><span>٣</span></label><label><input type="checkbox" name="tj" value="4"><span>٤</span></label><label><input type="checkbox" name="tj" value="5"><span>٥</span></label><label><input type="checkbox" name="tj" value="6"><span>٦</span></label><label><input type="checkbox" name="tj" value="7"><span>٧</span></label><label><input type="checkbox" name="tj" value="8"><span>٨</span></label><label><input type="checkbox" name="tj" value="9"><span>٩</span></label><label><input type="checkbox" name="tj" value="10"><span>١٠</span></label><label><input type="checkbox" name="tj" value="11"><span>١١</span></label><label><input type="checkbox" name="tj" value="12"><span>١٢</span></label><label><input type="checkbox" name="tj" value="13"><span>١٣</span></label><label><input type="checkbox" name="tj" value="14"><span>١٤</span></label><label><input type="checkbox" name="tj" value="15"><span>١٥</span></label><label><input type="checkbox" name="tj" value="16"><span>١٦</span></label><label><input type="checkbox" name="tj" value="17"><span>١٧</span></label><label><input type="checkbox" name="tj" value="18"><span>١٨</span></label><label><input type="checkbox" name="tj" value="19"><span>١٩</span></label><label><input type="checkbox" name="tj" value="20"><span>٢٠</span></label><label><input type="checkbox" name="tj" value="21"><span>٢١</span></label><label><input type="checkbox" name="tj" value="22"><span>٢٢</span></label><label><input type="checkbox" name="tj" value="23"><span>٢٣</span></label><label><input type="checkbox" name="tj" value="24"><span>٢٤</span></label><label><input type="checkbox" name="tj" value="25"><span>٢٥</span></label><label><input type="checkbox" name="tj" value="26"><span>٢٦</span></label><label><input type="checkbox" name="tj" value="27"><span>٢٧</span></label><label><input type="checkbox" name="tj" value="28"><span>٢٨</span></label><label><input type="checkbox" name="tj" value="29"><span>٢٩</span></label><label><input type="checkbox" name="tj" value="30"><span>٣٠</span></label></div>
+      <p class="grp">السور</p>
+      <div class="tchips" id="t-sur"></div>
+      <p class="tsmall" id="t-note"></p>
+      <p class="tstep">٤. عدد الاختبارات <span class="tsmall" id="t-perq">(من كل اختبار اخترته)</span></p>
+      <div class="tchips"><label><input type="radio" name="tn" value="3"><span>٣</span></label><label><input type="radio" name="tn" value="5" checked><span>٥</span></label><label><input type="radio" name="tn" value="10"><span>١٠</span></label></div>
+      <button type="button" class="start tgo" id="t-makeBtn">أنشئ التكليف</button>
+      <p class="terr" id="t-err" aria-live="polite"></p>
+      <div class="tout" id="t-out" hidden>
+        <b>التكليف جاهز</b>
+        <p class="tsmall">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة الحلقة.</p>
+        <div class="tbtns">
+          <a class="fill" id="t-wa" target="_blank" rel="noopener">أرسل للطلاب عبر واتساب</a>
+          <a class="line" id="t-try" href="#">جرّب التكليف كأنك طالب</a>
+        </div>
+        <p class="tsmall">لكل طالب محاولة واحدة على جهازه. النتائج تصلك من الطلاب مباشرة، ولا تُحفظ أسماؤهم أو نتائجهم على الموقع. وحين تصلك، الصقها في «نتائج الطلاب».</p>
+      </div>
+    </div>
+
+    <div class="tpane" id="t-res" hidden>
+      <p class="tsmall">انسخ رسائل النتائج التي وصلتك في واتساب (رسالة أو أكثر، أو المحادثة كلها) والصقها هنا، فتظهر في جدول واحد.</p>
+      <textarea id="t-paste" placeholder="الصق رسائل النتائج هنا"></textarea>
+      <p class="tstep" style="font-size:1rem">أسماء طلاب الحلقة <span class="tsmall">(اختياري: اسم في كل سطر، لتعرف من لم يرسل)</span></p>
+      <textarea id="t-roster" class="names" placeholder="أحمد&#10;سارة&#10;يوسف"></textarea>
+      <button type="button" class="start tgo" id="t-collect">اعرض النتائج</button>
+      <p class="terr" id="t-err2" aria-live="polite"></p>
+      <div class="tres" id="t-table"></div>
+      <p class="tsmall">كل هذا يتم على جهازك فقط؛ لا يُرسل شيء إلى الموقع.</p>
+    </div>
+
+    <div class="pick-go"><button type="button" class="ghost" id="teachX">رجوع</button></div>
+  </section>
+
 
   <nav class="sections" aria-label="الأقسام">
     <a class="sbtn on" id="secMut" href="./" aria-current="page">متشابهات القرآن الكريم</a>
@@ -429,7 +514,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     النص: مصحف المدينة (حفص) من <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil Project</a> (tanzil.net) ·
     <a href="https://quranic-verses.github.io/quranic-tests/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> ·
     <a href="support.html">ادعم المشروع</a> ·
-    <a href="teacher.html">للمعلّمين: أنشئ تكليفًا</a>
+    <a href="#teach">للمُعلّمين: أنشئ تكليفًا</a>
   </footer>
 </div>
 
@@ -451,7 +536,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
         <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
         <li><b>تلميح:</b> يساعدك إذا تعثرت.</li>
         <li><b>الاختبارات السابقة:</b> حُلّ أي اختبار فاتك.</li>
-        <li><b>للمعلّمين:</b> أنشئ تكليفًا لطلابك من رابط «للمعلّمين» أسفل الصفحة.</li>
+        <li><b>للمُعلّمين:</b> أنشئ تكليفًا لطلابك من زر «للمُعلّمين» أعلى الصفحة، واجمع نتائجهم في جدول.</li>
       </ul>
       <h3 class="hsub">طريقة كل اختبار</h3>
     </div>
@@ -1492,6 +1577,127 @@ function hwStart(){
   $('hwName').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   $('hwName').focus();
 }
+
+// ---------- «للمعلّمين»: make an assignment and read the results, on this page like «تدرّب» ----------
+(() => {
+const SITE = 'https://quranic-verses.github.io/quranic-tests/';
+const FILE = { surah: '', farq: 'farq.html', akhir: 'akhir.html', qabl: 'qabl.html', rattib: 'rattib.html' };
+const NAME = { surah: 'أين ورد؟', farq: 'ميّز بينهما', akhir: 'آخر الآية', qabl: 'ما قبلها؟ ما بعدها؟', rattib: 'رتّب الآيات' };
+const AR = '٠١٢٣٤٥٦٧٨٩';
+const vals = name => [...document.querySelectorAll('#teach input[name="' + name + '"]:checked')].map(x => +x.value || x.value);
+const wrap = document.querySelector('.wrap');
+$('t-sur').innerHTML = Array.from({length: 114}, (_, i) => `<label><input type="checkbox" name="ts" value="${i + 1}"><span>${SURAH[i + 1]}</span></label>`).join('');
+function showTeach(){
+  if (!$('pick').hidden) hidePick();
+  $('teach').hidden = false; wrap.classList.add('teaching');
+  ['modeDaily', 'modeTrain'].forEach(id => { $(id).classList.remove('on'); $(id).setAttribute('aria-pressed', false); });
+  $('modeTeach').classList.add('on'); $('modeTeach').setAttribute('aria-current', 'true');
+  window.scrollTo(0, 0);
+}
+function hideTeach(){
+  if ($('teach').hidden) return;
+  $('teach').hidden = true; wrap.classList.remove('teaching');
+  $('modeTeach').classList.remove('on'); $('modeTeach').removeAttribute('aria-current');
+  if (S) setNav(S.practice);
+}
+$('modeTeach').addEventListener('click', e => { e.preventDefault(); showTeach(); });
+// «اختبار اليوم» and «تدرّب» close it first (capture phase: before their own handlers run)
+['modeDaily', 'modeTrain'].forEach(id => $(id).addEventListener('click', hideTeach, true));
+$('teachX').addEventListener('click', hideTeach);
+document.addEventListener('click', e => { const a = e.target.closest('a[href="#teach"]'); if (a && a.id !== 'modeTeach') { e.preventDefault(); showTeach(); } });
+$('teachTabs').addEventListener('click', e => { const b = e.target.closest('.ptab'); if (!b) return;
+  $('teachTabs').querySelectorAll('.ptab').forEach(x => x.classList.toggle('on', x === b));
+  $('t-make').hidden = b.dataset.tt !== 'make'; $('t-res').hidden = b.dataset.tt !== 'res'; });
+function selLabel(j, s){
+  j = j.slice().sort((a, b) => a - b); const parts = [];
+  for (let i = 0; i < j.length; i++) { let k = i; while (k + 1 < j.length && j[k + 1] === j[k] + 1) k++;
+    parts.push(k > i ? toAr(j[i]) + '–' + toAr(j[k]) : toAr(j[i])); i = k; }
+  // the surahs by name (a long list: the first eight, then how many more)
+  const nm = s.slice().sort((a, b) => a - b).map(x => SURAH[x]);
+  const sl = !nm.length ? '' : nm.length === 1 ? 'سورة ' + nm[0] : 'سور ' + (nm.length > 8 ? nm.slice(0, 8).join('، ') + ' و' + toAr(nm.length - 8) + ' سور أخرى' : nm.slice(0, -1).join('، ') + ' و' + nm[nm.length - 1]);
+  if (!j.length) return sl;
+  return (j.length > 1 ? 'الأجزاء ' : 'الجزء ') + parts.join('، ') + (sl ? ' + ' + sl : '');
+}
+function note(){
+  const g = vals('tg');
+  $('t-note').textContent = (g.includes('surah') || g.includes('farq')) ? 'في «أين ورد؟» و«ميّز بينهما» اختر أكثر من جزء: أسئلتهما تحتاج مواضع في عدة سور.' : '';
+  $('t-perq').hidden = g.length < 2;
+}
+$('teach').addEventListener('change', e => { if (e.target.name === 'tg') note(); if (e.target.closest('#t-make')) { $('t-out').hidden = true; $('t-err').textContent = ''; } });
+note();
+const b64 = s => { const u = new TextEncoder().encode(s); let b = ''; u.forEach(c => b += String.fromCharCode(c));
+  return btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+let tryHref = '';
+$('t-makeBtn').addEventListener('click', () => {
+  const g = vals('tg'), j = vals('tj'), s = vals('ts'), n = vals('tn')[0] || 5, t = $('t-title').value.trim();
+  if (!g.length) { $('t-err').textContent = 'اختر اختبارًا واحدًا على الأقل.'; $('t-out').hidden = true; return; }
+  if (!j.length && !s.length) { $('t-err').textContent = 'اختر جزءًا أو سورة على الأقل.'; $('t-out').hidden = true; return; }
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const hash = '#hw=' + b64(JSON.stringify({ i: id, t, g, n, j, s }));
+  const link = SITE + FILE[g[0]] + hash;   // the first quiz's page; the student moves on to the others from there
+  const msg = (t ? 'تكليف: ' + t + '\n' : 'تكليف\n') + g.map(x => NAME[x]).join('، ') + '\n' + selLabel(j, s) + ' · ' + toAr(n) + ' اختبارات' + (g.length > 1 ? ' من كل منها' : '')
+    + '\nافتح الرابط واكتب اسمك، وفي النهاية أرسل لي نتيجتك:\n' + link;
+  $('t-wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  tryHref = (FILE[g[0]] || (location.hostname.endsWith('github.io') ? './' : 'index.html')) + hash;   // next to this page (works in a preview too)
+  $('t-out').hidden = false; $('t-out').scrollIntoView({ block: 'nearest' });
+});
+// opening the assignment on this same page only changes the address after «#», so reload to start it
+$('t-try').addEventListener('click', e => { e.preventDefault(); if (!tryHref) return;
+  const u = new URL(tryHref, location.href);
+  if (u.pathname === location.pathname) { location.hash = u.hash; location.reload(); } else location.href = u.href; });
+// ---------- «نتائج الطلاب»: read the pasted WhatsApp results into one table (all on this device) ----------
+const toN = s => +String(s).replace(/[٠-٩]/g, d => AR.indexOf(d));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const after = (line, key) => line.slice(line.indexOf(key) + key.length).trim();
+function parse(text){
+  const out = []; let title = '', cur = null;
+  text.split(/\r?\n/).forEach(raw => {
+    const line = raw.replace(/[\u200e\u200f\u202a-\u202e]/g, '');
+    if (line.includes('الطالب:')) { cur = { title, name: after(line, 'الطالب:'), sel: '', parts: [], n: null, t: null, miss: [], id: '' }; out.push(cur); return; }
+    if (line.includes('رمز التكليف:')) { if (cur) cur.id = after(line, 'رمز التكليف:').split(/\s/)[0]; cur = null; return; }
+    if (/(^|[\s:\]])تكليف(:|\s*$)/.test(line)) { title = line.includes('تكليف:') ? after(line, 'تكليف:') : ''; cur = null; return; }
+    if (!cur) return;
+    if (line.includes('النتيجة:')) { const m = after(line, 'النتيجة:').match(/([0-9٠-٩]+)\s*من\s*([0-9٠-٩]+)/); if (m) { cur.n = toN(m[1]); cur.t = toN(m[2]); } return; }
+    if (line.includes('الأسئلة من:')) { cur.sel = after(line, 'الأسئلة من:'); return; }
+    const q = line.match(/^\s*([^:\-–•][^:]*?):\s*(?:([0-9٠-٩]+)\s*من\s*([0-9٠-٩]+)|(لا أسئلة كافية))\s*$/);
+    if (q) { cur.parts.push(q[4] ? { q: q[1].trim(), skip: true } : { q: q[1].trim(), n: toN(q[2]), t: toN(q[3]) }); return; }
+    const d = line.match(/^\s*[-–•]\s*(.+?)\s*$/);   // a missed question
+    if (d) { cur.miss.push({ l: d[1].replace(/\s*\([0-9٠-٩]+\s*من\s*[0-9٠-٩]+\)$/, '') }); return; }
+  });
+  out.forEach(r => { if (r.t === null && r.parts.length) { r.n = r.parts.reduce((a, p) => a + (p.n || 0), 0); r.t = r.parts.reduce((a, p) => a + (p.t || 0), 0); } });
+  return out.filter(r => r.name && r.t);
+}
+const pct = r => Math.round(100 * r.n / r.t);
+$('t-collect').addEventListener('click', () => {
+  const recs = parse($('t-paste').value), roster = $('t-roster').value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  if (!recs.length) { $('t-err2').textContent = 'لم أجد نتائج في النص الملصق. انسخ رسائل النتائج كما وصلتك.'; $('t-table').innerHTML = ''; return; }
+  $('t-err2').textContent = '';
+  // one table per assignment (by its code, or its title and quiz)
+  const groups = new Map();
+  recs.forEach(r => { const k = r.id || r.title + '|' + r.sel; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r); });
+  let html = '';
+  groups.forEach(list => {
+    const seen = new Map(); list.forEach(r => { if (!seen.has(r.name)) seen.set(r.name, r); });   // a result sent twice counts once
+    const rows = [...seen.values()].sort((a, b) => pct(b) - pct(a));
+    const avg = Math.round(rows.reduce((a, r) => a + pct(r), 0) / rows.length);
+    const missing = roster.filter(n => !seen.has(n));
+    const cnt = new Map(); rows.forEach(r => r.miss.forEach(m => cnt.set(m.l, (cnt.get(m.l) || 0) + 1)));
+    const top = [...cnt.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const g = rows[0], quizzes = g.parts.map(p => p.q), many = quizzes.length > 1;
+    const cell = (r, q) => { const p = r.parts.find(x => x.q === q); return !p ? '' : p.skip ? '—' : toAr(p.n) + ' من ' + toAr(p.t); };
+    html += `<h3>${esc(g.title || 'تكليف')}</h3><p class="meta">${esc(quizzes.join('، '))}${g.sel ? ' · ' + esc(g.sel) : ''} · وصلت ${rows.length === 1 ? 'نتيجة واحدة' : rows.length === 2 ? 'نتيجتان' : toAr(rows.length) + (rows.length > 10 ? ' نتيجة' : ' نتائج')}${roster.length ? ' من ' + toAr(roster.length) : ''} · المتوسط ${toAr(avg)}٪</p>`
+      + '<div style="overflow-x:auto"><table><thead><tr><th>الطالب</th>' + (many ? quizzes.map(q => `<th>${esc(q)}</th>`).join('') : '') + '<th>' + (many ? 'المجموع' : 'النتيجة') + '</th><th>أخطأ في</th></tr></thead><tbody>'
+      + rows.map(r => `<tr class="${r.n === r.t ? 'full' : pct(r) < 60 ? 'low' : ''}"><td>${esc(r.name)}</td>${many ? quizzes.map(q => `<td class="part">${cell(r, q)}</td>`).join('') : ''}<td class="num">${toAr(r.n)} من ${toAr(r.t)}<span class="bar" style="width:${Math.max(4, pct(r) * .5)}px"></span></td><td>${r.miss.length ? r.miss.map(m => esc(m.l)).join('، ') : '—'}</td></tr>`).join('')
+      + missing.map(n => `<tr class="miss"><td>${esc(n)}</td>${many ? quizzes.map(() => '<td></td>').join('') : ''}<td class="num">لم يرسل</td><td></td></tr>`).join('')
+      + '</tbody></table></div>'
+      + (top.length ? '<p class="step" style="font-size:1rem">أكثر ما أخطأ فيه الطلاب</p><ol class="top">' + top.map(([l, c]) => `<li>${esc(l)} <span class="small">(${c === 1 ? 'طالب واحد' : c === 2 ? 'طالبان' : toAr(c) + ' طلاب'})</span></li>`).join('') + '</ol>' : '');
+  });
+  $('t-table').innerHTML = html;
+  $('t-table').scrollIntoView({ block: 'start', behavior: 'smooth' });
+});
+
+if (location.hash === '#teach') { showTeach(); setTimeout(() => { $('welcome').hidden = true; }); }   // a teacher opening the teachers' link: no welcome window on top
+})();
 
 load(todayIndex(), false);
 markTabs();
