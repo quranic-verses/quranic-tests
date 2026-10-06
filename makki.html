@@ -125,6 +125,7 @@ a.mbtn{text-decoration:none}
 .gbtn{text-align:center;padding:7px 4px;text-decoration:none;color:var(--muted);font-weight:600;font-size:clamp(.8rem,3.9vw,.95rem);white-space:nowrap;background:var(--surface)}
 .gbtn+.gbtn{border-inline-start:1px solid var(--line)}
 .gbtn.on{background:var(--hint-bg);color:var(--gold)}
+.gbtn.lost{color:var(--bad)} .gbtn.on.lost{background:var(--bad-bg);color:var(--bad)}
 
 .mbtn{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--surface);color:var(--accent);border:1px solid var(--line);border-radius:12px;padding:9px 8px}
 .mbtn .mt{font-weight:700;font-size:1rem}
@@ -159,7 +160,7 @@ body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
 .atitle{font-family:var(--f-display);font-size:1.25rem;margin:0 0 -8px;color:var(--accent)}
 .go-ic{width:52px;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
 .sharenote{margin:0;text-align:center;font-size:.8rem;color:var(--muted)}
-.tick{color:var(--ok);font-weight:700}
+.tick{color:var(--ok);font-weight:700} .tick.bad{color:var(--bad)}
 .today{margin:0;text-align:center;font-size:.95rem;color:var(--muted)} .today a{color:var(--accent);font-weight:600} .today b{color:var(--ok)}
 .acts{display:flex;align-items:center;gap:6px;flex:none}
 .mlink{width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--accent);color:var(--accent);background:transparent;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
@@ -252,7 +253,28 @@ button.sm{padding:6px 10px;font-size:.88rem}
 .choice.right{border:2px solid var(--ok);background:var(--ok-bg)}
 .choice.wrong{border:2px solid var(--bad);background:var(--bad-bg)}
 .choice.dim{opacity:.5}
-.choice.gone{display:none}   /* a hint removes two wrong choices: they disappear */
+.choice.gone{display:none}
+.choices .choice.full{grid-column:1/-1}
+.choice.mine{border-width:3px}
+.choice.dim{opacity:.35}
+.choice .mk{font-family:var(--f-ui);font-weight:800}
+.choice .mk.ok{color:var(--ok)} .choice .mk.bad{color:var(--bad)}
+.choice .yours{display:block;font-family:var(--f-ui);font-size:.78rem;font-weight:700;line-height:1.4;color:var(--ink)}
+.choice .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.inote2{margin:6px 2px 0;font-size:.85rem;color:var(--muted)}
+.choices + section.card, .inote2 + section.card, .answers + section.card{margin-top:16px}
+.choices + .answers{margin-top:10px}
+.qask.qsub{margin:14px 2px 6px;text-align:right}
+.choices + .qsub{margin-top:16px}
+.dlist.done .ditem{cursor:default}
+.dlist .mk{font-weight:800;font-family:var(--f-ui)} .dlist .mk.ok{color:var(--ok)} .dlist .mk.bad{color:var(--bad)}
+.log .mk.bad{color:var(--bad)}
+.hw.ok{color:var(--ok)} .hw.hint{color:var(--gold)} .hw.miss{color:var(--bad)}
+.hw .hm{font-family:var(--f-ui);font-size:.6em;font-weight:800;margin-inline-start:2px}
+.ayah .hlegend{font-family:var(--f-ui);font-size:.8rem;line-height:1.6;color:var(--muted);margin-top:6px}
+.ayah .hlegend .hw{font-weight:700}
+.ditem .belong{font-family:var(--f-ui);font-size:.78rem;font-weight:700;color:var(--bad);white-space:nowrap;margin-inline-start:auto}
+.ayah.short .head{margin:0}   /* a hint removes two wrong choices: they disappear */
 .lives i.todo{background:var(--line)} .lives i.okd{background:var(--ok)} .lives i.hinted{background:var(--gold)}
 .answers{display:flex;flex-direction:column;gap:10px}
 .pair2{display:flex;flex-direction:column;gap:6px}
@@ -678,6 +700,7 @@ function verseCard(k, b, e, tag){
 
 // ---------- render ----------
 function render(){
+  markTabs();   // ✓ / ✗ on the quiz tabs in «اختبار اليوم» only
   if (C.kind === 'type') renderType(); else if (C.kind === 'order') renderOrder(); else renderMcq();
   document.querySelector('.wrap').classList.toggle('over', S.done);
   if ($('lead')) $('lead').hidden = S.done;
@@ -690,7 +713,12 @@ function render(){
 function renderType(){
   const Q = question(S.items[0]), w = toks(Q.key);
   if (S.done) {
-    $('stage').innerHTML = `<div class="answers">${verseCard(Q.key, Q.b, Q.e, isWon() ? '' : ' <span class="tag">لم تكملها</span>')}</div>`;
+    const st = {}; let at = 0;
+    S.guesses.forEach(g => { if (g.ok) st[Q.hid[at++]] = 'ok'; else if (g.h) st[Q.hid[at++]] = 'hint'; });
+    Q.hid.forEach(i => { if (!st[i]) st[i] = 'miss'; });
+    const LB = { ok: 'كتبتها', hint: 'كُشفت بتلميح', miss: 'لم تكتبها' };
+    const html = w.map((x, i) => st[i] ? `<span class="hw ${st[i]}" aria-label="${esc(x)} (${LB[st[i]]})">${esc(x)}</span>` : esc(x)).join(' ');
+    $('stage').innerHTML = `<div class="answers"><div class="ayah"><div class="head"><div class="ref">${ref(Q.key)}${where(Q.key)}</div>${playBtn(Q.key)}</div><p>${html}</p></div></div>`;
   } else {
     const shown = Q.hid[S.rev] === undefined ? Q.e : Q.hid[S.rev];   // everything before the next hidden word
     const parts = [];
@@ -707,7 +735,7 @@ function renderType(){
   $('lives').innerHTML = Array.from({length: MAX_WRONG}, (_, i) => `<i class="${i < wr ? 'used' : ''}"></i>`).join('');
   $('log').innerHTML = S.guesses.filter(g => !g.ok).reverse().map(g => g.h
     ? `<li class="hint"><span>تلميح</span><span>كُشفت الكلمة «${esc(g.w)}»</span></li>`
-    : `<li class="bad"><span>${esc(g.w)}</span><span>ليست الكلمة التالية</span></li>`).join('');
+    : `<li class="bad"><span><b class="mk bad">✗</b> ${esc(g.w)}</span><span>${S.done ? 'محاولة خاطئة' : 'ليست الكلمة التالية'}</span></li>`).join('');
   const hl = hintsLeft();
   $('hintBtn').textContent = 'تلميح (' + toAr(hl) + ')';
   $('hintBtn').disabled = S.done || !hl;
@@ -727,7 +755,11 @@ function passageCard(keys, tag){
 function renderOrder(){
   const Q = question(S.items[0]), [s] = Q.key.split(':');
   if (S.done) {
-    $('stage').innerHTML = '<div class="answers">' + passageCard(Q.hid, isWon() ? '' : ' <span class="tag">لم ترتّبها</span>') + '</div>';
+    const last = S.chk && S.chk.length ? S.chk : S.arr;
+    $('stage').innerHTML = '<p class="qask qsub">ترتيبك' + (isWon() ? ' <span class="okt">✓ رتّبتها</span>' : '') + '</p><ol class="dlist done">' + last.map((j, i) => j === i
+        ? `<li class="ditem good"><span class="mk ok" aria-label="في مكانها">✓</span><span class="pn">${toAr(i + 1)}</span><span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span></li>`
+        : `<li class="ditem bad"><span class="mk bad" aria-label="في غير مكانها">✗</span><span class="pn">${toAr(i + 1)}</span><span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span><span class="belong">مكانها ${toAr(j + 1)}</span></li>`).join('')
+      + '</ol><div class="answers">' + passageCard(Q.hid, '').replace(/<p>[\s\S]*<\/p><\/div>$/, '</div>').replace('class="ayah"', 'class="ayah short"') + '</div>';
   } else {
     // a verse is green while it stays where the last check found it right
     // after «تأكيد» each verse that has not moved since is green (right place) or red (wrong place)
@@ -825,8 +857,8 @@ function questionHtml(Q){
     const text = w.map((x, i) => i === Q.i ? '<span class="blank" aria-label="الكلمة الناقصة"></span>' : esc(x)).join(' ');
     return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${text}</p>`;
   }
-  return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${toks(Q.key).map(esc).join(' ')}</p>
-    <p class="qask">${Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
+  // «ما قبلها؟ ما بعدها؟»: only the verse in the box; the question is written under it (see roundHtml)
+  return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${toks(Q.key).map(esc).join(' ')}</p>`;
 }
 const SURAH_OPTS = ['fawatih', 'tartib', 'asmaa'];   // their choices are surah numbers
 const optText = (Q, o) => SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[o]] : GAME === 'qabl' ? esc(short(Q.opts[o], 7)) : esc(Q.opts[o]);
@@ -867,29 +899,55 @@ function trioCard(it, aBefore, aAfter){
   return `<div class="ayah trio"><div class="head"><div class="ref">سورة ${SURAH[s]} · الآيات ${toAr(a - 1)}–${toAr(a + 1)}`
     + (wrong ? ' <span class="tag">' + wrong + '</span>' : '') + where(k) + `</div>${btn}</div><p>${text}</p></div>`;
 }
+// The quizzes that keep their choices on screen after answering (option A): every choice stays a button;
+// the right one is green with ✓, a wrong pick is red with ✗, the player's own choice has a thick border and «إجابتك»,
+// and the verse is shown in its own box under the choices (مكية أم مدنية؟ has no box).
+const KEEP = ['lam', 'fawatih', 'tartib', 'asmaa', 'makki', 'qabl'];
+function openVerse(Q){
+  if (GAME === 'qabl') return verseCard(Q.target, -1, -1, ' <span class="okt">' + (Q.dir > 0 ? 'الآية التي بعدها' : 'الآية التي قبلها') + '</span>');
+  if (GAME === 'lam') return verseCard(Q.key, Q.i, Q.i + 1, '');
+  const s = GAME === 'tartib' ? Q.s + Q.dir : Q.opts[Q.right];   // the surah of the right choice: its first verse
+  return verseCard(s + ':1', -1, -1, '');
+}
+function roundHtml(Q, a, removed, opt){
+  opt = opt || {};
+  const keep = a && KEEP.includes(GAME);
+  const btns = Q.order.map(o => {
+    let cls = 'choice';
+    if (a) cls += o === Q.right ? ' right' : o === a.pick ? ' wrong' : ' dim';
+    if (keep && o === a.pick) cls += ' mine';
+    const off = removed.includes(o);
+    const mark = !keep ? '' : o === Q.right ? '<span class="mk ok" aria-hidden="true">✓</span> ' : o === a.pick ? '<span class="mk bad" aria-hidden="true">✗</span> ' : '';
+    const yours = keep && o === a.pick ? '<span class="yours">إجابتك</span>' : '';
+    const sr = !keep ? '' : o === Q.right ? '<span class="sr">(الإجابة الصحيحة)</span>' : o === a.pick ? '<span class="sr">(خطأ)</span>' : '';
+    return `<button type="button" class="${cls}${off ? ' gone' : ''}" data-o="${o}"${a || off ? ' disabled' : ''}>${mark}${optText(Q, o)}${sr}${yours}</button>`;
+  }).join('');
+  const note = a && GAME === 'makki' && Q.disputed ? '<p class="inote2">على ما في مصحف المدينة، وفيها خلاف بين العلماء.</p>' : '';
+  const verse = keep && GAME !== 'makki' && !opt.noVerse ? '<div class="answers">' + openVerse(Q) + '</div>' : '';
+  const sub = `<p class="qask qsub">${Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
+  const head = opt.noCard ? sub : `<section class="card">${questionHtml(Q)}</section>` + (GAME === 'qabl' ? sub : '');
+  return `${head}<div class="choices${GAME === 'qabl' ? ' long' : ''}${GAME === 'lam' ? ' three' : ''}${SURAH_OPTS.includes(GAME) || GAME === 'makki' ? ' names' : ''}">${btns}</div>${note}${verse}`;
+}
 function renderMcq(){
   const r = S.ans.length - (S.showing ? 1 : 0);      // the answer on screen
   const R = rounds();
-  if (S.done) {
+  if (S.done && GAME === 'qabl') {
+    // the verse with both questions, each with its choices marked, then the three verses together in one box
+    $('stage').innerHTML = S.items.map((it, k) => { const a1 = S.ans[2 * k], a2 = S.ans[2 * k + 1];
+      return roundHtml(question(it, -1), a1, a1 ? (a1.rm || []) : [], { noVerse: true })
+        + roundHtml(question(it, 1), a2, a2 ? (a2.rm || []) : [], { noVerse: true, noCard: true })
+        + '<div class="answers">' + trioCard(it, a1, a2) + '</div>'; }).join('');
+  } else if (S.done && KEEP.includes(GAME)) {
+    $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [])).join('');
+  } else if (S.done) {
     $('stage').innerHTML = '<div class="answers">' + (GAME === 'qabl'
       ? S.items.map((it, k) => trioCard(it, S.ans[2 * k], S.ans[2 * k + 1])).join('')
-      : GAME === 'tartib' ? S.items.map((it, k) => surahTrio(it, S.ans[2 * k], S.ans[2 * k + 1])).join('')
       : S.items.map((it, k) => GAME === 'naqisa' ? answerCards(question(it), S.ans[k]) : infoCard(question(it), S.ans[k])).join('')) + '</div>';
   } else {
     const Q = question(...R[r]), a = S.showing ? S.ans[r] : null;
     const removed = a ? (a.rm || []) : S.hidden;
-    const btns = Q.order.map(o => {
-      let cls = 'choice';
-      if (a) cls += o === Q.right ? ' right' : o === a.pick ? ' wrong' : ' dim';
-      const off = removed.includes(o);
-      // «ما قبلها؟ ما بعدها؟»: once answered, the right choice opens into the whole verse (reference, recitation, mushaf link)
-      if (a && GAME === 'qabl' && o === Q.right)
-        return `<div class="choice right full">${verseCard(Q.target, -1, -1, ' <span class="okt">' + (Q.dir > 0 ? 'الآية التي بعدها' : 'الآية التي قبلها') + '</span>')}</div>`;
-      return `<button type="button" class="${cls}${off ? ' gone' : ''}" data-o="${o}"${a || off ? ' disabled' : ''}>${optText(Q, o)}</button>`;
-    }).join('');
-    const shownAns = !a || GAME === 'qabl' ? '' : GAME === 'naqisa' ? answerCards(Q, a) : infoCard(Q, a);
-    $('stage').innerHTML = `<section class="card">${questionHtml(Q)}</section><div class="choices${GAME === 'qabl' ? ' long' : ''}${GAME === 'lam' ? ' three' : ''}${SURAH_OPTS.includes(GAME) || GAME === 'makki' ? ' names' : ''}">${btns}</div>`
-      + (shownAns ? '<div class="answers">' + shownAns + '</div>' : '');
+    const shownAns = !a || GAME === 'qabl' || KEEP.includes(GAME) ? '' : GAME === 'naqisa' ? answerCards(Q, a) : infoCard(Q, a);
+    $('stage').innerHTML = roundHtml(Q, a, removed) + (shownAns ? '<div class="answers">' + shownAns + '</div>' : '');
   }
   $('statusText').innerHTML = S.done || C.per === 1 ? '' : 'السؤال <b>' + toAr(Math.min(C.per, r + 1)) + '</b> من ' + toAr(C.per);
   $('lives').innerHTML = C.per === 1 ? '' : Array.from({length: C.per}, (_, i) => { const a = S.ans[i];
@@ -926,7 +984,7 @@ function guessType(raw){
     if (loose(parts[j]) === want) { S.guesses.push({ w: parts[j], ok: true }); S.rev++; continue; }
     // «يا أيها» typed as two words for one Uthmani word «يَـٰٓأَيُّهَا»
     if (j + 1 < parts.length && loose(parts[j] + parts[j + 1]) === want) { S.guesses.push({ w: parts[j] + ' ' + parts[j + 1], ok: true }); S.rev++; j++; continue; }
-    S.guesses.push({ w: parts[j], ok: false }); ok = false; msg = '«' + parts[j] + '» ليست الكلمة التالية'; break;
+    S.guesses.push({ w: parts[j], ok: false, at: S.rev }); ok = false; msg = '«' + parts[j] + '» ليست الكلمة التالية'; break;
   }
   finishIfOver(); save();
   $('guess').value = '';
@@ -1306,12 +1364,19 @@ $('shareNative').addEventListener('click', e => {
 });
 const doneToday = g => !!store.get('sum-' + SK(g) + '-' + cairoDateKey(), null);
 function markTabs(){
+  // today's result on each quiz tab, in «اختبار اليوم» only: ✓ answered right, ✗ (and a red tab) answered wrong
+  const train = typeof S !== 'undefined' && S && S.practice;
   GAMES.forEach(([g, id, name]) => {
-    $(id).textContent = name;
-    if (doneToday(g)) $(id).insertAdjacentHTML('beforeend', ' <span class="tick" title="أتممته اليوم">✓</span>');
+    const el = $(id); el.textContent = name; el.classList.remove('lost');
+    const a = train ? null : store.get('sum-' + SK(g) + '-' + cairoDateKey(), null);
+    if (!a) return;
+    const ok = a.n >= a.total;
+    el.insertAdjacentHTML('beforeend', ok ? ' <span class="tick" title="أصبت في اختبار اليوم">✓</span>' : ' <span class="tick bad" title="أخطأت في اختبار اليوم">✗</span>');
+    if (!ok) el.classList.add('lost');
   });
 }
 function renderToday(){
+  markTabs();
   const box = $('today');
   if (S.practice || S.archive || !S.done) { box.hidden = true; return; }
   const left = GAMES.filter(([g]) => !doneToday(g));

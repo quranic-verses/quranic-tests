@@ -1,7 +1,7 @@
 // اختبارات قرآنية — offline support.
 // Pages: always checked with GitHub first (so updates show up right away), cached copy when offline.
 // Fonts: cached after the first visit. Recitation audio is never cached.
-const CACHE = 'mutashabih-v63';
+const CACHE = 'mutashabih-v70';
 const CORE = ['./', './index.html', './farq.html', './akhir.html', './qabl.html', './rattib.html', './lam.html', './makki.html', './fawatih.html', './tartib.html', './asmaa.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
