@@ -401,7 +401,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <button type="button" class="x" id="helpX" aria-label="إغلاق">×</button>
     <h2 id="helpTitle"></h2>
     <div id="helpBody"></div>
-    <p class="small">اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
+    <p class="small">يتجدد الاختبار كل يوم عند منتصف الليل بتوقيت القاهرة. وفي «تدرّب» اختر الأجزاء والسور التي تحفظها، وتدرّب متى شئت.</p>
     <p class="small" id="installNote">لتثبيت التطبيق على شاشة هاتفك: من قائمة المتصفح اختر «إضافة إلى الشاشة الرئيسية» (في الآيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»).</p>
     <button type="button" class="ghost" id="installBtn" hidden>تثبيت التطبيق على الهاتف</button>
     <button type="button" id="helpGo" class="start">ابدأ الاختبار</button>
@@ -412,14 +412,15 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <div class="panel" dir="rtl" lang="ar">
     <button type="button" class="x" id="welcomeX" aria-label="إغلاق">×</button>
     <h2 id="welcomeTitle">اختبارات قرآنية</h2>
-    <p class="lead">اختبارات قصيرة كل يوم لحافظي القرآن. في قسم «تثبيت الحفظ»:</p>
+    <p class="lead">اختبارات قصيرة كل يوم لحافظي القرآن، في ثلاثة أقسام:</p>
     <ul>
-      <li><b>آخر الآية</b> آية حُذفت كلماتها الأخيرة، فاكتبها.</li>
-      <li><b>ما قبلها؟ ما بعدها؟</b> آية، فاختر الآية التي قبلها ثم الآية التي بعدها.</li>
-      <li><b>رتّب الآيات</b> خمس آيات متتالية مبعثرة، فرتّبها كما في المصحف.</li>
+      <li><b>متشابهات القرآن الكريم:</b> أين ورد؟ · ميّز بينهما</li>
+      <li><b>تثبيت الحفظ:</b> آخر الآية · ما قبلها؟ ما بعدها؟ · رتّب الآيات</li>
+      <li><b>معلومات قرآنية:</b> لم تتكرر · مكية أم مدنية؟ · فواتح السور · ترتيب السور · أسماء السور</li>
     </ul>
-    <p class="small">وفي قسم «متشابهات القرآن الكريم»: أين ورد؟ وميّز بينهما. وفي قسم «معلومات قرآنية»: لم تتكرر، مكية أم مدنية؟، فواتح السور، ترتيب السور، أسماء السور.</p>
-    <p class="small">اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة، و«تدرّب» على الأجزاء التي تحفظها متى شئت. زر «؟» يشرح كل اختبار بالتفصيل.</p>
+    <p class="small"><b>اختبار اليوم:</b> تتجدد الاختبارات كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
+    <p class="small"><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها، وتدرّب عليها متى شئت.</p>
+    <p class="small">زر «؟» أعلى الصفحة يشرح طريقة كل اختبار.</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
   </div>
 </div>
@@ -483,7 +484,7 @@ const CONF = {
 };
 const C = CONF[GAME];
 const HELP = {
-  lam: `<p class="lead">ثلاث كلمات كما وردت في المصحف، واحدة منها فقط وردت في القرآن مرة واحدة، والكلمتان الأخريان تكررتا.</p><ul>
+  lam: `<p class="lead">ثلاث كلمات كما وردت في المصحف: واحدة منها فقط لم تتكرر في القرآن، فاخترها.</p><ul>
     <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
     <li>بعد الإجابة تظهر الآية التي وردت فيها الكلمة.</li></ul>`,
   makki: `<p class="lead">سورة واحدة كل يوم: هل هي مكية أم مدنية؟</p><ul>
@@ -503,7 +504,7 @@ const HELP = {
     <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
     <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
     <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
-  rattib: `<p class="lead">خمس آيات متتالية من سورة واحدة، مبعثرة. رتّبها كما في المصحف.</p><ul>
+  rattib: `<p class="lead">خمس آيات متتالية من سورة واحدة، بغير ترتيبها. رتّبها كما في المصحف.</p><ul>
     <li>اسحب الآية من المقبض ⠿ وضعها في مكانها، ثم اضغط «تأكيد».</li>
     <li>بعد كل تأكيد تصير الآيات التي في مكانها الصحيح خضراء، والتي في غير مكانها حمراء.</li>
     <li>لديك ٤ محاولات. كل تأكيد بترتيب غير صحيح يكلّفك محاولة.</li>
@@ -1400,7 +1401,7 @@ $('welcomeGo').addEventListener('click', hideWelcome);
 $('welcomeX').addEventListener('click', hideWelcome);
 $('welcome').addEventListener('click', e => { if (e.target === $('welcome')) hideWelcome(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('welcome').hidden) hideWelcome(); });
-const FIRST_VISIT = !store.get('mut-welcome', 0) && !['mut', 'farq', 'akhir', 'qabl', 'rattib', 'lam', 'makki', 'fawatih', 'tartib', 'asmaa'].some(g => store.get(g + '-seen-help', 0));
+const FIRST_VISIT = !store.get('mut-welcome', 0) && !['mut', 'farq', 'aya', 'kal', 'akhir', 'qabl', 'rattib', 'lam', 'makki', 'fawatih', 'tartib', 'asmaa'].some(g => store.get(g + '-seen-help', 0));
 let installEvt = null;
 const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);

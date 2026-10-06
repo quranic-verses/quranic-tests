@@ -396,7 +396,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="ex-phrase">(ب) وَأَرْجُلَكُم مِّنْ خِلَـٰفٍ <span class="d">وَلَأُصَلِّبَنَّكُمْ</span> أَجْمَعِينَ</p>
       <div class="ex-slots"><span class="slot found">(أ) الأعراف</span><span class="slot found">(ب) الشعراء</span></div>
     </div>
-    <p class="small">اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
+    <p class="small">يتجدد الاختبار كل يوم عند منتصف الليل بتوقيت القاهرة. وفي «تدرّب» اختر الأجزاء والسور التي تحفظها، وتدرّب متى شئت.</p>
     <p class="small" id="installNote">لتثبيت التطبيق على شاشة هاتفك: من قائمة المتصفح اختر «إضافة إلى الشاشة الرئيسية» (في الآيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»).</p>
     <button type="button" class="ghost" id="installBtn" hidden>تثبيت التطبيق على الهاتف</button>
     <button type="button" id="helpGo" class="start">ابدأ الاختبار</button>
@@ -407,13 +407,15 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <div class="panel" dir="rtl" lang="ar">
     <button type="button" class="x" id="welcomeX" aria-label="إغلاق">×</button>
     <h2 id="welcomeTitle">اختبارات قرآنية</h2>
-    <p class="lead">اختبارات قصيرة كل يوم لمن يحفظ القرآن:</p>
+    <p class="lead">اختبارات قصيرة كل يوم لحافظي القرآن، في ثلاثة أقسام:</p>
     <ul>
-      <li><b>أين ورد؟</b> عبارة تتكرر في القرآن، فاكتب السور التي وردت فيها.</li>
-      <li><b>ميّز بينهما</b> موضعان متشابهان، فاعرف سورة كل منهما.</li>
+      <li><b>متشابهات القرآن الكريم:</b> أين ورد؟ · ميّز بينهما</li>
+      <li><b>تثبيت الحفظ:</b> آخر الآية · ما قبلها؟ ما بعدها؟ · رتّب الآيات</li>
+      <li><b>معلومات قرآنية:</b> لم تتكرر · مكية أم مدنية؟ · فواتح السور · ترتيب السور · أسماء السور</li>
     </ul>
-    <p class="small">وفي قسم «تثبيت الحفظ»: <b>آخر الآية</b> و<b>ما قبلها؟ ما بعدها؟</b> و<b>رتّب الآيات</b>. وفي قسم «معلومات قرآنية»: <b>لم تتكرر</b> و<b>مكية أم مدنية؟</b> و<b>فواتح السور</b> و<b>ترتيب السور</b> و<b>أسماء السور</b>.</p>
-    <p class="small">في «أين ورد؟» عدد المحاولات ضعف عدد السور، وفي «ميّز بينهما» ٦ محاولات. وزر «تلميح» يعطيك نص الآية كاملًا مقابل محاولة. اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة، و«تدرّب» على الأجزاء التي تحفظها متى شئت. زر «؟» يشرح كل اختبار بالتفصيل.</p>
+    <p class="small"><b>اختبار اليوم:</b> تتجدد الاختبارات كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
+    <p class="small"><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها، وتدرّب عليها متى شئت.</p>
+    <p class="small">زر «؟» أعلى الصفحة يشرح طريقة كل اختبار.</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
   </div>
 </div>
@@ -1115,7 +1117,7 @@ $('welcomeX').addEventListener('click', hideWelcome);
 $('welcome').addEventListener('click', e => { if (e.target === $('welcome')) hideWelcome(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('welcome').hidden) hideWelcome(); });
 // first visit to the site (any of the three pages): one short welcome; each quiz's details stay behind «؟»
-const FIRST_VISIT = !store.get('mut-welcome', 0) && !store.get('mut-seen-help', 0) && !store.get('farq-seen-help', 0) && !store.get('aya-seen-help', 0) && !store.get('kal-seen-help', 0);
+const FIRST_VISIT = !store.get('mut-welcome', 0) && !['mut', 'farq', 'aya', 'kal', 'akhir', 'qabl', 'rattib', 'lam', 'makki', 'fawatih', 'tartib', 'asmaa'].some(g => store.get(g + '-seen-help', 0));
 // ---------- Install banner: shown after today's question; one tap on Android, the two Share steps on iPhone ----------
 let installEvt = null;
 const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
