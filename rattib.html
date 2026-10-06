@@ -164,6 +164,20 @@ body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
 .ix{background:transparent;border:none;color:var(--muted);font-size:1.4rem;line-height:1;padding:4px 6px}
 .over .msg:empty{display:none}
 .outnote{margin:0;font-size:.9rem;color:var(--muted);line-height:1.8;grid-column:1/-1}
+.gbtn .qhelp{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid currentColor;font-size:.72rem;font-weight:700;line-height:1;vertical-align:1px;margin-inline-start:3px;cursor:pointer}
+#help .hsub{margin:14px 0 4px;font-size:1rem}
+#help .hsec{margin:12px 0 6px;font-size:.82rem;font-weight:700;color:var(--muted)}
+.hgame{border:1px solid var(--line);border-radius:12px;margin:0 0 6px;background:var(--surface)}
+.hgame summary{cursor:pointer;padding:9px 12px;font-weight:700}
+.hgame .hbody{padding:0 12px 10px}
+.hgame.cur{border:2px solid var(--accent)} .hgame.cur summary{color:var(--accent)}
+.hgame.cur summary::after{content:" · هذا الاختبار";font-weight:400;font-size:.8rem;color:var(--muted)}
+#help.one .hall, #help.one .hsec, #help.one .hgame:not(.cur){display:none}
+#help.one .hgame.cur{border:none;background:transparent;margin:0}
+#help.one .hgame.cur summary{pointer-events:none;list-style:none;font-family:var(--f-display);font-size:1.3rem;padding:0 0 6px}
+#help.one .hgame.cur summary::-webkit-details-marker{display:none}
+#help.one .hgame.cur summary::after{content:none}
+#help.one .hgame .hbody{padding:0}
 .lead2{margin:0;color:var(--muted);text-align:center;font-size:.95rem;text-wrap:balance}
 .atitle{font-family:var(--f-display);font-size:1.25rem;margin:0 0 -8px;color:var(--accent)}
 .go-ic{width:52px;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
@@ -282,6 +296,7 @@ button.sm{padding:6px 10px;font-size:.88rem}
 .qask.qsub{margin:14px 2px 6px;text-align:right}
 .choices + .qsub{margin-top:16px}
 .dlist.done .ditem{cursor:default}
+.ditem .handle.off{color:var(--ok);cursor:default;touch-action:auto;font-weight:800}
 .dlist .mk{font-weight:800;font-family:var(--f-ui)} .dlist .mk.ok{color:var(--ok)} .dlist .mk.bad{color:var(--bad)}
 .log .mk.bad{color:var(--bad)}
 .hw.ok{color:var(--ok)} .hw.hint{color:var(--gold)} .hw.miss{color:var(--bad)}
@@ -445,14 +460,102 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
 <div class="overlay" id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
   <div class="panel" dir="rtl" lang="ar">
     <button type="button" class="x" id="helpX" aria-label="إغلاق">×</button>
-    <h2 id="helpTitle"></h2>
-    <div id="helpBody"></div>
-    <p class="small">يتجدد الاختبار كل يوم عند منتصف الليل بتوقيت القاهرة. وفي «تدرّب» اختر الأجزاء والسور التي تحفظها، وتدرّب متى شئت.</p>
+    <div class="hall">
+      <h2 id="helpTitle">طريقة الاستخدام</h2>
+      <ul>
+        <li><b>اختبار اليوم:</b> تتجدد الاختبارات كل يوم عند منتصف الليل بتوقيت القاهرة.</li>
+        <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
+        <li><b>تلميح:</b> يساعدك إذا تعثرت.</li>
+        <li><b>الاختبارات السابقة:</b> حُلّ أي اختبار فاتك.</li>
+      </ul>
+      <h3 class="hsub">طريقة كل اختبار</h3>
+    </div>
+    <p class="hsec">متشابهات القرآن الكريم</p>
+    <details class="hgame" data-g="surah"><summary>أين ورد؟</summary><div class="hbody">
+      <p class="lead">اعرف السور التي ورد فيها الموضع المتشابه.</p>
+    <ul>
+      <li>كل يوم يظهر موضع متكرر من القرآن، مع عدد مرات تكراره وعدد السور التي ورد فيها.</li>
+      <li>اكتب اسم سورة واضغط ✓ (أو Enter). إذا كانت صحيحة ظهرت الآية التي ورد فيها الموضع، وإذا كان الموضع فيها أكثر من مرة ظهرت آياتها كلها معًا.</li>
+      <li>عدد المحاولات ضعف عدد السور التي ورد فيها الموضع: سورتان = ٤ محاولات، ثلاث سور = ٦ محاولات.</li>
+      <li>زر «تلميح» يُظهر لك نص الآية كاملًا من إحدى السور التي لم تجدها بعد، ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li>
+      <li>في «تدرّب» تُحسب السور التي تحفظها فقط، وتظهر لك في النهاية المواضع الأخرى إن وُجدت.</li>
+    </ul>
+    <div class="example">
+      <span class="ex-label">مثال</span>
+      <p class="ex-phrase">﴿ إِنِّى لَكُمْ رَسُولٌ أَمِينٌ ﴾</p>
+      <p class="ex-facts">تكرر ٦ مرات في سورتين</p>
+      <div class="ex-slots"><span class="slot found">الشعراء <small>٥ مواضع</small></span><span class="slot found">الدخان</span></div>
+    </div>
+      <p class="small">النص من مصحف المدينة (رواية حفص)، والمواضع مستخرجة من العبارات المتكررة حرفيًا.</p>
+    </div></details>
+    <details class="hgame" data-g="farq"><summary>ميّز بينهما</summary><div class="hbody">
+      <p class="lead">موضعان متشابهان جدًا، كل واحد في سورة. اعرف سورة كل موضع.</p>
+    <ul>
+      <li>الكلمات التي يختلف فيها الموضعان ملوّنة، وهي مفتاح الحل.</li>
+      <li>الموضع المحدَّد بإطار هو الذي تجيب عنه الآن. اضغط على الموضع الآخر للانتقال إليه.</li>
+      <li>إذا كتبت سورة الموضع الآخر يُحسب خطأ، لكنها تُسجَّل له.</li>
+      <li>لديك ٦ محاولات. زر «تلميح» يُظهر لك نص آية الموضع كاملًا، ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li>
+    </ul>
+    <div class="example">
+      <span class="ex-label">مثال</span>
+      <p class="ex-phrase">(أ) وَأَرْجُلَكُم مِّنْ خِلَـٰفٍ <span class="d">ثُمَّ لَأُصَلِّبَنَّكُمْ</span> أَجْمَعِينَ</p>
+      <p class="ex-phrase">(ب) وَأَرْجُلَكُم مِّنْ خِلَـٰفٍ <span class="d">وَلَأُصَلِّبَنَّكُمْ</span> أَجْمَعِينَ</p>
+      <div class="ex-slots"><span class="slot found">(أ) الأعراف</span><span class="slot found">(ب) الشعراء</span></div>
+    </div>
+    </div></details>
+    <p class="hsec">تثبيت الحفظ</p>
+    <details class="hgame" data-g="akhir"><summary>آخر الآية</summary><div class="hbody">
+      <p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأخيرة، فاكتبها كلمةً كلمة.</p><ul>
+    <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
+    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
+    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="qabl"><summary>ما قبلها؟ ما بعدها؟</summary><div class="hbody">
+      <p class="lead">آية واحدة، وسؤالان: ما الآية التي قبلها؟ ثم ما الآية التي بعدها؟</p><ul>
+    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
+    <li>تظهر بداية كل اختيار، والاختيارات من الآيات القريبة ومن آيات تبدأ بالكلمة نفسها.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>
+    </div></details>
+    <details class="hgame" data-g="rattib"><summary>رتّب الآيات</summary><div class="hbody">
+      <p class="lead">خمس آيات متتالية من سورة واحدة، بغير ترتيبها. رتّبها كما في المصحف.</p><ul>
+    <li>اسحب الآية من المقبض ⠿ وضعها في مكانها، ثم اضغط «تأكيد».</li>
+    <li>بعد كل تأكيد تصير الآيات التي في مكانها الصحيح خضراء، والتي في غير مكانها حمراء.</li>
+    <li>لديك ٤ محاولات. كل تأكيد بترتيب غير صحيح يكلّفك محاولة.</li>
+    <li>زر «تلميح» يضع سهمًا ▲ أو ▼ على آية في غير مكانها: حرّكها إلى أعلى أو إلى أسفل. يكلّفك محاولة، والرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    </div></details>
+    <p class="hsec">معلومات قرآنية</p>
+    <details class="hgame" data-g="lam"><summary>لم تتكرر</summary><div class="hbody">
+      <p class="lead">ثلاث كلمات كما وردت في المصحف: واحدة منها فقط لم تتكرر في القرآن، فاخترها.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>بعد الإجابة تظهر الآية التي وردت فيها الكلمة.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="makki"><summary>مكية أم مدنية؟</summary><div class="hbody">
+      <p class="lead">سورة واحدة كل يوم: هل هي مكية أم مدنية؟</p><ul>
+    <li>التصنيف على ما في مصحف المدينة النبوية.</li>
+    <li>بعض السور فيها خلاف بين العلماء، ويُنبَّه عليه بعد الإجابة.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="fawatih"><summary>فواتح السور</summary><div class="hbody">
+      <p class="lead">تظهر لك أول كلمات من سورة، فاختر السورة من أربع سور.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="tartib"><summary>ترتيب السور</summary><div class="hbody">
+      <p class="lead">سورة واحدة كل يوم، وسؤالان: ما السورة التي قبلها في ترتيب المصحف؟ ثم ما السورة التي بعدها؟</p><ul>
+    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="asmaa"><summary>أسماء السور</summary><div class="hbody">
+      <p class="lead">لبعض السور أسماء أخرى مشهورة عند العلماء، مثل «براءة» لسورة التوبة. اختر السورة التي تُعرف بالاسم المذكور.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    </div></details>
     <p class="small" id="installNote">لتثبيت التطبيق على شاشة هاتفك: من قائمة المتصفح اختر «إضافة إلى الشاشة الرئيسية» (في الآيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»).</p>
     <button type="button" class="ghost" id="installBtn" hidden>تثبيت التطبيق على الهاتف</button>
-    <button type="button" id="helpGo" class="start">ابدأ الاختبار</button>
+    <button type="button" id="helpGo" class="start">حسنًا</button>
   </div>
 </div>
+
 
 <div class="overlay" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
   <div class="panel" dir="rtl" lang="ar">
@@ -542,46 +645,7 @@ const CONF = {
   qabl:   { name: 'ما قبلها؟ ما بعدها؟', file: 'qabl.html', kind: 'mcq', items: 1, per: 2, hints: 1, lead: 'اختر الآية التي قبل هذه الآية، ثم الآية التي بعدها.' }
 };
 const C = CONF[GAME];
-const HELP = {
-  lam: `<p class="lead">ثلاث كلمات كما وردت في المصحف: واحدة منها فقط لم تتكرر في القرآن، فاخترها.</p><ul>
-    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>بعد الإجابة تظهر الآية التي وردت فيها الكلمة.</li></ul>`,
-  makki: `<p class="lead">سورة واحدة كل يوم: هل هي مكية أم مدنية؟</p><ul>
-    <li>التصنيف على ما في مصحف المدينة النبوية.</li>
-    <li>بعض السور فيها خلاف بين العلماء، ويُنبَّه عليه بعد الإجابة.</li></ul>`,
-  fawatih: `<p class="lead">تظهر لك أول كلمات من سورة، فاختر السورة من أربع سور.</p><ul>
-    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
-  tartib: `<p class="lead">سورة واحدة كل يوم، وسؤالان: ما السورة التي قبلها في ترتيب المصحف؟ ثم ما السورة التي بعدها؟</p><ul>
-    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
-  asmaa: `<p class="lead">لبعض السور أسماء أخرى مشهورة عند العلماء، مثل «براءة» لسورة التوبة. اختر السورة التي تُعرف بالاسم المذكور.</p><ul>
-    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
-  akhir: `<p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأخيرة، فاكتبها كلمةً كلمة.</p><ul>
-    <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
-    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
-    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
-    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
-  rattib: `<p class="lead">خمس آيات متتالية من سورة واحدة، بغير ترتيبها. رتّبها كما في المصحف.</p><ul>
-    <li>اسحب الآية من المقبض ⠿ وضعها في مكانها، ثم اضغط «تأكيد».</li>
-    <li>بعد كل تأكيد تصير الآيات التي في مكانها الصحيح خضراء، والتي في غير مكانها حمراء.</li>
-    <li>لديك ٤ محاولات. كل تأكيد بترتيب غير صحيح يكلّفك محاولة.</li>
-    <li>زر «تلميح» يضع سهمًا ▲ أو ▼ على آية في غير مكانها: حرّكها إلى أعلى أو إلى أسفل. يكلّفك محاولة، والرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
-  akmil: `<p class="lead">يظهر لك أول آية، فاكتب الكلمات الأربع التي تليها، كلمةً كلمة.</p><ul>
-    <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
-    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
-    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
-    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
-  naqisa: `<p class="lead">خمس آيات، حُذفت من كل منها كلمة. اختر الكلمة الناقصة من أربع كلمات متشابهة.</p><ul>
-    <li>لكل سؤال اختيار واحد فقط.</li>
-    <li>الكلمات المقترحة متشابهة عمدًا، وكثير منها من مواضع متشابهة في القرآن.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميحان في كل اختبار. السؤال الذي تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>`,
-  qabl: `<p class="lead">آية واحدة، وسؤالان: ما الآية التي قبلها؟ ثم ما الآية التي بعدها؟</p><ul>
-    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
-    <li>تظهر بداية كل اختيار، والاختيارات من الآيات القريبة ومن آيات تبدأ بالكلمة نفسها.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>`
-};
+// each quiz's help is in help_all.html (shared by every page)
 const MAX_WRONG = C.tries || 0;   // آخر الآية / رتّب الآيات: tries
 const TRY = C.kind !== 'mcq';     // the quizzes played with tries (type a word / tap the next verse)
 const WANT_TRAIN = location.hash === '#train';
@@ -630,6 +694,10 @@ function loose(w){
   w = w.replace(/[ةت]$/, 'ه').replace(/(.)\1+/g, '$1');
   return w.replace(/[^ء-ي]/g, '');
 }
+// typed word = verse word: the forgiving spelling above, or the same with the hamza seats ئ ؤ dropped
+// («مسئولا» and «مسؤولا» both = «مَّسْـُٔولًا»)
+const noSeat = w => loose(String(w).replace(/[ئؤ]/g, ''));
+const same = (a, b) => loose(a) === loose(b) || noSeat(a) === noSeat(b);
 const ref = k => { const [s, a] = k.split(':'); return 'سورة ' + SURAH[s] + ' · الآية ' + toAr(a); };
 const juzOf = k => (QD.m[k] || [0])[0];
 // a fixed shuffle per question, so the options keep their order after a reload
@@ -800,9 +868,10 @@ function renderOrder(){
   } else {
     // a verse is green while it stays where the last check found it right
     // after «تأكيد» each verse that has not moved since is green (right place) or red (wrong place)
-    const mark = (j, i) => S.chk[i] !== j ? '' : j === i ? ' good' : ' bad';
+    // a verse found in its right place (green) is locked there: no handle, and the others move around it
+    const mark = (j, i) => S.chk[i] !== j ? '' : j === i ? ' good locked' : ' bad';
     const items = S.arr.map((j, i) => `<li class="ditem${mark(j, i)}" data-j="${j}">`
-      + `<span class="handle" aria-label="اسحب لتغيير المكان" title="اسحب لتغيير المكان">⠿</span><span class="pn">${toAr(i + 1)}</span>`
+      + (S.chk[i] === j && j === i ? '<span class="handle off" aria-label="في مكانها الصحيح">✓</span>' : '<span class="handle" aria-label="اسحب لتغيير المكان" title="اسحب لتغيير المكان">⠿</span>') + `<span class="pn">${toAr(i + 1)}</span>`
       + (S.tips.some(x => x.j === j && x.at === i) ? `<span class="tip" title="${j < i ? 'حرّكها إلى أعلى' : 'حرّكها إلى أسفل'}">${j < i ? '▲' : '▼'}</span>` : '')
       + `<span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span></li>`).join('');
     $('stage').innerHTML = `<section class="card"><div class="facts"><span class="chip">سورة ${SURAH[s]}</span><span class="chip">${toAr(Q.hid.length)} آيات متتالية</span></div></section>`
@@ -833,19 +902,21 @@ function checkOrder(){
 // drag and drop with the ⠿ handle (mouse, finger or pen); the list reorders while the verse is dragged
 let drag = null;
 document.addEventListener('pointerdown', e => {
-  const h = e.target.closest('.handle'); if (!h || !S || S.done) return;
+  const h = e.target.closest('.handle'); if (!h || h.classList.contains('off') || !S || S.done) return;
   e.preventDefault(); drag = h.closest('.ditem'); drag.classList.add('dragging');
 });
 document.addEventListener('pointermove', e => {
   if (!drag) return;
   e.preventDefault();
-  const list = drag.parentNode, items = [...list.children];
+  const list = drag.parentNode, items = [...list.children], locked = x => x.classList.contains('locked');
   for (const it of items) {
-    if (it === drag) continue;
+    if (it === drag || locked(it)) continue;
     const r = it.getBoundingClientRect();
     if (e.clientY > r.top && e.clientY < r.bottom) {
-      const after = items.indexOf(it) > items.indexOf(drag);
-      list.insertBefore(drag, after ? it.nextSibling : it);
+      // move among the free places only; a locked (green) verse keeps its place
+      const free = items.filter(x => !locked(x)), to = free.indexOf(it);
+      free.splice(free.indexOf(drag), 1); free.splice(to, 0, drag);
+      let f = 0; items.map(x => locked(x) ? x : free[f++]).forEach(x => list.appendChild(x));
       break;
     }
   }
@@ -976,8 +1047,8 @@ function renderMcq(){
         + '<div class="answers">' + trioCard(it, a1, a2) + '</div>'; }).join('');
   } else if (S.done && KEEP.includes(GAME)) {
     $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [], { noCard: GAME === 'tartib' && k > 0 })).join('');
-  } else if (GAME === 'tartib' && S.ans.length === 1) {
-    // «ترتيب السور»: the first answer stays on screen (marked), and the second question follows right under it
+  } else if ((GAME === 'tartib' || GAME === 'qabl') && S.ans.length === 1) {
+    // «ترتيب السور» and «ما قبلها؟ ما بعدها؟»: the first answer stays on screen (marked), and the second question follows right under it
     const a0 = S.ans[0];
     $('stage').innerHTML = roundHtml(question(...R[0]), a0, a0.rm || []) + roundHtml(question(...R[1]), null, S.hidden, { noCard: true });
   } else if (S.done) {
@@ -1021,10 +1092,16 @@ function guessType(raw){
   if (!parts.length) return;
   let msg = '', ok = true;
   for (let j = 0; j < parts.length && S.rev < Q.hid.length; j++) {
-    const want = loose(w[Q.hid[S.rev]]);
-    if (loose(parts[j]) === want) { S.guesses.push({ w: parts[j], ok: true }); S.rev++; continue; }
+    if (same(parts[j], w[Q.hid[S.rev]])) { S.guesses.push({ w: parts[j], ok: true }); S.rev++; continue; }
     // «يا أيها» typed as two words for one Uthmani word «يَـٰٓأَيُّهَا»
-    if (j + 1 < parts.length && loose(parts[j] + parts[j + 1]) === want) { S.guesses.push({ w: parts[j] + ' ' + parts[j + 1], ok: true }); S.rev++; j++; continue; }
+    if (j + 1 < parts.length && same(parts[j] + parts[j + 1], w[Q.hid[S.rev]])) { S.guesses.push({ w: parts[j] + ' ' + parts[j + 1], ok: true }); S.rev++; j++; continue; }
+    // a forgotten space: «منعذاب» for «مِنْ عَذَابِ» counts as the next words (each one in turn)
+    let joined = '', n = 0;
+    for (let k = S.rev; k < Q.hid.length; k++) {
+      joined += w[Q.hid[k]];
+      if (k > S.rev && same(parts[j], joined)) { n = k - S.rev + 1; break; }
+    }
+    if (n) { for (let k = 0; k < n; k++) { S.guesses.push({ w: w[Q.hid[S.rev]], ok: true }); S.rev++; } continue; }
     S.guesses.push({ w: parts[j], ok: false, at: S.rev }); ok = false; msg = '«' + parts[j] + '» ليست الكلمة التالية'; break;
   }
   finishIfOver(); save();
@@ -1059,7 +1136,7 @@ function choose(o){
   $('msg').textContent = ok ? 'صحيح' : 'خطأ، الصحيح: ' + (GAME === 'naqisa' || GAME === 'lam' || GAME === 'makki' ? Q.opts[Q.right] : SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[Q.right]] : '');
   $('msg').className = 'msg ' + (ok ? 'ok' : 'bad');
   if (GAME === 'qabl' && !ok) $('msg').textContent = 'خطأ، والصحيح في الآية أدناه';
-  if (C.per === 1 || GAME === 'tartib') { S.showing = false; finishIfOver(); }   // ترتيب السور: no «next» button between its two questions
+  if (C.per === 1 || GAME === 'tartib' || GAME === 'qabl') { S.showing = false; finishIfOver(); }   // no «next» button between the two questions
   save(); render();
   sfx(S.done ? (isWon() ? 'win' : 'lose') : ok ? 'ok' : 'bad');
 }
@@ -1315,7 +1392,10 @@ function setNav(practice){
 GAMES.forEach(([g, id]) => $(id).addEventListener('click', e => { if (g === GAME) e.preventDefault(); }));
 $('secHifz').addEventListener('click', e => { if (GAME === 'akhir') e.preventDefault(); });
 $('secInfo').addEventListener('click', e => { if (GAME === 'lam') e.preventDefault(); });
-$('modeDaily').addEventListener('click', () => { if (S && (S.practice || S.archive)) load(todayIndex(), false); });
+$('modeDaily').addEventListener('click', () => {
+  if (!$('pick').hidden) hidePick();   // the practice setup was open: close it and go back to today's test
+  if (S && (S.practice || S.archive)) load(todayIndex(), false);
+});
 $('modeTrain').addEventListener('click', () => { pick.game = GAME; showPick(); });
 
 $('stage').addEventListener('click', e => {
@@ -1409,6 +1489,7 @@ function markTabs(){
   const train = typeof S !== 'undefined' && S && S.practice;
   GAMES.forEach(([g, id, name]) => {
     const el = $(id); el.textContent = name; el.classList.remove('lost');
+    if (g === HELP_KEY) el.insertAdjacentHTML('beforeend', ' <span class="qhelp" role="button" tabindex="0" aria-label="طريقة هذا الاختبار" title="طريقة هذا الاختبار">؟</span>');
     const a = train ? null : store.get('sum-' + SK(g) + '-' + cairoDateKey(), null);
     if (!a) return;
     const ok = a.n >= a.total;
@@ -1429,10 +1510,16 @@ function renderToday(){
 }
 
 // ---------- help, theme, sound ----------
-$('helpTitle').textContent = C.name;
-$('helpBody').innerHTML = HELP[GAME];
 $('lead').textContent = C.lead; if (!C.lead) $('lead').remove();
-function showHelp(){ $('help').hidden = false; $('helpGo').focus(); }
+const HELP_KEY = GAME;
+// «؟» at the top: a short overall help, then every quiz's help (this quiz's one open and highlighted);
+// «؟» beside the quiz title: this quiz's help only
+function showHelp(one){
+  const o = $('help'); one = one === true;
+  o.classList.toggle('one', one);
+  o.querySelectorAll('details.hgame').forEach(d => { const cur = d.dataset.g === HELP_KEY; d.classList.toggle('cur', cur); d.open = cur; });
+  o.hidden = false; $('helpGo').focus({ preventScroll: true }); o.querySelector('.panel').scrollTop = 0;
+}
 function hideHelp(){ $('help').hidden = true; store.set(GAME + '-seen-help', 1); }
 const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
 const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
@@ -1488,7 +1575,10 @@ function paintSoundBtn(){
 $('soundBtn').addEventListener('click', () => { SOUND = !SOUND; store.set('mut-sound', SOUND); paintSoundBtn(); if (SOUND) sfx('ok'); });
 paintSoundBtn();
 $('hintBtn').addEventListener('click', () => sfx('hint'));
-$('helpBtn').addEventListener('click', showHelp);
+$('helpBtn').addEventListener('click', () => showHelp(false));
+// «؟» inside this quiz's own tab: this quiz's help (the tab itself is a link to this page, so stop it)
+document.addEventListener('click', e => { const q = e.target.closest('.gbtn .qhelp'); if (!q) return; e.preventDefault(); e.stopPropagation(); showHelp(true); });
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('qhelp')) { e.preventDefault(); showHelp(true); } });
 $('helpGo').addEventListener('click', hideHelp);
 $('helpX').addEventListener('click', hideHelp);
 $('help').addEventListener('click', e => { if (e.target === $('help')) hideHelp(); });
