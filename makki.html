@@ -1,0 +1,1417 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="مكية أم مدنية؟ خمس سور كل يوم، فاعرف المكية منها والمدنية.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quranic-verses.github.io/mutashabihat/makki.html">
+<meta property="og:title" content="مكية أم مدنية؟ · اختبارات قرآنية">
+<meta property="og:description" content="مكية أم مدنية؟ خمس سور كل يوم، فاعرف المكية منها والمدنية.">
+<meta property="og:image" content="https://quranic-verses.github.io/mutashabihat/og-image.png?v=4">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://quranic-verses.github.io/mutashabihat/og-image.png?v=4">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="اختبارات قرآنية">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0E6B57">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230E6B57'/%3E%3Crect x='17' y='17' width='30' height='30' fill='%23D9AE55'/%3E%3Crect x='17' y='17' width='30' height='30' fill='%23D9AE55' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%230E6B57'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%23D9AE55' stroke-width='2'/%3E%3C/svg%3E">
+<script>
+try { var t = JSON.parse(localStorage.getItem('mut-theme')); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<title>مكية أم مدنية؟ · اختبارات قرآنية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Changa:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&text=%D9%A0%D9%A1%D9%A2%D9%A3%D9%A4%D9%A5%D9%A6%D9%A7%D9%A8%D9%A9&display=swap">
+<style>
+/* Layout: one narrow centred column — verse card, answer slots, guess box, guess log */
+:root{
+  --bg:#EDF1EE; --surface:#FBFCFB; --ink:#15241F; --muted:#5C6E68; --line:#CCD8D3;
+  --accent:#0E6B57; --accent-ink:#FFFFFF; --gold:#A87A1E;
+  --scrim:rgba(14,22,20,.55); --hint-bg:#F5ECD6; --ok:#1F8A5B; --ok-bg:#DDF1E6; --bad:#B23A3A; --bad-bg:#F6E0DE; --empty:#E3EAE6;
+  --f-display:"Changa","IBM Plex Sans Arabic",sans-serif;
+  --f-quran:"Amiri Quran","Amiri","Traditional Arabic",serif;
+  --f-ui:"Tajawal","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1614; --surface:#15201D; --ink:#E5EEEA; --muted:#93A6A0; --line:#2A3934;
+  --accent:#3DB592; --accent-ink:#06120F; --gold:#D9AE55;
+  --scrim:rgba(0,0,0,.65); --hint-bg:#33291A; --ok:#4CC58C; --ok-bg:#163428; --bad:#E57373; --bad-bg:#3A1F1F; --empty:#1C2925; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1614; --surface:#15201D; --ink:#E5EEEA; --muted:#93A6A0; --line:#2A3934;
+  --accent:#3DB592; --accent-ink:#06120F; --gold:#D9AE55;
+  --scrim:rgba(0,0,0,.65); --hint-bg:#33291A; --ok:#4CC58C; --ok-bg:#163428; --bad:#E57373; --bad-bg:#3A1F1F; --empty:#1C2925; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:17px}   /* a little larger than the 16px default; every rem size scales with it */
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:1rem;line-height:1.6}
+.wrap{max-width:620px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:18px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:4px}
+/* sections of the site (one for now: متشابهات القرآن الكريم); more tabs can be added later */
+.sections{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.sbtn{padding:6px 12px 8px;font-family:var(--f-display);font-weight:700;font-size:1.05rem;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.sbtn.on{color:var(--accent);border-bottom-color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:700;font-size:2.1rem;line-height:1.4;margin:0;color:var(--accent);text-wrap:balance}
+.meta{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.meta>*{unicode-bidi:isolate}
+.meta .dates{display:block;margin-top:2px}
+.arow .adate small{display:block;font-size:.75rem}
+.meta .sep{margin-inline:7px;color:var(--line)}   /* a bar, not "·", which looks like the Arabic zero ٠ */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 18px;text-align:center;display:flex;flex-direction:column;gap:12px}
+.phrase{font-family:var(--f-quran);font-size:clamp(1.6rem,6vw,2.2rem);line-height:2.1;margin:0;word-spacing:.08em}
+.phrase::before{content:"﴿ ";color:var(--gold)} .phrase::after{content:" ﴾";color:var(--gold)}
+.facts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:.92rem;color:var(--muted)}
+.chip b{color:var(--ink);font-variant-numeric:tabular-nums}
+.slots:empty{display:none}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.slots .ayah{grid-column:1/-1}
+.ayah.found{border-color:var(--ok)}
+.slot.empty{flex-direction:column;gap:0;line-height:1.35;color:var(--muted);font-weight:600;font-size:.9rem}
+.slot.empty small{font-weight:400;font-size:.78rem;opacity:.85}
+.slot.clued{border-color:var(--gold);color:var(--gold)}
+.slot{min-height:52px;border-radius:10px;background:var(--empty);border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:600;padding:6px}
+.slot.found{background:var(--ok-bg);border:1px solid var(--ok);color:var(--ok);animation:pop .35s ease}
+.slot.missed{background:transparent;border:1px solid var(--bad);color:var(--bad)}
+.slot small{display:block;font-size:.8rem;font-weight:500;opacity:.85;font-variant-numeric:tabular-nums}
+.slot.found,.slot.missed{flex-direction:column;gap:0;line-height:1.3}
+@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.slot.found{animation:none}}
+form{display:flex;gap:8px}
+input[type=text]{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+input[type=text]:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;font-weight:600;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 16px;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.status{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:.95rem;color:var(--muted)}
+.lives{display:flex;gap:5px;direction:ltr}
+.lives i{width:12px;height:12px;border-radius:50%;background:var(--accent);display:block}
+.lives i.used{background:var(--bad)}
+.msg{min-height:1.6em;font-weight:600;text-align:center}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.log li{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:10px;font-weight:500}
+.log li.hint{background:var(--hint-bg);color:var(--gold);flex-wrap:wrap}
+.log .hverse{flex-basis:100%;text-align:right;text-align-last:auto;margin:2px 0 0;font-family:var(--f-quran);font-size:1.15rem;line-height:2.2;color:var(--ink);font-weight:400}
+.log .hverse mark{background:transparent;color:var(--accent);font-weight:700;border-bottom:2px solid var(--gold)}
+.msg.hintmsg{color:var(--gold)}
+.status button small{font-weight:400;opacity:.8}
+.log li.ok{background:var(--ok-bg);color:var(--ok)} .log li.bad{background:var(--bad-bg);color:var(--bad)}
+.log li > span:nth-child(2){font-weight:400;font-size:.9rem}
+.reveal{display:flex;flex-direction:column;gap:10px}
+.reveal h2{font-family:var(--f-display);font-size:1.25rem;margin:0}
+.ayah{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.ayah .ref{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.ayah p{font-family:var(--f-quran);font-size:1.3rem;line-height:2.2;margin:4px 0 0}
+.ayah.missed{border-color:var(--bad)}
+.ayah .tag{color:var(--bad);font-weight:600;margin-inline-start:6px}
+.ayah.new{border-color:var(--ok);animation:pop .35s ease}
+@media (prefers-reduced-motion:reduce){.ayah.new{animation:none}}
+.ayah .head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.play{width:36px;height:36px;padding:0;border-radius:50%;flex:none;font-size:.95rem;line-height:1;background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.play.on{background:var(--accent);color:var(--accent-ink)}
+.ayah .loc{display:block;font-size:.8rem;color:var(--gold);font-weight:600}
+.ayah mark{background:transparent;color:var(--accent);font-weight:700;border-bottom:2px solid var(--gold)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modes.three{grid-template-columns:repeat(3,1fr)}
+a.mbtn{text-decoration:none}
+.games{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.gbtn{text-align:center;padding:7px 4px;text-decoration:none;color:var(--muted);font-weight:600;font-size:clamp(.8rem,3.9vw,.95rem);white-space:nowrap;background:var(--surface)}
+.gbtn+.gbtn{border-inline-start:1px solid var(--line)}
+.gbtn.on{background:var(--hint-bg);color:var(--gold)}
+
+.mbtn{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--surface);color:var(--accent);border:1px solid var(--line);border-radius:12px;padding:9px 8px}
+.mbtn .mt{font-weight:700;font-size:1rem}
+.mbtn .ms{font-weight:400;font-size:.78rem;color:var(--muted)}
+.mbtn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.mbtn.on .ms{color:var(--accent-ink);opacity:.85}
+.credits{margin-top:28px;text-align:center;font-size:.7rem;line-height:1.6;color:var(--muted);opacity:.7}
+.credits a{color:inherit}
+.help-btn svg{width:18px;height:18px;display:block;margin:auto}
+/* header: title + round buttons on one line, puzzle number / date / archive link on the line below */
+header{align-items:center;gap:8px}
+header h1{flex:1;order:1;min-width:0;font-size:clamp(1.35rem,6vw,2.1rem);line-height:1.3;text-wrap:balance}
+header .head-side{display:contents}
+.head-side .help-btn{order:2}
+.head-side .meta{order:3;flex-basis:100%}
+.arch-link{background:none;border:none;padding:0;font:inherit;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.alist{display:flex;flex-direction:column;gap:6px;max-height:min(60vh,480px);overflow-y:auto;padding:2px}
+.arow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:600;text-align:right}
+.arow .adate{color:var(--muted);font-weight:400;font-size:.85rem}
+.arow .ast{font-size:.82rem;font-weight:600;min-width:64px;text-align:left}
+.ast.ok{color:var(--ok)} .ast.bad{color:var(--bad)} .ast.new{color:var(--muted)} .ast.cur{color:var(--gold)}
+.btn-link{display:inline-flex;align-items:center;justify-content:center;font-weight:600;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 16px;text-decoration:none}
+.btn-link.ghostlink{background:transparent;color:var(--accent)}
+.ibar{position:fixed;left:12px;right:12px;bottom:12px;max-width:596px;margin-inline:auto;z-index:9;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--accent);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:10px 12px}
+body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
+.itext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:.9rem}
+.itext span{color:var(--muted);font-size:.82rem}
+.ix{background:transparent;border:none;color:var(--muted);font-size:1.4rem;line-height:1;padding:4px 6px}
+.over .msg:empty{display:none}
+.outnote{margin:0;font-size:.9rem;color:var(--muted);line-height:1.8;grid-column:1/-1}
+.lead2{margin:0;color:var(--muted);text-align:center;font-size:.95rem;text-wrap:balance}
+.atitle{font-family:var(--f-display);font-size:1.25rem;margin:0 0 -8px;color:var(--accent)}
+.go-ic{width:52px;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
+.sharenote{margin:0;text-align:center;font-size:.8rem;color:var(--muted)}
+.tick{color:var(--ok);font-weight:700}
+.today{margin:0;text-align:center;font-size:.95rem;color:var(--muted)} .today a{color:var(--accent);font-weight:600} .today b{color:var(--ok)}
+.acts{display:flex;align-items:center;gap:6px;flex:none}
+.mlink{width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--accent);color:var(--accent);background:transparent;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.mlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tlink{font-size:.8rem;font-weight:600;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.report{align-self:center;font-size:.85rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.books{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 14px;font-size:.92rem}
+.books .bk{margin:0;color:var(--muted)} .books .bk b{color:var(--gold)}
+.books details{margin-top:6px} .books summary{cursor:pointer;color:var(--accent);font-weight:600}
+.books blockquote{margin:8px 0 0;padding:0 10px;border-inline-start:3px solid var(--gold);color:var(--ink);line-height:1.9}
+.books cite{display:block;font-style:normal;font-size:.8rem;color:var(--muted);margin-top:4px}
+.dist{display:flex;flex-direction:column;gap:5px}
+.dist h3{margin:4px 0 2px;font-size:.95rem;font-family:var(--f-display)}
+.drow{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.dbar{background:var(--empty);color:var(--ink);border-radius:6px;min-width:28px;padding:2px 8px;text-align:left;font-weight:600;font-variant-numeric:tabular-nums}
+.drow.cur .dbar{background:var(--accent);color:var(--accent-ink)}
+.hardopt{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px;cursor:pointer}
+.hardopt input{margin-top:5px;accent-color:var(--gold)}
+.hardtag{font-size:.82rem;font-weight:700;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:3px 10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stats div{border:1px solid var(--line);border-radius:10px;padding:8px 4px;background:var(--surface)}
+.stats b{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.stats span{font-size:.8rem;color:var(--muted)}
+details{color:var(--muted);font-size:.92rem}
+details p{margin:.4em 0}
+.next{text-align:center;color:var(--muted);margin:0;font-variant-numeric:tabular-nums}
+.help-btn{width:34px;height:34px;padding:0;border-radius:50%;font-size:1.1rem;line-height:1;background:transparent;color:var(--accent)}
+.head-side{display:flex;align-items:center;gap:10px}
+.overlay{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+.overlay[hidden]{display:none!important}
+.panel{position:relative;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;max-width:480px;width:100%;max-height:calc(100% - 16px);overflow-y:auto;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
+.panel h2{font-family:var(--f-display);font-size:1.6rem;margin:0;color:var(--accent)}
+.panel .lead{margin:0;font-weight:600}
+.panel ul{margin:0;padding-inline-start:1.2em;display:flex;flex-direction:column;gap:6px}
+.panel .small{margin:0;font-size:.85rem;color:var(--muted)}
+.panel .x{position:absolute;top:10px;left:10px;width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:var(--muted);border-color:var(--line);font-size:1.3rem;line-height:1}
+.example{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;text-align:center}
+.ex-label{font-size:.8rem;color:var(--gold);font-weight:600;letter-spacing:.02em}
+.ex-phrase{font-family:var(--f-quran);font-size:1.4rem;line-height:2;margin:0}
+.ex-facts{margin:0;color:var(--muted);font-size:.9rem}
+.ex-slots{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.start{align-self:stretch}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+/* practice setup on the page: while it is open the quiz underneath is hidden */
+.psetup{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.psetup h2{margin:0;font-family:var(--f-display);font-size:1.2rem;color:var(--accent)}
+.pstep{display:flex;flex-direction:column;gap:6px} .plab{font-weight:700;font-size:.9rem;color:var(--muted)}
+.ptab{font:inherit;font-size:.88rem;font-weight:600;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:8px 4px;line-height:1.35}
+.ptab.on{background:var(--accent);color:var(--accent-ink)}
+.pick-go{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+.psetup .small{font-size:.85rem;color:var(--muted);margin:0;line-height:1.6} .psetup .pick-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.9rem}
+.wrap.picking > :not(header):not(.modes):not(#pick):not(footer){display:none!important}
+.games.many{display:flex;flex-wrap:wrap} .games.many .gbtn{flex:1 1 30%;border-top:1px solid var(--line);margin-top:-1px}
+.sections{display:grid;grid-template-columns:repeat(3,1fr);gap:0;overflow:visible} .sbtn{padding:6px 4px 8px;font-size:clamp(.82rem,3.6vw,1.05rem);white-space:normal;text-align:center;line-height:1.35;display:flex;align-items:flex-end;justify-content:center}
+.tab{font-size:.9rem}
+.tab{background:transparent;color:var(--accent);padding:8px 6px}
+.tab.on{background:var(--accent);color:var(--accent-ink)}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;max-height:min(40vh,320px);overflow-y:auto;padding:2px}
+.chips.juz{grid-template-columns:repeat(auto-fill,minmax(52px,1fr));max-height:none}
+.opt{position:relative;display:block;cursor:pointer}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:flex;align-items:center;justify-content:center;gap:4px;min-height:38px;padding:4px 6px;border:1px solid var(--line);border-radius:9px;font-size:.92rem;text-align:center}
+.opt span small{color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
+.opt input:checked+span{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:600}
+.opt input:checked+span small{color:var(--ok)}
+.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:1px}
+.pick-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.92rem;color:var(--muted)}
+.link{background:none;border:none;color:var(--accent);padding:4px;font-weight:600}
+.start:disabled{opacity:.45}
+.pbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;border:1px dashed var(--gold);border-radius:12px;padding:8px 12px}
+.plabel{color:var(--muted);font-size:.92rem;min-width:0}
+.plabel b{color:var(--gold)}
+.pbtns{display:flex;flex-wrap:wrap;gap:6px}
+button.sm{padding:6px 10px;font-size:.88rem}
+.mode{font-size:.85rem;color:var(--gold);font-weight:600}
+
+.lead2{margin:0;color:var(--muted);text-align:center;font-size:.95rem;text-wrap:balance}
+.qtext{font-family:var(--f-quran);font-size:clamp(1.35rem,5.4vw,1.8rem);line-height:2.3;margin:0}
+.qask{margin:0;font-weight:700;color:var(--gold)}
+.blank{display:inline-block;min-width:2.8em;height:1em;border-bottom:2px dashed var(--gold);vertical-align:middle;margin:0 3px}
+.got{color:var(--accent);font-weight:700}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choices.long{grid-template-columns:1fr}
+.choice{background:var(--surface);color:var(--ink);border:1px solid var(--line);font-family:var(--f-quran);font-weight:400;font-size:1.35rem;line-height:2;padding:6px 10px}
+.choices.long .choice{text-align:right;font-size:1.15rem;line-height:2.1}
+.choice:disabled{opacity:1;cursor:default}
+.choice.right{border:2px solid var(--ok);background:var(--ok-bg)}
+.choice.wrong{border:2px solid var(--bad);background:var(--bad-bg)}
+.choice.dim{opacity:.5}
+.choice.gone{display:none}   /* a hint removes two wrong choices: they disappear */
+.lives i.todo{background:var(--line)} .lives i.okd{background:var(--ok)} .lives i.hinted{background:var(--gold)}
+.answers{display:flex;flex-direction:column;gap:10px}
+.pair2{display:flex;flex-direction:column;gap:6px}
+.anum{color:var(--gold);font-size:.85em;white-space:nowrap}
+.ayah mark.miss{border-bottom-color:var(--bad)}
+.placedlist{display:flex;flex-direction:column;gap:6px}
+.placed{display:flex;gap:10px;align-items:flex-start;background:var(--ok-bg);border:1px solid var(--ok);border-radius:12px;padding:8px 12px}
+.pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:6px}
+.pt,.vbtn{font-family:var(--f-quran);font-size:clamp(1.15rem,4.6vw,1.35rem);line-height:2.1;font-weight:400}
+.vchoices{display:flex;flex-direction:column;gap:8px}
+.vbtn{background:var(--surface);color:var(--ink);border:1px solid var(--line);text-align:right;padding:8px 12px}
+.dlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ditem{display:flex;gap:8px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 12px;user-select:none;-webkit-user-select:none}
+.ditem .pn{background:var(--line);color:var(--ink)}
+.ditem.good{background:var(--ok-bg);border-color:var(--ok)} .ditem.good .pn{background:var(--ok);color:#fff}
+.ditem.bad{background:var(--bad-bg);border-color:var(--bad)} .ditem.bad .pn{background:var(--bad);color:#fff}
+.choice.full{padding:0;text-align:right;font-family:var(--f-ui)} .choice.full .ayah{border:none;background:transparent}
+.ditem.dragging{border:2px dashed var(--accent);opacity:.85;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.handle{flex:none;width:36px;min-height:44px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--muted);cursor:grab;touch-action:none}
+.ditem.dragging .handle{cursor:grabbing;color:var(--accent)}
+.ditem .pt{flex:1;min-width:0}
+.tip{flex:none;align-self:center;color:var(--gold);font-size:1.1rem;font-weight:700;padding:0 2px}
+.qbig{font-family:var(--f-display);font-size:clamp(1.5rem,6vw,2rem);margin:0;color:var(--accent)}
+.choices.three{grid-template-columns:repeat(3,1fr)}
+.choices.names .choice{font-family:var(--f-ui);font-weight:600;font-size:1.05rem;line-height:1.5;padding:10px 8px}
+.ayah.info{font-size:1rem;line-height:1.8;text-align:center} .inote{display:block;font-size:.85rem;color:var(--gold);margin-top:2px}
+.tok{color:var(--ok)} .tbad{color:var(--bad)}
+.okt{color:var(--ok);font-weight:700;margin-inline-start:6px;white-space:nowrap}
+</style>
+<script>
+// Private visitor counter (GoatCounter). Put your GoatCounter code between the quotes, e.g. 'mutashabih'.
+// It only counts visits on the live site, and only you can see the numbers.
+var GOATCOUNTER_CODE = 'mutashabih';
+(function () {
+  if (!GOATCOUNTER_CODE || location.hostname !== 'quranic-verses.github.io') return;
+  var s = document.createElement('script');
+  s.async = true; s.src = '//gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER_CODE + '.goatcounter.com/count');
+  document.head.appendChild(s);
+})();
+// Offline support / install on the phone home screen
+if ('serviceWorker' in navigator && location.protocol === 'https:' && location.hostname.endsWith('github.io')) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <header>
+    <h1>اختبارات قرآنية</h1>
+    <div class="head-side"><div class="meta"><span id="pnum"></span><span class="sep">|</span><button type="button" class="arch-link" id="archBtn">الاختبارات السابقة</button><span id="pdate" class="dates"></span></div>
+    <button type="button" class="help-btn ghost" id="soundBtn" aria-label="إيقاف الأصوات"></button>
+    <button type="button" class="help-btn ghost" id="themeBtn" aria-label="الوضع الداكن"></button>
+    <button type="button" class="help-btn ghost" id="helpBtn" aria-label="طريقة الاختبار">؟</button></div>
+  </header>
+
+  <nav class="modes" aria-label="نوع الاختبار">
+    <button type="button" class="mbtn" id="modeDaily"><span class="mt">اختبار اليوم</span><span class="ms">لحافظي القرآن</span></button>
+    <button type="button" class="mbtn" id="modeTrain"><span class="mt">تدرّب</span><span class="ms">على ما حفظته</span></button>
+  </nav>
+
+  <section class="psetup" id="pick" aria-labelledby="pickTitle" hidden>
+    <h2 id="pickTitle">تدرّب على ما حفظته</h2>
+    <div class="pstep"><span class="plab">القسم</span><div class="tabs" id="pickSec"></div></div>
+    <div class="pstep"><span class="plab">الاختبار</span><div class="tabs" id="pickGame"></div></div>
+    <div class="pstep"><span class="plab">الأسئلة من</span>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" class="tab" data-mode="all">كل القرآن</button>
+        <button type="button" role="tab" class="tab" data-mode="juz">أجزاء أحفظها</button>
+        <button type="button" role="tab" class="tab" data-mode="miss">أخطائي</button>
+      </div>
+      <div id="pickJuz" hidden><div class="chips juz" id="juzChips"></div></div>
+    </div>
+    <div class="pick-foot"><span id="pickCount"></span><button type="button" class="link" id="pickClear">مسح الأجزاء</button></div>
+    <div class="pick-go"><button type="button" id="pickGo" class="start">ابدأ</button><button type="button" class="ghost" id="pickX">إلغاء</button></div>
+  </section>
+
+  <nav class="sections" aria-label="الأقسام">
+    <a class="sbtn" id="secMut" href="./">متشابهات القرآن الكريم</a>
+    <a class="sbtn" id="secHifz" href="akhir.html">تثبيت الحفظ</a>
+    <a class="sbtn" id="secInfo" href="lam.html">معلومات قرآنية</a>
+  </nav>
+  <nav class="games" id="games" aria-label="نوع السؤال"></nav>
+
+  <div class="pbar" id="pbar" hidden>
+    <span class="plabel">تدريب: <b id="pwhat"></b></span>
+    <div class="pbtns">
+      <button type="button" class="ghost sm" id="again">اختبار آخر</button>
+      <button type="button" class="ghost sm" id="change">تغيير الاختيار</button>
+    </div>
+  </div>
+
+  <p class="lead2" id="lead"></p>
+  <h2 class="atitle" id="ansTitle" hidden>الإجابة الصحيحة</h2>
+  <div id="stage"></div>
+
+  <form id="guessForm" autocomplete="off" hidden>
+    <input type="text" id="guess" placeholder="اكتب الكلمة التالية" aria-label="الكلمة التالية">
+    <button type="submit" id="go" class="go-ic" aria-label="تحقق من الإجابة" title="تحقق من الإجابة"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+  </form>
+
+  <div class="status" id="statusRow">
+    <span id="statusText"></span>
+    <div class="lives" id="lives"></div>
+    <button type="button" class="ghost sm" id="hintBtn">تلميح</button>
+  </div>
+  <div class="msg" id="msg" role="status"></div>
+  <button type="button" id="nextQ" class="start" hidden>السؤال التالي</button>
+
+  <ul class="log" id="log"></ul>
+
+  <section class="reveal" id="reveal" hidden>
+    <h2 id="resultTitle"></h2>
+    <p class="today" id="today" hidden></p>
+    <div class="row">
+      <button type="button" id="share">نسخ النتيجة</button>
+      <a class="btn-link ghostlink" id="shareNative" href="#" target="_blank" rel="noopener">مشاركة</a>
+    </div>
+    <p class="sharenote">لتظهر صورة الموقع في واتساب: انسخ النتيجة ثم الصقها في المحادثة.</p>
+    <p class="next" id="next"></p>
+    <a class="report" id="report" href="#">أبلغ عن خطأ في هذا السؤال</a>
+    <div class="stats" id="stats"></div>
+    <div class="dist" id="dist"></div>
+  </section>
+
+  <footer class="credits">
+    التلاوة: الشيخ محمود خليل الحصري، عبر <a href="https://alquran.cloud" target="_blank" rel="noopener">Islamic Network</a> ·
+    النص: مصحف المدينة (حفص) من <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil Project</a> (tanzil.net) ·
+    <a href="https://quranic-verses.github.io/mutashabihat/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a>
+  </footer>
+</div>
+
+<div class="overlay" id="arch" role="dialog" aria-modal="true" aria-labelledby="archTitle" hidden>
+  <div class="panel" dir="rtl" lang="ar">
+    <button type="button" class="x" id="archX" aria-label="إغلاق">×</button>
+    <h2 id="archTitle">الاختبارات السابقة</h2>
+    <p class="small">حُلّ أي اختبار فاتك. اختبارات الأرشيف لا تُحسب في الإحصائيات.</p>
+    <div class="alist" id="alist"></div>
+  </div>
+</div>
+<div class="overlay" id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+  <div class="panel" dir="rtl" lang="ar">
+    <button type="button" class="x" id="helpX" aria-label="إغلاق">×</button>
+    <h2 id="helpTitle"></h2>
+    <div id="helpBody"></div>
+    <p class="small">اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
+    <p class="small" id="installNote">لتثبيت التطبيق على شاشة هاتفك: من قائمة المتصفح اختر «إضافة إلى الشاشة الرئيسية» (في الآيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»).</p>
+    <button type="button" class="ghost" id="installBtn" hidden>تثبيت التطبيق على الهاتف</button>
+    <button type="button" id="helpGo" class="start">ابدأ الاختبار</button>
+  </div>
+</div>
+
+<div class="overlay" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
+  <div class="panel" dir="rtl" lang="ar">
+    <button type="button" class="x" id="welcomeX" aria-label="إغلاق">×</button>
+    <h2 id="welcomeTitle">اختبارات قرآنية</h2>
+    <p class="lead">اختبارات قصيرة كل يوم لحافظي القرآن. في قسم «تثبيت الحفظ»:</p>
+    <ul>
+      <li><b>آخر الآية</b> آية حُذفت كلماتها الأخيرة، فاكتبها.</li>
+      <li><b>ما قبلها؟ ما بعدها؟</b> آية، فاختر الآية التي قبلها ثم الآية التي بعدها.</li>
+      <li><b>رتّب الآيات</b> خمس آيات متتالية مبعثرة، فرتّبها كما في المصحف.</li>
+    </ul>
+    <p class="small">وفي قسم «متشابهات القرآن الكريم»: أين ورد؟ وميّز بينهما. وفي قسم «معلومات قرآنية»: لم تتكرر، مكية أم مدنية؟، فواتح السور، ترتيب السور، أسماء السور.</p>
+    <p class="small">اختبار جديد كل يوم عند منتصف الليل بتوقيت القاهرة، و«تدرّب» على الأجزاء التي تحفظها متى شئت. زر «؟» يشرح كل اختبار بالتفصيل.</p>
+    <button type="button" id="welcomeGo" class="start">ابدأ</button>
+  </div>
+</div>
+<div class="ibar" id="ibar" role="region" aria-label="تثبيت التطبيق" hidden>
+  <div class="itext"><b>أضف اختبارات قرآنية إلى شاشتك الرئيسية</b><span id="ihow"></span></div>
+  <button type="button" id="ibtn" class="sm">تثبيت</button>
+  <button type="button" class="ix" id="ix" aria-label="إخفاء">×</button>
+</div>
+<script>
+/*
+# PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#====================================================================
+#
+#  Tanzil Quran Text (Uthmani, Version 1.1)
+#  Copyright (C) 2007-2026 Tanzil Project
+#  License: Creative Commons Attribution 3.0
+#
+#  This copy of the Quran text is carefully produced, highly 
+#  verified and continuously monitored by a group of specialists 
+#  at Tanzil Project.
+#
+#  TERMS OF USE:
+#
+#  - Permission is granted to copy and distribute verbatim copies 
+#    of this text, but CHANGING IT IS NOT ALLOWED.
+#
+#  - This Quran text can be used in any website or application, 
+#    provided that its source (Tanzil Project) is clearly indicated, 
+#    and a link is made to tanzil.net to enable users to keep
+#    track of changes.
+#
+#  - This copyright notice shall be included in all verbatim copies 
+#    of the text, and shall be reproduced appropriately in all files 
+#    derived from or containing substantial portion of this text.
+#
+#  Please check updates at: http://tanzil.net/updates/
+#
+#====================================================================
+*/
+const MAKKI={"s":[[1,"الفاتحة"],[2,"البقرة"],[3,"آل عمران"],[4,"النساء"],[5,"المائدة"],[6,"الأنعام"],[7,"الأعراف"],[8,"الأنفال"],[9,"التوبة"],[10,"يونس"],[11,"هود"],[12,"يوسف"],[13,"الرعد"],[14,"ابراهيم"],[15,"الحجر"],[16,"النحل"],[17,"الإسراء"],[18,"الكهف"],[19,"مريم"],[20,"طه"],[21,"الأنبياء"],[22,"الحج"],[23,"المؤمنون"],[24,"النور"],[25,"الفرقان"],[26,"الشعراء"],[27,"النمل"],[28,"القصص"],[29,"العنكبوت"],[30,"الروم"],[31,"لقمان"],[32,"السجدة"],[33,"الأحزاب"],[34,"سبإ"],[35,"فاطر"],[36,"يس"],[37,"الصافات"],[38,"ص"],[39,"الزمر"],[40,"غافر"],[41,"فصلت"],[42,"الشورى"],[43,"الزخرف"],[44,"الدخان"],[45,"الجاثية"],[46,"الأحقاف"],[47,"محمد"],[48,"الفتح"],[49,"الحجرات"],[50,"ق"],[51,"الذاريات"],[52,"الطور"],[53,"النجم"],[54,"القمر"],[55,"الرحمن"],[56,"الواقعة"],[57,"الحديد"],[58,"المجادلة"],[59,"الحشر"],[60,"الممتحنة"],[61,"الصف"],[62,"الجمعة"],[63,"المنافقون"],[64,"التغابن"],[65,"الطلاق"],[66,"التحريم"],[67,"الملك"],[68,"القلم"],[69,"الحاقة"],[70,"المعارج"],[71,"نوح"],[72,"الجن"],[73,"المزمل"],[74,"المدثر"],[75,"القيامة"],[76,"الانسان"],[77,"المرسلات"],[78,"النبإ"],[79,"النازعات"],[80,"عبس"],[81,"التكوير"],[82,"الإنفطار"],[83,"المطففين"],[84,"الإنشقاق"],[85,"البروج"],[86,"الطارق"],[87,"الأعلى"],[88,"الغاشية"],[89,"الفجر"],[90,"البلد"],[91,"الشمس"],[92,"الليل"],[93,"الضحى"],[94,"الشرح"],[95,"التين"],[96,"العلق"],[97,"القدر"],[98,"البينة"],[99,"الزلزلة"],[100,"العاديات"],[101,"القارعة"],[102,"التكاثر"],[103,"العصر"],[104,"الهمزة"],[105,"الفيل"],[106,"قريش"],[107,"الماعون"],[108,"الكوثر"],[109,"الكافرون"],[110,"النصر"],[111,"المسد"],[112,"الإخلاص"],[113,"الفلق"],[114,"الناس"]],"v":{},"m":{"1:1":[1,1,1],"2:1":[1,1,1],"3:1":[3,5,4],"4:1":[4,8,3],"5:1":[6,11,3],"6:1":[7,13,3],"7:1":[8,16,1],"8:1":[9,18,3],"9:1":[10,19,3],"10:1":[11,21,3],"11:1":[11,22,4],"12:1":[12,24,2],"13:1":[13,25,3],"14:1":[13,26,2],"15:1":[14,27,1],"16:1":[14,27,3],"17:1":[15,29,1],"18:1":[15,30,1],"19:1":[16,31,2],"20:1":[16,32,1],"21:1":[17,33,1],"22:1":[17,34,1],"23:1":[18,35,1],"24:1":[18,35,4],"25:1":[18,36,4],"26:1":[19,37,3],"27:1":[19,38,3],"28:1":[20,39,2],"29:1":[20,40,3],"30:1":[21,41,2],"31:1":[21,41,4],"32:1":[21,42,1],"33:1":[21,42,3],"34:1":[22,43,3],"35:1":[22,44,2],"36:1":[22,44,4],"37:1":[23,45,2],"38:1":[23,46,1],"39:1":[23,46,3],"40:1":[24,47,3],"41:1":[24,48,2],"42:1":[25,49,1],"43:1":[25,49,4],"44:1":[25,50,2],"45:1":[25,50,3],"46:1":[26,51,1],"47:1":[26,51,2],"48:1":[26,51,4],"49:1":[26,52,2],"50:1":[26,52,3],"51:1":[26,52,4],"52:1":[27,53,1],"53:1":[27,53,2],"54:1":[27,53,3],"55:1":[27,54,1],"56:1":[27,54,2],"57:1":[27,54,3],"58:1":[28,55,1],"59:1":[28,55,2],"60:1":[28,55,3],"61:1":[28,55,4],"62:1":[28,56,1],"63:1":[28,56,1],"64:1":[28,56,2],"65:1":[28,56,3],"66:1":[28,56,4],"67:1":[29,57,1],"68:1":[29,57,2],"69:1":[29,57,3],"70:1":[29,57,3],"71:1":[29,57,4],"72:1":[29,58,1],"73:1":[29,58,1],"74:1":[29,58,2],"75:1":[29,58,3],"76:1":[29,58,3],"77:1":[29,58,4],"78:1":[30,59,1],"79:1":[30,59,1],"80:1":[30,59,2],"81:1":[30,59,2],"82:1":[30,59,3],"83:1":[30,59,3],"84:1":[30,59,4],"85:1":[30,59,4],"86:1":[30,59,4],"87:1":[30,60,1],"88:1":[30,60,1],"89:1":[30,60,1],"90:1":[30,60,2],"91:1":[30,60,2],"92:1":[30,60,2],"93:1":[30,60,2],"94:1":[30,60,3],"95:1":[30,60,3],"96:1":[30,60,3],"97:1":[30,60,3],"98:1":[30,60,3],"99:1":[30,60,3],"100:1":[30,60,3],"101:1":[30,60,4],"102:1":[30,60,4],"103:1":[30,60,4],"104:1":[30,60,4],"105:1":[30,60,4],"106:1":[30,60,4],"107:1":[30,60,4],"108:1":[30,60,4],"109:1":[30,60,4],"110:1":[30,60,4],"111:1":[30,60,4],"112:1":[30,60,4],"113:1":[30,60,4],"114:1":[30,60,4]},"q":[[10,1,0],[57,0,0],[31,1,0],[52,1,0],[64,0,1],[5,0,0],[9,0,0],[101,1,0],[49,0,0],[21,1,0],[103,1,0],[107,1,0],[104,1,0],[61,0,1],[114,1,1],[62,0,0],[22,0,1],[98,0,1],[48,0,0],[82,1,0],[112,1,1],[1,1,1],[47,0,1],[78,1,0],[59,0,0],[113,1,1],[55,0,1],[46,1,0],[13,0,1],[105,1,0],[14,1,0],[65,0,0],[96,1,0],[29,1,0],[97,1,1],[6,1,0],[53,1,0],[72,1,0],[28,1,0],[106,1,0],[63,0,0],[69,1,0],[39,1,0],[50,1,0],[111,1,0],[2,0,0],[38,1,0],[85,1,0],[67,1,0],[37,1,0],[20,1,0],[12,1,0],[94,1,0],[26,1,0],[60,0,0],[81,1,0],[70,1,0],[33,0,0],[17,1,0],[27,1,0],[89,1,0],[110,0,0],[80,1,0],[44,1,0],[92,1,0],[93,1,0],[108,1,0],[100,1,1],[36,1,0],[19,1,0],[66,0,0],[86,1,0],[51,1,0],[83,1,1],[87,1,0],[43,1,0],[42,1,0],[8,0,0],[73,1,0],[68,1,0],[75,1,0],[15,1,0],[109,1,0],[25,1,0],[54,1,0],[40,1,0],[34,1,0],[76,0,1],[3,0,0],[74,1,0],[99,0,1],[91,1,0],[56,1,0],[88,1,0],[71,1,0],[23,1,0],[77,1,0],[41,1,0],[7,1,0],[35,1,0],[30,1,0],[11,1,0],[102,1,0],[45,1,0],[84,1,0],[95,1,0],[16,1,0],[90,1,0],[24,0,0],[58,0,0],[79,1,0],[4,0,0],[32,1,0],[18,1,0]]};
+const QD = MAKKI;
+</script>
+<script>
+(function(){
+// One page per quiz of the «تثبيت الحفظ» section; the build sets GAME and the data (QD) for each page.
+const GAME = 'makki';
+if (typeof QD === 'undefined') { document.getElementById('msg').textContent = 'تعذر تحميل البيانات. أعد تحميل الصفحة.'; return; }
+const CONF = {
+  // items = questions in a test; per = answers in a test (ما قبلها؟ ما بعدها؟ asks two things about one verse)
+  akhir:  { name: 'آخر الآية', file: 'akhir.html', kind: 'type', items: 1, per: 1, tries: 6, lead: 'اكتب الكلمات الثلاث الأخيرة من الآية.' },
+  rattib: { name: 'رتّب الآيات', file: 'rattib.html', kind: 'order', items: 1, per: 1, tries: 4, lead: 'رتّب الخمس آيات الآتية. اسحبها من المقبض ⠿ لترتّبها كما في المصحف، ثم اضغط «تأكيد».' },
+  // «معلومات قرآنية»: one question a day each, and the question itself says what to do (no lead line)
+  lam:     { name: 'لم تتكرر', file: 'lam.html', kind: 'mcq', items: 1, per: 1, hints: 0, lead: '' },
+  makki:   { name: 'مكية أم مدنية؟', file: 'makki.html', kind: 'mcq', items: 1, per: 1, hints: 0, lead: '' },
+  fawatih: { name: 'فواتح السور', file: 'fawatih.html', kind: 'mcq', items: 1, per: 1, hints: 1, lead: '' },
+  tartib:  { name: 'ترتيب السور', file: 'tartib.html', kind: 'mcq', items: 1, per: 2, hints: 1, lead: '' },   // one surah: before, then after
+  asmaa:   { name: 'أسماء السور', file: 'asmaa.html', kind: 'mcq', items: 1, per: 1, hints: 1, lead: '' },
+  akmil:  { name: 'أكمل الآية', file: 'akmil.html', kind: 'type', items: 1, per: 1, tries: 6, lead: 'أكمل الآية: اكتب الكلمات الأربع التي تلي هذا الجزء من الآية.' },   // archived: no page is built
+  naqisa: { name: 'الكلمة الناقصة', file: 'naqisa.html', kind: 'mcq', items: 5, per: 5, hints: 2, lead: 'خمس آيات حُذفت من كل منها كلمة. اختر الكلمة الناقصة.' },   // archived: no page is built
+  qabl:   { name: 'ما قبلها؟ ما بعدها؟', file: 'qabl.html', kind: 'mcq', items: 1, per: 2, hints: 1, lead: 'اختر الآية التي قبل هذه الآية، ثم الآية التي بعدها.' }
+};
+const C = CONF[GAME];
+const HELP = {
+  lam: `<p class="lead">ثلاث كلمات كما وردت في المصحف، واحدة منها فقط وردت في القرآن مرة واحدة، والكلمتان الأخريان تكررتا.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>بعد الإجابة تظهر الآية التي وردت فيها الكلمة.</li></ul>`,
+  makki: `<p class="lead">سورة واحدة كل يوم: هل هي مكية أم مدنية؟</p><ul>
+    <li>التصنيف على ما في مصحف المدينة النبوية.</li>
+    <li>بعض السور فيها خلاف بين العلماء، ويُنبَّه عليه بعد الإجابة.</li></ul>`,
+  fawatih: `<p class="lead">تظهر لك أول كلمات من سورة، فاختر السورة من أربع سور.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
+  tartib: `<p class="lead">سورة واحدة كل يوم، وسؤالان: ما السورة التي قبلها في ترتيب المصحف؟ ثم ما السورة التي بعدها؟</p><ul>
+    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
+  asmaa: `<p class="lead">لبعض السور أسماء أخرى مشهورة عند العلماء، مثل «براءة» لسورة التوبة. اختر السورة التي تُعرف بالاسم المذكور.</p><ul>
+    <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>`,
+  akhir: `<p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأخيرة، فاكتبها كلمةً كلمة.</p><ul>
+    <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
+    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
+    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
+  rattib: `<p class="lead">خمس آيات متتالية من سورة واحدة، مبعثرة. رتّبها كما في المصحف.</p><ul>
+    <li>اسحب الآية من المقبض ⠿ وضعها في مكانها، ثم اضغط «تأكيد».</li>
+    <li>بعد كل تأكيد تصير الآيات التي في مكانها الصحيح خضراء، والتي في غير مكانها حمراء.</li>
+    <li>لديك ٤ محاولات. كل تأكيد بترتيب غير صحيح يكلّفك محاولة.</li>
+    <li>زر «تلميح» يضع سهمًا ▲ أو ▼ على آية في غير مكانها: حرّكها إلى أعلى أو إلى أسفل. يكلّفك محاولة، والرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
+  akmil: `<p class="lead">يظهر لك أول آية، فاكتب الكلمات الأربع التي تليها، كلمةً كلمة.</p><ul>
+    <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
+    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
+    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>`,
+  naqisa: `<p class="lead">خمس آيات، حُذفت من كل منها كلمة. اختر الكلمة الناقصة من أربع كلمات متشابهة.</p><ul>
+    <li>لكل سؤال اختيار واحد فقط.</li>
+    <li>الكلمات المقترحة متشابهة عمدًا، وكثير منها من مواضع متشابهة في القرآن.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميحان في كل اختبار. السؤال الذي تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>`,
+  qabl: `<p class="lead">آية واحدة، وسؤالان: ما الآية التي قبلها؟ ثم ما الآية التي بعدها؟</p><ul>
+    <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
+    <li>تظهر بداية كل اختيار، والاختيارات من الآيات القريبة ومن آيات تبدأ بالكلمة نفسها.</li>
+    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>`
+};
+const MAX_WRONG = C.tries || 0;   // آخر الآية / رتّب الآيات: tries
+const TRY = C.kind !== 'mcq';     // the quizzes played with tries (type a word / tap the next verse)
+const WANT_TRAIN = location.hash === '#train';
+const SITE_URL = 'https://quranic-verses.github.io/mutashabihat/';
+const START = Date.UTC(2026, 9, 6); // test #1 = 6 Oct 2026, Cairo date
+const FIX = {14:'إبراهيم',34:'سبأ',78:'النبأ',76:'الإنسان',82:'الانفطار',84:'الانشقاق'};
+const SURAH = {}; QD.s.forEach(([n, name]) => SURAH[n] = FIX[n] || name);
+const AR_DIG = '٠١٢٣٤٥٦٧٨٩';
+const toAr = n => String(n).replace(/\d/g, d => AR_DIG[d]);
+const $ = id => document.getElementById(id);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N = QD.q.length;
+
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+function cairoNow(){
+  const now = new Date();
+  try {
+    const parts = {};
+    new Intl.DateTimeFormat('en-US', { timeZone: 'Africa/Cairo', year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' })
+      .formatToParts(now).forEach(p => parts[p.type] = +p.value);
+    return parts;
+  } catch (e) {
+    return { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate(),
+             hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds() };
+  }
+}
+function todayIndex(){
+  const c = cairoNow();
+  return Math.max(0, Math.round((Date.UTC(c.year, c.month - 1, c.day) - START) / 86400000));
+}
+
+// ---------- words ----------
+const hasLetters = w => /[ء-ي]/.test(w);
+const toks = k => (QD.v[k] || '').split(' ');
+// Forgiving spelling (same as the build script): Uthmani and everyday spelling give the same key,
+// e.g. «ٱلصَّلَوٰةَ» = «الصلاة», «ٱلَّيْلِ» = «الليل», «إِبْرَٰهِـۧمَ» = «إبراهيم».
+function loose(w){
+  w = String(w).replace(/وٰ/g, 'ا').replace(/ىٰ/g, 'ى').replace(/ۧ/g, 'ي');
+  w = w.replace(/[ً-ٰٟۖ-ۭـࣰ-ࣲ]/g, '');
+  w = w.replace(/[اأإآٱء]/g, '');
+  w = w.replace(/ئ/g, 'ي').replace(/ؤ/g, 'و').replace(/ى/g, 'ي');
+  w = w.replace(/[ةت]$/, 'ه').replace(/(.)\1+/g, '$1');
+  return w.replace(/[^ء-ي]/g, '');
+}
+const ref = k => { const [s, a] = k.split(':'); return 'سورة ' + SURAH[s] + ' · الآية ' + toAr(a); };
+const juzOf = k => (QD.m[k] || [0])[0];
+// a fixed shuffle per question, so the options keep their order after a reload
+function seeded(n, seed){ let x = (seed * 2654435761) >>> 0; const r = () => (x = (x * 1103515245 + 12345) >>> 0) / 4294967296;
+  const a = Array.from({length: n}, (_, i) => i); for (let i = n - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ---------- one question ----------
+// akmil: [key, b, e]  tokens b..e-1 are hidden (4 words)          naqisa: [key, i, [3 wrong words]]  token i is hidden
+// qabl:  [key, [3 wrong verses for «قبلها»], [3 wrong verses for «بعدها»]]  asked twice: d = -1 (before), then 1 (after)
+function question(it, d){
+  const q = QD.q[it];
+  if (GAME === 'rattib') {
+    const [s, a] = q[0].split(':').map(Number), keys = Array.from({length: q[1]}, (_, j) => s + ':' + (a + j));
+    // a starting order with at most one verse already in place
+    let order = seeded(keys.length, it + 3);
+    for (let k = 1; order.filter((j, i) => j === i).length > 1 && k < 50; k++) order = seeded(keys.length, it + 3 + k * 1000);
+    return { key: q[0], hid: keys, order };
+  }
+  if (GAME === 'akmil' || GAME === 'akhir') {
+    const w = toks(q[0]); const hid = []; for (let i = q[1]; i < q[2]; i++) if (hasLetters(w[i])) hid.push(i);
+    return { key: q[0], b: q[1], e: q[2], hid };
+  }
+  if (GAME === 'lam') {          // [key, word index, [2 words that occur more than once]]
+    const w = toks(q[0]); return { key: q[0], i: q[1], opts: [w[q[1]]].concat(q[2]), order: seeded(3, it + 5), right: 0 };
+  }
+  if (GAME === 'makki') {        // [surah, 1 = Meccan, 1 = scholars differ]
+    return { s: q[0], opts: ['مكية', 'مدنية'], order: [0, 1], right: q[1] ? 0 : 1, disputed: q[2] };
+  }
+  if (GAME === 'fawatih') {      // [surah, words shown, [3 wrong surahs]]
+    return { s: q[0], n: q[1], opts: [q[0]].concat(q[2]), order: seeded(4, it + 9), right: 0, key: q[0] + ':1' };
+  }
+  if (GAME === 'tartib') {       // [surah, [3 wrong for «قبلها»], [3 wrong for «بعدها»]], asked twice: d = -1, then 1
+    return { s: q[0], dir: d, opts: [q[0] + d].concat(d < 0 ? q[1] : q[2]), order: seeded(4, it * 2 + (d > 0) + 11), right: 0 };
+  }
+  if (GAME === 'asmaa') {        // [other name, surah, [3 wrong surahs]]
+    return { alt: q[0], s: q[1], opts: [q[1]].concat(q[2]), order: seeded(4, it + 13), right: 0 };
+  }
+  if (GAME === 'naqisa') {
+    const w = toks(q[0]); const opts = [w[q[1]]].concat(q[2]);
+    return { key: q[0], i: q[1], opts, order: seeded(4, it + 1), right: 0 };
+  }
+  const [s, a] = q[0].split(':').map(Number), t = s + ':' + (a + d);
+  return { key: q[0], dir: d, target: t, opts: [t].concat(d < 0 ? q[1] : q[2]), order: seeded(4, it * 2 + (d > 0) + 7), right: 0 };
+}
+// the answers of a test, in order: [item, d]
+const rounds = () => GAME === 'qabl' || GAME === 'tartib' ? S.items.flatMap(it => [[it, -1], [it, 1]]) : S.items.map(it => [it, 0]);
+// first words of a verse, for the options of «ما قبلها؟ ما بعدها؟»
+function short(k, n){ const w = toks(k); let c = 0, out = [];
+  for (const x of w) { out.push(x); if (hasLetters(x) && ++c >= n) break; }
+  return out.join(' ') + (out.length < w.length ? ' …' : ''); }
+
+// ---------- state ----------
+let S;
+// Saved-data names. «ما قبلها؟ ما بعدها؟» changed its questions (1 verse a day, all three verses in one quarter and page),
+// so it uses new names (qabl3)
+// and nothing saved by the old version is read.
+const SK = g => g === 'qabl' ? 'qabl3' : g === 'rattib' ? 'rattib2' : g === 'tartib' ? 'tartib2' : g;   // rattib2: drag and drop
+const dayKey = i => SK(GAME) + '-day-' + i;
+function itemsFor(idx){ return Array.from({length: C.items}, (_, r) => (idx * C.items + r) % N); }
+function load(idx, practice, archive, items){
+  player.pause(); playing = null;
+  let saved = !practice && store.get(dayKey(idx), null);
+  if (saved && (!Array.isArray(saved.items) || saved.items.length !== C.items)) saved = null;   // saved by another version
+  S = { idx, practice: !!practice, archive: !!archive, items: items || (saved && saved.items) || itemsFor(idx),
+        done: saved ? saved.done : false };
+  if (TRY) { S.guesses = saved ? saved.guesses : []; S.rev = saved ? saved.rev : 0; }
+  if (C.kind === 'order') { const Q = question(S.items[0]); S.arr = saved && saved.arr ? saved.arr : Q.order.slice(); S.chk = saved && saved.chk ? saved.chk : []; S.tips = saved && saved.tips ? saved.tips : []; }   // chk: the order at the last «تأكيد»
+  else {
+    S.ans = saved ? saved.ans : []; S.hidden = saved ? (saved.hidden || []) : []; S.showing = false;
+    if (!S.done && S.ans.length >= C.per) { finishIfOver(); save(); }   // left before pressing «النتيجة»
+  }
+  $('pnum').textContent = practice ? 'تدريب' : 'الاختبار ' + toAr(idx + 1) + (archive ? ' (من الأرشيف)' : '');
+  $('archBtn').hidden = !!practice;
+  $('pbar').hidden = !practice;
+  setNav(!!practice);
+  $('pdate').innerHTML = archive ? bothDates(new Date(START + idx * 86400000), 'UTC') : bothDates(new Date(), 'Africa/Cairo');
+  $('msg').textContent = ''; $('msg').className = 'msg';
+  $('guess').value = '';
+  render();
+}
+function save(){
+  if (S.practice) return;
+  const o = { items: S.items, done: S.done };
+  if (TRY) { o.guesses = S.guesses; o.rev = S.rev; }
+  if (C.kind === 'order') { o.arr = S.arr; o.chk = S.chk; o.tips = S.tips; }
+  if (!TRY) { o.ans = S.ans; o.hidden = S.hidden; }
+  store.set(dayKey(S.idx), o);
+}
+const wrongCount = () => TRY ? S.guesses.filter(g => !g.ok).length : S.ans.filter(a => !a.ok).length;
+const inPlace = () => S.arr.filter((j, i) => j === i).length;   // رتّب الآيات: verses in the right place
+function isWon(){ if (C.kind === 'order') return inPlace() === S.arr.length; return TRY ? S.rev >= question(S.items[0]).hid.length : S.ans.length === C.per && S.ans.every(a => a.ok); }
+function score(){ if (C.kind === 'order') return inPlace(); return TRY ? S.guesses.filter(g => g.ok).length : S.ans.filter(a => a.ok).length; }
+function total(){ return TRY ? question(S.items[0]).hid.length : C.per; }
+
+// ---------- verse cards ----------
+function playBtn(key){ const on = playing === key;
+  return `<span class="acts">${tafsirLink(key)}<button type="button" class="play${on ? ' on' : ''}" data-key="${key}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآية بصوت الحصري'}">${on ? '⏸' : '▶'}</button></span>`; }
+function where(k){ const m = QD.m[k]; return m ? `<span class="loc">الجزء ${toAr(m[0])} · الحزب ${toAr(m[1])} · الربع ${toAr(m[2])}</span>` : ''; }
+// a whole verse, with the tokens in [b, e) marked
+function verseCard(k, b, e, tag){
+  const w = toks(k);
+  const html = w.map((x, i) => (i === b ? '<mark>' : '') + esc(x) + (i === e - 1 ? '</mark>' : '')).join(' ');
+  return `<div class="ayah"><div class="head"><div class="ref">${ref(k)}${tag || ''}${where(k)}</div>${playBtn(k)}</div><p>${html}</p></div>`;
+}
+
+// ---------- render ----------
+function render(){
+  if (C.kind === 'type') renderType(); else if (C.kind === 'order') renderOrder(); else renderMcq();
+  document.querySelector('.wrap').classList.toggle('over', S.done);
+  if ($('lead')) $('lead').hidden = S.done;
+  $('ansTitle').hidden = !S.done;
+  $('reveal').hidden = !S.done;
+  if (S.done) renderReveal();
+}
+
+// «أكمل الآية»
+function renderType(){
+  const Q = question(S.items[0]), w = toks(Q.key);
+  if (S.done) {
+    $('stage').innerHTML = `<div class="answers">${verseCard(Q.key, Q.b, Q.e, isWon() ? '' : ' <span class="tag">لم تكملها</span>')}</div>`;
+  } else {
+    const shown = Q.hid[S.rev] === undefined ? Q.e : Q.hid[S.rev];   // everything before the next hidden word
+    const parts = [];
+    for (let i = 0; i < Q.e; i++) {
+      if (i < Q.b) parts.push(esc(w[i]));
+      else if (i < shown) parts.push(`<span class="got">${esc(w[i])}</span>`);
+      else if (hasLetters(w[i])) parts.push('<span class="blank" aria-label="كلمة ناقصة"></span>');
+    }
+    $('stage').innerHTML = `<section class="card"><div class="facts"><span class="chip">${ref(Q.key)}</span></div>
+      <p class="qtext">${parts.join(' ')}${Q.e < w.length ? ' …' : ''}</p></section>`;
+  }
+  const wr = wrongCount();
+  $('statusText').innerHTML = 'محاولات متبقية: <b>' + toAr(Math.max(0, MAX_WRONG - wr)) + '</b>';
+  $('lives').innerHTML = Array.from({length: MAX_WRONG}, (_, i) => `<i class="${i < wr ? 'used' : ''}"></i>`).join('');
+  $('log').innerHTML = S.guesses.filter(g => !g.ok).reverse().map(g => g.h
+    ? `<li class="hint"><span>تلميح</span><span>كُشفت الكلمة «${esc(g.w)}»</span></li>`
+    : `<li class="bad"><span>${esc(g.w)}</span><span>ليست الكلمة التالية</span></li>`).join('');
+  const hl = hintsLeft();
+  $('hintBtn').textContent = 'تلميح (' + toAr(hl) + ')';
+  $('hintBtn').disabled = S.done || !hl;
+  $('guessForm').hidden = $('statusRow').hidden = S.done;
+  $('guess').disabled = $('go').disabled = S.done;
+  $('nextQ').hidden = true;
+}
+// «رتّب الآيات»
+// one paragraph like the mushaf: the verses with their numbers, one recitation of all and one mushaf link (first verse)
+function passageCard(keys, tag){
+  const [s, a0] = keys[0].split(':').map(Number), a1 = +keys[keys.length - 1].split(':')[1];
+  const text = keys.map(k => toks(k).map(esc).join(' ') + ' <span class="anum">﴿' + toAr(k.split(':')[1]) + '﴾</span>').join(' ');
+  const all = keys.join('|'), on = playing === all;
+  const btn = `<span class="acts">${tafsirLink(keys[0])}<button type="button" class="play${on ? ' on' : ''}" data-key="${all}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآيات بصوت الحصري'}">${on ? '⏸' : '▶'}</button></span>`;
+  return `<div class="ayah"><div class="head"><div class="ref">سورة ${SURAH[s]} · الآيات ${toAr(a0)}–${toAr(a1)}${tag || ''}${where(keys[0])}</div>${btn}</div><p>${text}</p></div>`;
+}
+function renderOrder(){
+  const Q = question(S.items[0]), [s] = Q.key.split(':');
+  if (S.done) {
+    $('stage').innerHTML = '<div class="answers">' + passageCard(Q.hid, isWon() ? '' : ' <span class="tag">لم ترتّبها</span>') + '</div>';
+  } else {
+    // a verse is green while it stays where the last check found it right
+    // after «تأكيد» each verse that has not moved since is green (right place) or red (wrong place)
+    const mark = (j, i) => S.chk[i] !== j ? '' : j === i ? ' good' : ' bad';
+    const items = S.arr.map((j, i) => `<li class="ditem${mark(j, i)}" data-j="${j}">`
+      + `<span class="handle" aria-label="اسحب لتغيير المكان" title="اسحب لتغيير المكان">⠿</span><span class="pn">${toAr(i + 1)}</span>`
+      + (S.tips.some(x => x.j === j && x.at === i) ? `<span class="tip" title="${j < i ? 'حرّكها إلى أعلى' : 'حرّكها إلى أسفل'}">${j < i ? '▲' : '▼'}</span>` : '')
+      + `<span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span></li>`).join('');
+    $('stage').innerHTML = `<section class="card"><div class="facts"><span class="chip">سورة ${SURAH[s]}</span><span class="chip">${toAr(Q.hid.length)} آيات متتالية</span></div></section>`
+      + `<ol class="dlist" id="dlist">${items}</ol>`;
+  }
+  const wr = wrongCount();
+  $('statusText').innerHTML = 'محاولات متبقية: <b>' + toAr(Math.max(0, MAX_WRONG - wr)) + '</b>';
+  $('lives').innerHTML = Array.from({length: MAX_WRONG}, (_, i) => `<i class="${i < wr ? 'used' : ''}"></i>`).join('');
+  $('log').innerHTML = '';
+  const hl = hintsLeft();
+  $('hintBtn').textContent = 'تلميح (' + toAr(hl) + ')';
+  $('hintBtn').disabled = S.done || !hl;
+  $('guessForm').hidden = true;
+  $('statusRow').hidden = S.done;
+  $('nextQ').hidden = S.done; $('nextQ').textContent = 'تأكيد';
+}
+function checkOrder(){
+  if (S.done) return;
+  const won = isWon();
+  S.chk = S.arr.slice();
+  S.guesses.push({ ok: won, n: inPlace() });
+  finishIfOver(); save();
+  $('msg').textContent = S.done ? '' : toAr(inPlace()) + ' من ' + toAr(S.arr.length) + ' في مكانها الصحيح';
+  $('msg').className = 'msg bad';
+  render();
+  sfx(S.done ? (won ? 'win' : 'lose') : 'bad');
+}
+// drag and drop with the ⠿ handle (mouse, finger or pen); the list reorders while the verse is dragged
+let drag = null;
+document.addEventListener('pointerdown', e => {
+  const h = e.target.closest('.handle'); if (!h || !S || S.done) return;
+  e.preventDefault(); drag = h.closest('.ditem'); drag.classList.add('dragging');
+});
+document.addEventListener('pointermove', e => {
+  if (!drag) return;
+  e.preventDefault();
+  const list = drag.parentNode, items = [...list.children];
+  for (const it of items) {
+    if (it === drag) continue;
+    const r = it.getBoundingClientRect();
+    if (e.clientY > r.top && e.clientY < r.bottom) {
+      const after = items.indexOf(it) > items.indexOf(drag);
+      list.insertBefore(drag, after ? it.nextSibling : it);
+      break;
+    }
+  }
+}, { passive: false });
+function endDrag(){
+  if (!drag) return;
+  drag.classList.remove('dragging');
+  const order = [...drag.parentNode.children].map(li => +li.dataset.j);
+  drag = null;
+  if (order.join() !== S.arr.join()) { S.arr = order; save(); $('msg').textContent = ''; }
+  render();
+}
+document.addEventListener('pointerup', endDrag);
+document.addEventListener('pointercancel', endDrag);
+// «رتّب الآيات»: a verse can get an arrow when it is out of place, has no arrow yet, and the arrow does not give its place
+// away: at least two places must be open in that direction (▼ on the 4th of 5 would mean «the 5th»).
+function tipOk(j, k){
+  if (j === k || S.tips.some(x => x.j === j && S.arr[x.at] === j)) return false;
+  return j < k ? k >= 2 : S.arr.length - 1 - k >= 2;
+}
+function hintsLeft(){
+  if (S.done) return 0;
+  if (C.kind === 'order') { const open = S.arr.filter((j, k) => tipOk(j, k)).length;
+    return Math.max(0, Math.min(open, MAX_WRONG - 1 - wrongCount())); }
+  if (TRY) { const Q = question(S.items[0]); return Math.max(0, Math.min(Q.hid.length - S.rev, MAX_WRONG - 1 - wrongCount())); }
+  return Math.max(0, C.hints - S.ans.filter(a => a.h).length - (S.hidden.length ? 1 : 0));
+}
+// the hint button works now: hints left, and (5-question quizzes) the current question is unanswered and not hinted yet
+const hintReady = () => hintsLeft() > 0 && (TRY || (!S.showing && !S.hidden.length));
+
+// «الكلمة الناقصة» and «ما قبلها؟ ما بعدها؟»
+// the first n words of a surah (they may run over several verses)
+function openingWords(s, n){
+  const out = []; let c = 0;
+  for (let a = 1; c < n && QD.v[s + ':' + a]; a++) for (const w of toks(s + ':' + a)) { if (c >= n) break; out.push(w); if (hasLetters(w)) c++; }
+  return out;
+}
+function questionHtml(Q){
+  if (GAME === 'lam') return '<p class="qask">أيّ هذه الكلمات وردت في القرآن مرة واحدة؟</p>';
+  if (GAME === 'makki') return `<p class="qbig">سورة ${SURAH[Q.s]}</p><p class="qask">مكية أم مدنية؟</p>`;
+  if (GAME === 'fawatih') return `<p class="qask">ما السورة التي تبدأ بهذه الكلمات؟</p><p class="qtext">${openingWords(Q.s, Q.n).map(esc).join(' ')} …</p>`;
+  if (GAME === 'tartib') return `<p class="qbig">سورة ${SURAH[Q.s]}</p><p class="qask">${Q.dir > 0 ? '٢. ما السورة التي بعدها في المصحف؟' : '١. ما السورة التي قبلها في المصحف؟'}</p>`;
+  if (GAME === 'asmaa') return `<p class="qask">ما السورة التي تُعرف بهذا الاسم؟</p><p class="qbig">«${esc(Q.alt)}»</p>`;
+  if (GAME === 'naqisa') {
+    const w = toks(Q.key);
+    const text = w.map((x, i) => i === Q.i ? '<span class="blank" aria-label="الكلمة الناقصة"></span>' : esc(x)).join(' ');
+    return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${text}</p>`;
+  }
+  return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${toks(Q.key).map(esc).join(' ')}</p>
+    <p class="qask">${Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
+}
+const SURAH_OPTS = ['fawatih', 'tartib', 'asmaa'];   // their choices are surah numbers
+const optText = (Q, o) => SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[o]] : GAME === 'qabl' ? esc(short(Q.opts[o], 7)) : esc(Q.opts[o]);
+// «ترتيب السور» at the end: the three surahs in order, the two answers marked
+function surahTrio(it, aB, aA){
+  const s = QD.q[it][0], mark = (n, a) => `<b class="${a && !a.ok ? 'tbad' : 'tok'}">سورة ${SURAH[n]}</b>`;
+  return `<div class="ayah info">${mark(s - 1, aB)} (${toAr(s - 1)}) ← سورة ${SURAH[s]} (${toAr(s)}) ← ${mark(s + 1, aA)} (${toAr(s + 1)})`
+    + ((aB && !aB.ok) || (aA && !aA.ok) ? '<span class="inote">المظلَّل بالأحمر: أخطأت فيه</span>' : '') + '</div>';
+}
+// after answering: what the player learns (a verse, or a short note)
+function infoCard(Q, a){
+  const tag = a && !a.ok ? ' <span class="tag">أخطأت</span>' : '';
+  if (GAME === 'lam') return verseCard(Q.key, Q.i, Q.i + 1, ' <span class="okt">«' + esc(Q.opts[0]) + '» وردت هنا فقط</span>' + tag);
+  if (GAME === 'fawatih') { const k = Q.s + ':1'; return verseCard(k, -1, -1, tag); }
+  let html = '';
+  if (GAME === 'makki') html = `سورة ${SURAH[Q.s]} <b>${Q.opts[Q.right]}</b>` + (Q.disputed ? '<span class="inote">على ما في مصحف المدينة، وفيها خلاف بين العلماء.</span>' : '');
+  if (GAME === 'tartib') { const t = Q.s + Q.dir;
+    html = (Q.dir > 0 ? 'التي بعدها: ' : 'التي قبلها: ') + `<b>سورة ${SURAH[t]}</b> (${toAr(t)})`; }
+  if (GAME === 'asmaa') html = `«${esc(Q.alt)}» من أسماء سورة <b>${SURAH[Q.s]}</b>`;
+  return `<div class="ayah info">${html}${tag}</div>`;
+}
+function answerCards(Q, a){
+  const tag = a && !a.ok ? ' <span class="tag">أخطأت</span>' : '';
+  return verseCard(Q.key, Q.i, Q.i + 1, tag);
+}
+// «ما قبلها؟ ما بعدها؟»: the verse before, the verse, the verse after; the two answers are marked
+function trioCard(it, aBefore, aAfter){
+  // one box like a line of the mushaf: the verse before, the verse, the verse after, each ending with its number;
+  // one recitation of the three and one mushaf link (to the middle verse)
+  const k = QD.q[it][0], [s, a] = k.split(':').map(Number), bk = s + ':' + (a - 1), fk = s + ':' + (a + 1);
+  const end = n => ' <span class="anum">﴿' + toAr(n) + '﴾</span>';
+  const ans = (key, an) => `<mark class="${an && !an.ok ? 'miss' : ''}">${toks(key).map(esc).join(' ')}</mark>`;
+  const text = ans(bk, aBefore) + end(a - 1) + ' ' + toks(k).map(esc).join(' ') + end(a) + ' ' + ans(fk, aAfter) + end(a + 1);
+  const wb = aBefore && !aBefore.ok, wa = aAfter && !aAfter.ok;
+  const wrong = wb && wa ? 'أخطأت في الآيتين' : wb ? 'أخطأت في الآية التي قبلها' : wa ? 'أخطأت في الآية التي بعدها' : '';
+  const keys = [bk, k, fk].join('|'), on = playing === keys;
+  const btn = `<span class="acts">${tafsirLink(k)}<button type="button" class="play${on ? ' on' : ''}" data-key="${keys}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآيات الثلاث بصوت الحصري'}">${on ? '⏸' : '▶'}</button></span>`;
+  return `<div class="ayah trio"><div class="head"><div class="ref">سورة ${SURAH[s]} · الآيات ${toAr(a - 1)}–${toAr(a + 1)}`
+    + (wrong ? ' <span class="tag">' + wrong + '</span>' : '') + where(k) + `</div>${btn}</div><p>${text}</p></div>`;
+}
+function renderMcq(){
+  const r = S.ans.length - (S.showing ? 1 : 0);      // the answer on screen
+  const R = rounds();
+  if (S.done) {
+    $('stage').innerHTML = '<div class="answers">' + (GAME === 'qabl'
+      ? S.items.map((it, k) => trioCard(it, S.ans[2 * k], S.ans[2 * k + 1])).join('')
+      : GAME === 'tartib' ? S.items.map((it, k) => surahTrio(it, S.ans[2 * k], S.ans[2 * k + 1])).join('')
+      : S.items.map((it, k) => GAME === 'naqisa' ? answerCards(question(it), S.ans[k]) : infoCard(question(it), S.ans[k])).join('')) + '</div>';
+  } else {
+    const Q = question(...R[r]), a = S.showing ? S.ans[r] : null;
+    const removed = a ? (a.rm || []) : S.hidden;
+    const btns = Q.order.map(o => {
+      let cls = 'choice';
+      if (a) cls += o === Q.right ? ' right' : o === a.pick ? ' wrong' : ' dim';
+      const off = removed.includes(o);
+      // «ما قبلها؟ ما بعدها؟»: once answered, the right choice opens into the whole verse (reference, recitation, mushaf link)
+      if (a && GAME === 'qabl' && o === Q.right)
+        return `<div class="choice right full">${verseCard(Q.target, -1, -1, ' <span class="okt">' + (Q.dir > 0 ? 'الآية التي بعدها' : 'الآية التي قبلها') + '</span>')}</div>`;
+      return `<button type="button" class="${cls}${off ? ' gone' : ''}" data-o="${o}"${a || off ? ' disabled' : ''}>${optText(Q, o)}</button>`;
+    }).join('');
+    const shownAns = !a || GAME === 'qabl' ? '' : GAME === 'naqisa' ? answerCards(Q, a) : infoCard(Q, a);
+    $('stage').innerHTML = `<section class="card">${questionHtml(Q)}</section><div class="choices${GAME === 'qabl' ? ' long' : ''}${GAME === 'lam' ? ' three' : ''}${SURAH_OPTS.includes(GAME) || GAME === 'makki' ? ' names' : ''}">${btns}</div>`
+      + (shownAns ? '<div class="answers">' + shownAns + '</div>' : '');
+  }
+  $('statusText').innerHTML = S.done || C.per === 1 ? '' : 'السؤال <b>' + toAr(Math.min(C.per, r + 1)) + '</b> من ' + toAr(C.per);
+  $('lives').innerHTML = C.per === 1 ? '' : Array.from({length: C.per}, (_, i) => { const a = S.ans[i];
+    return `<i class="${!a ? 'todo' : !a.ok ? 'used' : a.h ? 'hinted' : 'okd'}"></i>`; }).join('');
+  $('log').innerHTML = '';
+  const hl = hintsLeft();
+  $('hintBtn').textContent = 'تلميح (' + toAr(hl) + ')';
+  $('hintBtn').disabled = S.done || !hintReady();
+  $('hintBtn').hidden = !C.hints;   // no hints in لم تتكرر and مكية أم مدنية؟
+  $('guessForm').hidden = true;
+  $('statusRow').hidden = S.done;
+  $('nextQ').hidden = S.done || !S.showing;
+  $('nextQ').textContent = S.ans.length >= C.per ? 'النتيجة' : GAME === 'qabl' ? 'ما الآية التي بعدها؟' : GAME === 'tartib' ? 'ما السورة التي بعدها؟' : 'السؤال التالي';
+}
+
+// ---------- playing ----------
+function finishIfOver(){
+  const over = TRY ? (isWon() || wrongCount() >= MAX_WRONG) : (S.ans.length >= C.per && !S.showing);
+  if (!over) return;
+  S.done = true; $('msg').textContent = ''; $('msg').className = 'msg';
+  if (!S.practice && !S.archive) recordStats();
+  if (TRY) noteMistake(S.items[0], isWon() && wrongCount() === 0);
+  else S.items.forEach(it => { const mine = rounds().map((x, k) => x[0] === it ? S.ans[k] : null).filter(Boolean);
+    noteMistake(it, mine.every(a => a.ok && !a.h)); });
+}
+function guessType(raw){
+  if (S.done) return;
+  const Q = question(S.items[0]), w = toks(Q.key);
+  const parts = String(raw).trim().split(/\s+/).filter(p => loose(p));
+  if (!parts.length) return;
+  let msg = '', ok = true;
+  for (let j = 0; j < parts.length && S.rev < Q.hid.length; j++) {
+    const want = loose(w[Q.hid[S.rev]]);
+    if (loose(parts[j]) === want) { S.guesses.push({ w: parts[j], ok: true }); S.rev++; continue; }
+    // «يا أيها» typed as two words for one Uthmani word «يَـٰٓأَيُّهَا»
+    if (j + 1 < parts.length && loose(parts[j] + parts[j + 1]) === want) { S.guesses.push({ w: parts[j] + ' ' + parts[j + 1], ok: true }); S.rev++; j++; continue; }
+    S.guesses.push({ w: parts[j], ok: false }); ok = false; msg = '«' + parts[j] + '» ليست الكلمة التالية'; break;
+  }
+  finishIfOver(); save();
+  $('guess').value = '';
+  $('msg').textContent = S.done ? '' : ok ? (S.rev ? 'صحيح' : '') : msg;
+  $('msg').className = 'msg ' + (ok ? 'ok' : 'bad');
+  render();
+}
+function useHint(){
+  if (!hintReady()) return;
+  if (C.kind === 'order') {
+    // an arrow on the first verse that is out of place (and not already pointed at): move it up or down
+    const at = S.arr.findIndex((j, k) => tipOk(j, k)), j = S.arr[at];
+    S.tips = S.tips.filter(x => S.arr[x.at] === x.j).concat({ j, at });
+    S.guesses.push({ h: 1, ok: false });
+    $('msg').textContent = 'تلميح: حرّك الآية رقم ' + toAr(at + 1) + (j < at ? ' إلى أعلى' : ' إلى أسفل'); $('msg').className = 'msg hintmsg';
+  } else if (C.kind === 'type') {
+    const Q = question(S.items[0]), w = toks(Q.key);
+    S.guesses.push({ h: 1, ok: false, w: w[Q.hid[S.rev]] }); S.rev++;
+    $('msg').textContent = 'تلميح: كُشفت الكلمة التالية'; $('msg').className = 'msg hintmsg';
+  } else {
+    const Q = question(...rounds()[S.ans.length]);
+    S.hidden = Q.order.filter(o => o !== Q.right).slice(0, 2);
+    $('msg').textContent = 'تلميح: حُذف خياران خاطئان'; $('msg').className = 'msg hintmsg';
+  }
+  finishIfOver(); save(); render();
+}
+function choose(o){
+  if (S.done || S.showing) return;
+  const r = S.ans.length, Q = question(...rounds()[r]), ok = o === Q.right, h = S.hidden.length > 0;
+  S.ans.push({ pick: o, ok, h, rm: S.hidden }); S.hidden = []; S.showing = true;
+  $('msg').textContent = ok ? 'صحيح' : 'خطأ، الصحيح: ' + (GAME === 'naqisa' || GAME === 'lam' || GAME === 'makki' ? Q.opts[Q.right] : SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[Q.right]] : '');
+  $('msg').className = 'msg ' + (ok ? 'ok' : 'bad');
+  if (GAME === 'qabl' && !ok) $('msg').textContent = 'خطأ، والصحيح في الآية أدناه';
+  if (C.per === 1) { S.showing = false; finishIfOver(); }
+  save(); render();
+  sfx(C.per === 1 ? (ok ? 'win' : 'lose') : ok ? 'ok' : 'bad');
+}
+function nextRound(){
+  S.showing = false; $('msg').textContent = ''; $('msg').className = 'msg';
+  finishIfOver(); save(); render();
+  if (S.done) sfx(isWon() ? 'win' : 'lose');
+  window.scrollTo(0, 0);
+}
+
+// ---------- «أخطائي»: questions answered with a mistake or a hint, kept until answered cleanly ----------
+const MISS_KEY = SK(GAME) + '-miss';
+function noteMistake(id, clean){
+  const m = store.get(MISS_KEY, []).filter(x => x !== id);
+  if (!clean) m.push(id);
+  store.set(MISS_KEY, m.slice(-500));
+}
+
+// ---------- stats ----------
+const STATS_KEY = SK(GAME) + '-stats';
+// distribution: أكمل الآية = mistakes (0, 1, 2, 3+, not solved); the 5-question quizzes = right answers (5, 4, 3, 2 or fewer)
+const DIST_LABELS = TRY ? ['بلا أخطاء', 'خطأ واحد', 'خطآن', '٣ أخطاء فأكثر', 'لم تُحل']
+  : C.per === 1 ? ['أصبت', 'أخطأت'] : C.per === 2 ? ['٢ من ٢', '١ من ٢', '٠ من ٢'] : ['٥ من ٥', '٤ من ٥', '٣ من ٥', '٢ من ٥ فأقل'];
+const distSlot = () => TRY ? (isWon() ? Math.min(3, wrongCount()) : 4) : Math.min(DIST_LABELS.length - 1, C.per - score());
+function recordStats(){
+  const won = isWon();
+  const st = store.get(STATS_KEY, { played:0, wins:0, streak:0, best:0, last:-1 });
+  st.played++; if (won) st.wins++;
+  st.streak = won ? (st.last === S.idx - 1 ? st.streak + 1 : 1) : 0;
+  st.best = Math.max(st.best, st.streak); st.last = won ? S.idx : st.last;
+  st.dist = Array.isArray(st.dist) && st.dist.length === DIST_LABELS.length ? st.dist : DIST_LABELS.map(() => 0);
+  st.dist[distSlot()]++;
+  store.set(STATS_KEY, st);
+}
+function renderReveal(){
+  const won = isWon();
+  $('resultTitle').textContent = TRY ? (won ? (C.kind === 'order' ? 'أحسنت! رتّبتها' : 'أحسنت! أكملت الآية') : 'انتهت المحاولات')
+    : C.per === 1 ? (won ? 'أحسنت! إجابة صحيحة' : 'إجابة خاطئة')
+    : 'نتيجتك: ' + toAr(score()) + ' من ' + toAr(C.per) + (won ? ' — أحسنت!' : '');
+  const st = store.get(STATS_KEY, { played:0, wins:0, streak:0, best:0 });
+  $('stats').innerHTML = [['الاختبارات', st.played], [TRY ? 'فوز %' : 'كاملة %', st.played ? Math.round(100 * st.wins / st.played) : 0], ['التتابع', st.streak], ['أفضل تتابع', st.best]]
+    .map(([l, v]) => `<div><b>${toAr(v)}</b><span>${l}</span></div>`).join('');
+  $('stats').hidden = S.practice || S.archive; $('next').hidden = S.practice || S.archive;
+  saveSummary(score(), total(), grid());
+  renderToday();
+  maybeInstallBar();
+  $('report').href = reportLink(C.name, S.items.map(it => { const q = QD.q[it]; return '#' + (it + 1) + ' ' + q[0]; }).join('\n'));
+  renderDist();
+  tick();
+}
+function grid(){ return TRY ? S.guesses.map(g => g.h ? '💡' : g.ok ? '🟩' : '🟥').join('')
+  : S.ans.map(a => !a.ok ? '🟥' : a.h ? '💡' : '🟩').join(''); }
+function renderDist(){
+  const st = store.get(STATS_KEY, {});
+  const d = Array.isArray(st.dist) && st.dist.length === DIST_LABELS.length ? st.dist : DIST_LABELS.map(() => 0);
+  const tot = d.reduce((x, y) => x + y, 0), box = $('dist');
+  box.hidden = S.practice || S.archive || !tot;
+  if (box.hidden) return;
+  const max = Math.max(...d, 1), cur = (!S.practice && !S.archive && S.done) ? distSlot() : -1;
+  box.innerHTML = '<h3>توزيع نتائجك</h3>' + d.map((n, i) =>
+    `<div class="drow${i === cur ? ' cur' : ''}"><span>${DIST_LABELS[i]}</span><span class="dbar" style="width:${Math.max(8, Math.round(100 * n / max))}%">${toAr(n)}</span></div>`).join('');
+}
+function reportLink(game, details){
+  const wh = S.practice ? 'تدريب' : 'الاختبار ' + (S.idx + 1) + (S.archive ? ' (من الأرشيف)' : '');
+  const body = 'اكتب ملاحظتك هنا:\n\n\n---\n' + game + ' — ' + wh + '\n' + details + '\n' + location.href;
+  return 'mailto:quranicstuff@gmail.com?subject=' + encodeURIComponent('ملاحظة على سؤال: ' + game) + '&body=' + encodeURIComponent(body);
+}
+
+// ---------- recitation (Husary, one MP3 per verse) ----------
+const VERSE_COUNTS = [7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+const AYAH_OFFSET = [0]; VERSE_COUNTS.forEach((c, i) => AYAH_OFFSET.push(AYAH_OFFSET[i] + c));
+const audioUrl = (s, a) => 'https://cdn.islamic.network/quran/audio/128/ar.husary/' + (AYAH_OFFSET[s - 1] + a) + '.mp3';
+const player = new Audio(); player.preload = 'none';
+let playing = null;
+function audioFailed(){ setPlaying(null); $('msg').textContent = 'تعذر تشغيل التلاوة. تأكد من الاتصال بالإنترنت.'; $('msg').className = 'msg bad'; }
+function setPlaying(key){
+  playing = key;
+  document.querySelectorAll('.play').forEach(b => {
+    const on = b.dataset.key === key;
+    b.textContent = on ? '⏸' : '▶';
+    b.setAttribute('aria-label', on ? 'إيقاف التلاوة' : 'استمع للآية بصوت الحصري');
+    b.classList.toggle('on', on);
+  });
+}
+// a key can hold several verses ("11:40|11:41|11:42"): they are recited one after another
+let queue = [];
+function playVerse(k){
+  const [s, a] = k.split(':').map(Number);
+  player.src = audioUrl(s, a);
+  const pr = player.play();
+  if (pr && pr.catch) pr.catch(err => { if (err && err.name !== 'AbortError') audioFailed(); });
+}
+function togglePlay(key){
+  if (playing === key) { player.pause(); queue = []; setPlaying(null); return; }
+  const list = key.split('|'); queue = list.slice(1);
+  setPlaying(key); playVerse(list[0]);
+}
+player.addEventListener('ended', () => { if (queue.length && playing) playVerse(queue.shift()); else setPlaying(null); });
+player.addEventListener('error', () => { if (playing) audioFailed(); });
+
+function tick(){
+  const el = $('next'); if (!el || !S) return;
+  if (S.done) {
+    const c = cairoNow(), s = Math.max(0, 86400 - (c.hour * 3600 + c.minute * 60 + c.second));
+    const p = n => String(n).padStart(2, '0');
+    el.textContent = 'الاختبار التالي بعد ' + toAr(p(Math.floor(s / 3600)) + ':' + p(Math.floor(s % 3600 / 60)) + ':' + p(s % 60));
+  }
+  if (!S.practice && !S.archive && todayIndex() !== S.idx) load(todayIndex(), false);
+}
+setInterval(tick, 1000);
+
+// ---------- practice by juz / whole Quran / mistakes ----------
+const PICK_DEFAULT = { mode: 'all', juz: [] };
+let pick = Object.assign({}, PICK_DEFAULT, store.get('mut-pick', {}));
+if (!['all', 'juz', 'miss'].includes(pick.mode)) pick.mode = 'all';
+if (!Array.isArray(pick.juz)) pick.juz = [];
+// ---------- practice setup (on the page, not a pop-up): section, quiz and questions in one go, then «ابدأ» ----------
+const CATALOG = [['mut', 'متشابهات القرآن الكريم', [['surah', 'أين ورد؟', ''], ['farq', 'ميّز بينهما', 'farq.html']]],
+  ['hifz', 'تثبيت الحفظ', [['akhir', 'آخر الآية', 'akhir.html'], ['qabl', 'ما قبلها؟ ما بعدها؟', 'qabl.html'], ['rattib', 'رتّب الآيات', 'rattib.html']]],
+  ['info', 'معلومات قرآنية', [['lam', 'لم تتكرر', 'lam.html'], ['makki', 'مكية أم مدنية؟', 'makki.html'], ['fawatih', 'فواتح السور', 'fawatih.html'], ['tartib', 'ترتيب السور', 'tartib.html'], ['asmaa', 'أسماء السور', 'asmaa.html']]]];
+const MISS_KEYS = { surah: 'mut-miss', farq: 'farq-miss', akhir: 'akhir-miss', qabl: 'qabl3-miss', rattib: 'rattib2-miss', lam: 'lam-miss', makki: 'makki-miss', fawatih: 'fawatih-miss', tartib: 'tartib2-miss', asmaa: 'asmaa-miss' };
+const secOf = g => CATALOG.find(c => c[2].some(x => x[0] === g)) || CATALOG[0];
+const pageOfGame = g => { const f = secOf(g)[2].find(x => x[0] === g)[2]; return f || (location.hostname.endsWith('github.io') ? './' : 'index.html'); };
+if (!pick.game || !CATALOG.some(c => c[2].some(x => x[0] === pick.game))) pick.game = GAME;
+function renderPickNav(){
+  const sec = secOf(pick.game);
+  $('pickSec').style.gridTemplateColumns = 'repeat(' + CATALOG.length + ',1fr)';
+  $('pickSec').innerHTML = CATALOG.map(([id, name]) => `<button type="button" class="ptab${id === sec[0] ? ' on' : ''}" data-sec="${id}">${name}</button>`).join('');
+  $('pickGame').style.gridTemplateColumns = 'repeat(' + sec[2].length + ',1fr)';
+  $('pickGame').innerHTML = sec[2].map(([g, name]) => `<button type="button" class="ptab${g === pick.game ? ' on' : ''}" data-g="${g}">${name}</button>`).join('');
+}
+$('pickSec').addEventListener('click', e => { const b = e.target.closest('.ptab'); if (!b) return;
+  const sec = CATALOG.find(c => c[0] === b.dataset.sec); if (secOf(pick.game) !== sec) pick.game = sec[2][0][0]; renderPick(); });
+$('pickGame').addEventListener('click', e => { const b = e.target.closest('.ptab'); if (!b) return; pick.game = b.dataset.g; renderPick(); });
+$('juzChips').innerHTML = Array.from({length: 30}, (_, i) =>
+  `<label class="opt"><input type="checkbox" value="${i + 1}"><span>${toAr(i + 1)}</span></label>`).join('');
+// every verse the question shows or asks for lies in the chosen juz
+function inJuz(it, J){
+  const q = QD.q[it];
+  // surah quizzes: the surah starts in one of the chosen juz
+  if (['makki', 'fawatih', 'tartib'].includes(GAME)) return J.has(juzOf(q[0] + ':1'));
+  if (GAME === 'asmaa') return J.has(juzOf(q[1] + ':1'));
+  if (!J.has(juzOf(q[0]))) return false;
+  if (GAME === 'qabl') { const [s, a] = q[0].split(':').map(Number); return J.has(juzOf(s + ':' + (a - 1))) && J.has(juzOf(s + ':' + (a + 1))); }
+  if (GAME === 'rattib') { const [s, a] = q[0].split(':').map(Number); return Array.from({length: q[1]}, (_, j) => s + ':' + (a + j)).every(k => J.has(juzOf(k))); }
+  return true;
+}
+function pool(){
+  if (pick.mode === 'miss') { const m = new Set(store.get(MISS_KEY, [])); return QD.q.map((_, i) => m.has(i) ? i : -1).filter(i => i >= 0); }
+  if (pick.mode === 'all') return QD.q.map((_, i) => i);
+  const J = new Set(pick.juz); return QD.q.map((_, i) => inJuz(i, J) ? i : -1).filter(i => i >= 0);
+}
+function pickLabel(){
+  if (pick.mode === 'juz') {
+    const j = pick.juz.slice().sort((a, b) => a - b), parts = [];
+    for (let i = 0; i < j.length; i++) {
+      let k = i; while (k + 1 < j.length && j[k + 1] === j[k] + 1) k++;
+      parts.push(k > i ? toAr(j[i]) + '–' + toAr(j[k]) : toAr(j[i])); i = k;
+    }
+    return (j.length > 1 ? 'الأجزاء ' : 'الجزء ') + parts.join('، ');
+  }
+  if (pick.mode === 'miss') return 'أخطائي';
+  return 'كل القرآن';
+}
+const qCount = n => n === 1 ? 'سؤال واحد متاح' : n === 2 ? 'سؤالان متاحان'
+  : (n % 100 >= 3 && n % 100 <= 10) ? toAr(n) + ' أسئلة متاحة' : toAr(n) + ' سؤالًا متاحًا';
+function renderPick(){
+  renderPickNav();
+  if (pick.game !== GAME) {   // another quiz: its questions are on its own page, so only the choice is checked here
+    const none = pick.mode === 'juz' && !pick.juz.length, miss = (store.get(MISS_KEYS[pick.game], []) || []).length;
+    document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.mode === pick.mode; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); });
+    $('pickJuz').hidden = pick.mode !== 'juz';
+    document.querySelectorAll('#juzChips input').forEach(c => c.checked = pick.juz.includes(+c.value));
+    $('pickCount').textContent = none ? 'اختر الأجزاء التي تحفظها' : pick.mode === 'miss' && !miss ? 'لا توجد أخطاء محفوظة في هذا الاختبار بعد' : '';
+    $('pickClear').hidden = pick.mode !== 'juz';
+    $('pickGo').disabled = none || (pick.mode === 'miss' && !miss);
+    return;
+  }
+  document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.mode === pick.mode; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); });
+  $('pickJuz').hidden = pick.mode !== 'juz';
+  document.querySelectorAll('#juzChips input').forEach(c => c.checked = pick.juz.includes(+c.value));
+  const none = pick.mode === 'juz' && !pick.juz.length;
+  const n = none ? 0 : pool().length;
+  $('pickCount').textContent = none ? 'اختر الأجزاء التي تحفظها'
+    : n ? qCount(n)
+    : pick.mode === 'miss' ? 'لا توجد أخطاء محفوظة في هذا الاختبار بعد'
+    : 'لا توجد أسئلة داخل هذه الأجزاء، أضف أجزاء أخرى';
+  $('pickClear').hidden = pick.mode !== 'juz';
+  $('pickGo').disabled = !n;
+}
+function showPick(){
+  renderPick(); $('pick').hidden = false; document.querySelector('.wrap').classList.add('picking');
+  $('modeTrain').classList.add('on'); $('modeDaily').classList.remove('on'); window.scrollTo(0, 0);
+}
+function hidePick(){ $('pick').hidden = true; document.querySelector('.wrap').classList.remove('picking'); if (S) setNav(S.practice); }
+function startPractice(){
+  let list = pool();
+  if (!list.length) { showPick(); return; }
+  const prev = S && S.practice ? new Set(S.items) : new Set();
+  if (list.length > C.items) list = list.filter(i => !prev.has(i));
+  for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+  const items = list.slice(0, C.items);
+  while (items.length < C.items) items.push(items[items.length % Math.max(1, list.length)]);   // a short «أخطائي» list repeats
+  load(0, true, false, items);
+  $('pwhat').textContent = pickLabel();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => { pick.mode = t.dataset.mode; renderPick(); }));
+$('juzChips').addEventListener('change', e => {
+  const v = +e.target.value; pick.juz = e.target.checked ? pick.juz.concat(v) : pick.juz.filter(x => x !== v); renderPick();
+});
+$('pickClear').addEventListener('click', () => { pick.juz = []; renderPick(); });
+$('pickGo').addEventListener('click', () => {
+  store.set('mut-pick', pick);
+  if (pick.game !== GAME) { location.href = pageOfGame(pick.game) + '#train'; return; }   // the quiz's own page starts the practice
+  hidePick(); startPractice();
+});
+$('pickX').addEventListener('click', hidePick);
+$('again').addEventListener('click', startPractice);
+$('change').addEventListener('click', () => { pick.game = GAME; showPick(); });
+
+// ---------- navigation: sections, daily / practice, the three quizzes ----------
+// the quizzes of this page's section, as tabs (from CATALOG, which the practice setup uses too)
+const SEC = secOf(GAME);
+const GAMES = SEC[2].map(([g, name, file]) => [g, 'game_' + g, name, file]);
+$('games').innerHTML = GAMES.map(([g, id, name, file]) => `<a class="gbtn" id="${id}" href="${file}">${name}</a>`).join('');
+$('games').classList.toggle('many', GAMES.length > 3);
+[['mut', 'secMut'], ['hifz', 'secHifz'], ['info', 'secInfo']].forEach(([s, id]) => { const on = s === SEC[0]; $(id).classList.toggle('on', on); if (on) $(id).setAttribute('aria-current', 'page'); });
+function setNav(practice){
+  if (!practice && location.hash === '#train') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  $('modeDaily').classList.toggle('on', !practice); $('modeDaily').setAttribute('aria-pressed', !practice);
+  $('modeTrain').classList.toggle('on', practice); $('modeTrain').setAttribute('aria-pressed', practice);
+  const home = location.hostname.endsWith('github.io') ? './' : 'index.html';
+  const tag = practice ? '#train' : '';
+  $('secMut').href = home + tag; $('secHifz').href = 'akhir.html' + tag; $('secInfo').href = 'lam.html' + tag;   // the section tabs keep practice mode too
+  GAMES.forEach(([g, id, , file]) => { $(id).href = file + tag; $(id).classList.toggle('on', g === GAME); });
+}
+GAMES.forEach(([g, id]) => $(id).addEventListener('click', e => { if (g === GAME) e.preventDefault(); }));
+$('secHifz').addEventListener('click', e => { if (GAME === 'akhir') e.preventDefault(); });
+$('secInfo').addEventListener('click', e => { if (GAME === 'lam') e.preventDefault(); });
+$('modeDaily').addEventListener('click', () => { if (S && (S.practice || S.archive)) load(todayIndex(), false); });
+$('modeTrain').addEventListener('click', () => { pick.game = GAME; showPick(); });
+
+$('stage').addEventListener('click', e => {
+  const pb = e.target.closest('.play'); if (pb) { togglePlay(pb.dataset.key); return; }
+  const b = e.target.closest('.choice'); if (b && !b.disabled) choose(+b.dataset.o);
+});
+$('nextQ').addEventListener('click', () => C.kind === 'order' ? checkOrder() : nextRound());
+$('hintBtn').addEventListener('click', useHint);
+$('guessForm').addEventListener('submit', e => {
+  e.preventDefault(); const n = S.guesses.length; guessType($('guess').value);
+  if (S.guesses.length !== n) { const last = S.guesses[S.guesses.length - 1]; sfx(S.done ? (isWon() ? 'win' : 'lose') : (last.ok ? 'ok' : 'bad')); }
+  if (!S.done) $('guess').focus();
+});
+
+// ---------- archive ----------
+function hijri(d, tz){ try { return d.toLocaleDateString('ar-EG-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric', timeZone: tz}); } catch (e) { return ''; } }
+function bothDates(d, tz){
+  const g = d.toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric', timeZone: tz}) + ' م';
+  const h = hijri(d, tz);
+  return esc(g) + (h ? '<span class="sep">|</span>' + esc(h) : '');
+}
+const dayLabel = i => new Date(START + i * 86400000).toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'});
+function archStatus(i){
+  const s = store.get(dayKey(i), null);
+  if (!s || !((s.guesses && s.guesses.length) || (s.ans && s.ans.length))) return ['new', 'لم تبدأه'];
+  if (!s.done) return ['cur', 'لم تكمله'];
+  if (C.kind === 'order') return s.arr && s.arr.every((j, k) => j === k) ? ['ok', '✓ حللته'] : ['bad', '✗ لم تحله'];
+  if (TRY) { const q = question(itemsFor(i)[0]); return s.rev >= q.hid.length ? ['ok', '✓ حللته'] : ['bad', '✗ لم تحله']; }
+  const n = s.ans.filter(a => a.ok).length; return [n === C.per ? 'ok' : 'bad', toAr(n) + ' من ' + toAr(C.per)];
+}
+function showArch(){
+  const today = todayIndex(), rows = [];
+  for (let i = today; i >= 0; i--) {
+    const [cls, txt] = i === today ? ['cur', 'اليوم'] : archStatus(i);
+    rows.push(`<button type="button" class="arow" data-i="${i}"><span>الاختبار ${toAr(i + 1)}</span><span class="adate">${dayLabel(i)}<small>${esc(hijri(new Date(START + i * 86400000), 'UTC'))}</small></span><span class="ast ${cls}">${txt}</span></button>`);
+  }
+  $('alist').innerHTML = rows.join('');
+  $('arch').hidden = false;
+}
+function hideArch(){ $('arch').hidden = true; }
+$('archBtn').addEventListener('click', showArch);
+$('archX').addEventListener('click', hideArch);
+$('arch').addEventListener('click', e => {
+  if (e.target === $('arch')) return hideArch();
+  const r = e.target.closest('.arow'); if (!r) return;
+  const i = +r.dataset.i; hideArch();
+  load(i, false, i !== todayIndex()); window.scrollTo(0, 0);
+});
+
+// ---------- today's results of this section in one message ----------
+function cairoDateKey(){ const c = cairoNow(); return c.year + '-' + c.month + '-' + c.day; }
+function saveSummary(n, tot, grid){
+  if (S.practice || S.archive || !S.done) return;
+  store.set('sum-' + SK(GAME) + '-' + cairoDateKey(), { num: S.idx + 1, n, total: tot, grid });
+}
+function dailyShareText(){
+  const k = cairoDateKey();
+  const lines = ['اختبارات قرآنية · ' + SEC[1] + ' — ' + new Date().toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric', timeZone:'Africa/Cairo'})];
+  let all = true;
+  GAMES.forEach(([g]) => { const a = store.get('sum-' + SK(g) + '-' + k, null);
+    if (a) lines.push('', CONF[g].name, `${toAr(a.n)} من ${toAr(a.total)} ${a.grid}`); else all = false; });
+  if (all) lines.push('', '✅ أتممت اختباري اليوم');
+  lines.push('', SITE_URL + C.file);
+  return lines.join('\n');
+}
+function resultText(){
+  if (!S.practice && !S.archive) return dailyShareText();
+  const head = C.name + (S.practice ? ' — تدريب' : ' — الاختبار ' + toAr(S.idx + 1) + ' (من الأرشيف)');
+  return `اختبارات قرآنية\n${head}\n${toAr(score())} من ${toAr(total())} ${grid()}\n\n${SITE_URL}${C.file}`;
+}
+$('share').addEventListener('click', () => {
+  const text = resultText();
+  const done = () => { $('msg').textContent = 'تم نسخ النتيجة.'; $('msg').className = 'msg ok'; };
+  const fallback = () => { $('msg').textContent = text; $('msg').className = 'msg'; };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+});
+$('shareNative').addEventListener('click', e => {
+  const text = resultText();
+  if (navigator.share) {
+    e.preventDefault();
+    const m = text.match(/https?:\/\/\S+\s*$/);
+    const url = m ? m[0].trim() : SITE_URL;
+    navigator.share({ text: text.slice(0, m ? m.index : text.length).trim() + '\n', url }).catch(() => {});
+  } else {
+    $('shareNative').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+  }
+});
+const doneToday = g => !!store.get('sum-' + SK(g) + '-' + cairoDateKey(), null);
+function markTabs(){
+  GAMES.forEach(([g, id, name]) => {
+    $(id).textContent = name;
+    if (doneToday(g)) $(id).insertAdjacentHTML('beforeend', ' <span class="tick" title="أتممته اليوم">✓</span>');
+  });
+}
+function renderToday(){
+  const box = $('today');
+  if (S.practice || S.archive || !S.done) { box.hidden = true; return; }
+  const left = GAMES.filter(([g]) => !doneToday(g));
+  box.innerHTML = left.length
+    ? 'بقي لك اليوم: ' + left.map(([g, id, name]) => `<a href="${$(id).getAttribute('href')}">${name}</a>`).join('، ')
+    : '<b>✓ أتممت اختباري اليوم</b>';
+  box.hidden = false;
+  markTabs();
+}
+
+// ---------- help, theme, sound ----------
+$('helpTitle').textContent = C.name;
+$('helpBody').innerHTML = HELP[GAME];
+$('lead').textContent = C.lead; if (!C.lead) $('lead').remove();
+function showHelp(){ $('help').hidden = false; $('helpGo').focus(); }
+function hideHelp(){ $('help').hidden = true; store.set(GAME + '-seen-help', 1); }
+const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+(function(){ const t = store.get('mut-theme', null); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); })();
+function curTheme(){
+  const t = document.documentElement.getAttribute('data-theme');
+  if (t === 'dark' || t === 'light') return t;
+  return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function paintThemeBtn(){
+  const dark = curTheme() === 'dark';
+  $('themeBtn').innerHTML = dark ? SUN : MOON;
+  $('themeBtn').setAttribute('aria-label', dark ? 'الوضع الفاتح' : 'الوضع الداكن');
+  $('themeBtn').title = dark ? 'الوضع الفاتح' : 'الوضع الداكن';
+}
+$('themeBtn').addEventListener('click', () => {
+  const next = curTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('mut-theme', next);
+  paintThemeBtn();
+});
+paintThemeBtn();
+let SOUND = store.get('mut-sound', true) !== false;
+let actx = null;
+function tone(freq, at, dur, type, vol){
+  const o = actx.createOscillator(), g = actx.createGain();
+  o.type = type || 'sine'; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, at);
+  g.gain.exponentialRampToValueAtTime(vol || 0.12, at + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g); g.connect(actx.destination); o.start(at); o.stop(at + dur + 0.05);
+}
+function sfx(kind){
+  if (!SOUND) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    const t = actx.currentTime + 0.01;
+    if (kind === 'ok')   { tone(660, t, 0.14); tone(880, t + 0.09, 0.22); }
+    if (kind === 'bad')  { tone(196, t, 0.28, 'triangle', 0.10); }
+    if (kind === 'hint') { tone(740, t, 0.18, 'sine', 0.08); tone(988, t + 0.08, 0.2, 'sine', 0.06); }
+    if (kind === 'win')  { [523, 659, 784, 1047].forEach((f, i) => tone(f, t + i * 0.1, 0.3)); }
+    if (kind === 'lose') { tone(330, t, 0.22, 'triangle', 0.09); tone(247, t + 0.2, 0.4, 'triangle', 0.09); }
+  } catch (e) {}
+}
+const SPK_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+const SPK_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+function paintSoundBtn(){
+  $('soundBtn').innerHTML = SOUND ? SPK_ON : SPK_OFF;
+  $('soundBtn').setAttribute('aria-label', SOUND ? 'إيقاف الأصوات' : 'تشغيل الأصوات');
+  $('soundBtn').title = SOUND ? 'إيقاف الأصوات' : 'تشغيل الأصوات';
+}
+$('soundBtn').addEventListener('click', () => { SOUND = !SOUND; store.set('mut-sound', SOUND); paintSoundBtn(); if (SOUND) sfx('ok'); });
+paintSoundBtn();
+$('hintBtn').addEventListener('click', () => sfx('hint'));
+$('helpBtn').addEventListener('click', showHelp);
+$('helpGo').addEventListener('click', hideHelp);
+$('helpX').addEventListener('click', hideHelp);
+$('help').addEventListener('click', e => { if (e.target === $('help')) hideHelp(); });
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (!$('arch').hidden) hideArch(); else if (!$('pick').hidden) hidePick(); else if (!$('help').hidden) hideHelp(); });
+
+// Madinah mushaf: first verse (1–6236) of each of the 604 pages, so a verse's page can be found
+const PAGE_STARTS = [1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222];
+function pageOf(s, a){ const n = AYAH_OFFSET[s - 1] + a; let lo = 0, hi = PAGE_STARTS.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (PAGE_STARTS[m] <= n) lo = m; else hi = m - 1; } return lo + 1; }
+const tafsirLink = key => { const [s, a] = key.split(':').map(Number), p = pageOf(s, a);
+  return `<a class="mlink" href="https://quran.ksu.edu.sa/index.php#aya=${s}_${a}&m=hafs&qaree=husary&trans=ar_mu" target="_blank" rel="noopener" title="التفسير الميسر للآية وموضعها في مصحف المدينة" aria-label="التفسير الميسر للآية وموضعها في مصحف المدينة (صفحة ${toAr(p)})"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg></a>`; };
+
+// ---------- welcome (first visit to any page of the site) and install banner ----------
+function showWelcome(){ $('welcome').hidden = false; $('welcomeGo').focus(); }
+function hideWelcome(){ $('welcome').hidden = true; store.set('mut-welcome', 1); }
+$('welcomeGo').addEventListener('click', hideWelcome);
+$('welcomeX').addEventListener('click', hideWelcome);
+$('welcome').addEventListener('click', e => { if (e.target === $('welcome')) hideWelcome(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('welcome').hidden) hideWelcome(); });
+const FIRST_VISIT = !store.get('mut-welcome', 0) && !['mut', 'farq', 'akhir', 'qabl', 'rattib', 'lam', 'makki', 'fawatih', 'tartib', 'asmaa'].some(g => store.get(g + '-seen-help', 0));
+let installEvt = null;
+const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function maybeInstallBar(){
+  if (STANDALONE || store.get('mut-installed', 0) || Date.now() < store.get('mut-install-later', 0)) return;
+  if (!S || S.practice || S.archive || !S.done) return;
+  if (installEvt) { $('ihow').textContent = 'بضغطة واحدة، ويعمل بدون إنترنت'; $('ibtn').hidden = false; }
+  else if (IOS) { $('ihow').innerHTML = 'من Safari: اضغط زر المشاركة <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="زر المشاركة" style="vertical-align:-2px"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg> ثم «إضافة إلى الشاشة الرئيسية»'; $('ibtn').hidden = true; }
+  else return;
+  $('ibar').hidden = false;
+}
+function doInstall(){
+  if (!installEvt) return;
+  installEvt.prompt();
+  installEvt.userChoice.then(c => { if (c && c.outcome === 'accepted') store.set('mut-installed', 1); }).catch(() => {})
+    .finally(() => { installEvt = null; $('ibar').hidden = true; $('installBtn').hidden = true; });
+}
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('installBtn').hidden = false; maybeInstallBar(); });
+window.addEventListener('appinstalled', () => { installEvt = null; store.set('mut-installed', 1); $('ibar').hidden = true; });
+$('ibtn').addEventListener('click', doInstall);
+$('ix').addEventListener('click', () => { $('ibar').hidden = true; store.set('mut-install-later', Date.now() + 30 * 86400000); });
+$('installBtn').addEventListener('click', doInstall);
+if (STANDALONE) $('installNote').hidden = true;
+
+load(todayIndex(), false);
+markTabs();
+if (FIRST_VISIT) showWelcome();
+if (WANT_TRAIN) pick.game = GAME;
+if (WANT_TRAIN) { if (store.get('mut-pick', null) && pool().length) startPractice(); else showPick(); }
+})();
+</script>
+
+</body>
+</html>
