@@ -64,11 +64,26 @@ input[type=text]{width:100%;font:inherit;padding:9px 12px;border:1px solid var(-
 .link{direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;font-size:.8rem;word-break:break-all;color:var(--muted);margin:6px 0 12px}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
 .btn{font:inherit;font-weight:600;border-radius:10px;padding:8px 14px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;text-decoration:none}
-.btn.ghost{background:transparent;color:var(--accent)}
+.btn.ghost{background:transparent;color:var(--accent)!important}   /* the dark-mode .btn colour (from the support page) must not reach the outlined buttons */
 :root[data-theme="dark"] .btn:not(.ghost){color:#06120F}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn:not(.ghost){color:#06120F}}
 .small{color:var(--muted);font-size:.9rem}
 .done{color:var(--accent);font-size:.9rem;min-height:1.4em;margin:8px 0 0}
+.jump{display:inline-block;margin:4px 0 0;font-weight:600}
+hr.sep{border:none;border-top:1px solid var(--line);margin:40px 0 10px}
+textarea{width:100%;min-height:150px;font:inherit;font-size:.9rem;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);resize:vertical}
+textarea.names{min-height:80px}
+.res{margin-top:18px}
+.res h3{font-family:var(--f-display);font-size:1.15rem;margin:18px 0 4px;color:var(--accent)}
+.res .meta{color:var(--muted);font-size:.88rem;margin:0 0 8px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.95rem}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th{font-size:.82rem;color:var(--muted);font-weight:600}
+td.num{white-space:nowrap;font-weight:700}
+tr.low td.num{color:#B23A3A} tr.full td.num{color:var(--accent)}
+tr.miss td{color:var(--muted)} td.part{white-space:nowrap;font-size:.88rem}
+.bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-inline-start:6px;opacity:.7}
+ol.top{padding-inline-start:1.4em} ol.top li{margin:0 0 4px}
 </style>
 </head>
 <body>
@@ -78,37 +93,50 @@ input[type=text]{width:100%;font:inherit;padding:9px 12px;border:1px solid var(-
   <h1>للمعلّمين: أنشئ تكليفًا</h1>
   <p>اختر الاختبار والأجزاء، وأرسل الرابط لطلابك. كل طالب يكتب اسمه ويحل الأسئلة نفسها، ثم يرسل لك نتيجته في واتساب مع الآيات التي أخطأ فيها.</p>
 
+  <a class="jump" href="#results">وصلتك نتائج الطلاب؟ اجمعها في جدول ↓</a>
+
   <p class="step">١. عنوان التكليف <span class="small">(اختياري)</span></p>
   <input type="text" id="title" maxlength="60" placeholder="مثال: واجب الأسبوع · حلقة الفجر">
 
-  <p class="step">٢. الاختبار</p>
+  <p class="step">٢. الاختبارات <span class="small">(اختر واحدًا أو أكثر)</span></p>
     <p class="grp">متشابهات القرآن الكريم</p>
-    <div class="chips"><label><input type="radio" name="g" value="surah"><span>أين ورد؟</span></label><label><input type="radio" name="g" value="farq"><span>ميّز بينهما</span></label></div>
+    <div class="chips"><label><input type="checkbox" name="g" value="surah"><span>أين ورد؟</span></label><label><input type="checkbox" name="g" value="farq"><span>ميّز بينهما</span></label></div>
     <p class="grp">تثبيت الحفظ</p>
-    <div class="chips"><label><input type="radio" name="g" value="akhir"><span>آخر الآية</span></label><label><input type="radio" name="g" value="qabl" checked><span>ما قبلها؟ ما بعدها؟</span></label><label><input type="radio" name="g" value="rattib"><span>رتّب الآيات</span></label></div>
+    <div class="chips"><label><input type="checkbox" name="g" value="akhir"><span>آخر الآية</span></label><label><input type="checkbox" name="g" value="qabl" checked><span>ما قبلها؟ ما بعدها؟</span></label><label><input type="checkbox" name="g" value="rattib"><span>رتّب الآيات</span></label></div>
 
-  <p class="step">٣. الأجزاء</p>
+  <p class="step">٣. الأجزاء والسور</p>
+  <p class="grp">الأجزاء</p>
   <div class="chips juz" id="juz"><label><input type="checkbox" name="j" value="1"><span>١</span></label><label><input type="checkbox" name="j" value="2"><span>٢</span></label><label><input type="checkbox" name="j" value="3"><span>٣</span></label><label><input type="checkbox" name="j" value="4"><span>٤</span></label><label><input type="checkbox" name="j" value="5"><span>٥</span></label><label><input type="checkbox" name="j" value="6"><span>٦</span></label><label><input type="checkbox" name="j" value="7"><span>٧</span></label><label><input type="checkbox" name="j" value="8"><span>٨</span></label><label><input type="checkbox" name="j" value="9"><span>٩</span></label><label><input type="checkbox" name="j" value="10"><span>١٠</span></label><label><input type="checkbox" name="j" value="11"><span>١١</span></label><label><input type="checkbox" name="j" value="12"><span>١٢</span></label><label><input type="checkbox" name="j" value="13"><span>١٣</span></label><label><input type="checkbox" name="j" value="14"><span>١٤</span></label><label><input type="checkbox" name="j" value="15"><span>١٥</span></label><label><input type="checkbox" name="j" value="16"><span>١٦</span></label><label><input type="checkbox" name="j" value="17"><span>١٧</span></label><label><input type="checkbox" name="j" value="18"><span>١٨</span></label><label><input type="checkbox" name="j" value="19"><span>١٩</span></label><label><input type="checkbox" name="j" value="20"><span>٢٠</span></label><label><input type="checkbox" name="j" value="21"><span>٢١</span></label><label><input type="checkbox" name="j" value="22"><span>٢٢</span></label><label><input type="checkbox" name="j" value="23"><span>٢٣</span></label><label><input type="checkbox" name="j" value="24"><span>٢٤</span></label><label><input type="checkbox" name="j" value="25"><span>٢٥</span></label><label><input type="checkbox" name="j" value="26"><span>٢٦</span></label><label><input type="checkbox" name="j" value="27"><span>٢٧</span></label><label><input type="checkbox" name="j" value="28"><span>٢٨</span></label><label><input type="checkbox" name="j" value="29"><span>٢٩</span></label><label><input type="checkbox" name="j" value="30"><span>٣٠</span></label></div>
-  <details><summary>والسور (لسور من أجزاء لم تكتمل)</summary><div class="chips" id="sur" style="margin-top:8px"><label><input type="checkbox" name="s" value="1"><span>الفاتحة</span></label><label><input type="checkbox" name="s" value="2"><span>البقرة</span></label><label><input type="checkbox" name="s" value="3"><span>آل عمران</span></label><label><input type="checkbox" name="s" value="4"><span>النساء</span></label><label><input type="checkbox" name="s" value="5"><span>المائدة</span></label><label><input type="checkbox" name="s" value="6"><span>الأنعام</span></label><label><input type="checkbox" name="s" value="7"><span>الأعراف</span></label><label><input type="checkbox" name="s" value="8"><span>الأنفال</span></label><label><input type="checkbox" name="s" value="9"><span>التوبة</span></label><label><input type="checkbox" name="s" value="10"><span>يونس</span></label><label><input type="checkbox" name="s" value="11"><span>هود</span></label><label><input type="checkbox" name="s" value="12"><span>يوسف</span></label><label><input type="checkbox" name="s" value="13"><span>الرعد</span></label><label><input type="checkbox" name="s" value="14"><span>إبراهيم</span></label><label><input type="checkbox" name="s" value="15"><span>الحجر</span></label><label><input type="checkbox" name="s" value="16"><span>النحل</span></label><label><input type="checkbox" name="s" value="17"><span>الإسراء</span></label><label><input type="checkbox" name="s" value="18"><span>الكهف</span></label><label><input type="checkbox" name="s" value="19"><span>مريم</span></label><label><input type="checkbox" name="s" value="20"><span>طه</span></label><label><input type="checkbox" name="s" value="21"><span>الأنبياء</span></label><label><input type="checkbox" name="s" value="22"><span>الحج</span></label><label><input type="checkbox" name="s" value="23"><span>المؤمنون</span></label><label><input type="checkbox" name="s" value="24"><span>النور</span></label><label><input type="checkbox" name="s" value="25"><span>الفرقان</span></label><label><input type="checkbox" name="s" value="26"><span>الشعراء</span></label><label><input type="checkbox" name="s" value="27"><span>النمل</span></label><label><input type="checkbox" name="s" value="28"><span>القصص</span></label><label><input type="checkbox" name="s" value="29"><span>العنكبوت</span></label><label><input type="checkbox" name="s" value="30"><span>الروم</span></label><label><input type="checkbox" name="s" value="31"><span>لقمان</span></label><label><input type="checkbox" name="s" value="32"><span>السجدة</span></label><label><input type="checkbox" name="s" value="33"><span>الأحزاب</span></label><label><input type="checkbox" name="s" value="34"><span>سبأ</span></label><label><input type="checkbox" name="s" value="35"><span>فاطر</span></label><label><input type="checkbox" name="s" value="36"><span>يس</span></label><label><input type="checkbox" name="s" value="37"><span>الصافات</span></label><label><input type="checkbox" name="s" value="38"><span>ص</span></label><label><input type="checkbox" name="s" value="39"><span>الزمر</span></label><label><input type="checkbox" name="s" value="40"><span>غافر</span></label><label><input type="checkbox" name="s" value="41"><span>فصلت</span></label><label><input type="checkbox" name="s" value="42"><span>الشورى</span></label><label><input type="checkbox" name="s" value="43"><span>الزخرف</span></label><label><input type="checkbox" name="s" value="44"><span>الدخان</span></label><label><input type="checkbox" name="s" value="45"><span>الجاثية</span></label><label><input type="checkbox" name="s" value="46"><span>الأحقاف</span></label><label><input type="checkbox" name="s" value="47"><span>محمد</span></label><label><input type="checkbox" name="s" value="48"><span>الفتح</span></label><label><input type="checkbox" name="s" value="49"><span>الحجرات</span></label><label><input type="checkbox" name="s" value="50"><span>ق</span></label><label><input type="checkbox" name="s" value="51"><span>الذاريات</span></label><label><input type="checkbox" name="s" value="52"><span>الطور</span></label><label><input type="checkbox" name="s" value="53"><span>النجم</span></label><label><input type="checkbox" name="s" value="54"><span>القمر</span></label><label><input type="checkbox" name="s" value="55"><span>الرحمن</span></label><label><input type="checkbox" name="s" value="56"><span>الواقعة</span></label><label><input type="checkbox" name="s" value="57"><span>الحديد</span></label><label><input type="checkbox" name="s" value="58"><span>المجادلة</span></label><label><input type="checkbox" name="s" value="59"><span>الحشر</span></label><label><input type="checkbox" name="s" value="60"><span>الممتحنة</span></label><label><input type="checkbox" name="s" value="61"><span>الصف</span></label><label><input type="checkbox" name="s" value="62"><span>الجمعة</span></label><label><input type="checkbox" name="s" value="63"><span>المنافقون</span></label><label><input type="checkbox" name="s" value="64"><span>التغابن</span></label><label><input type="checkbox" name="s" value="65"><span>الطلاق</span></label><label><input type="checkbox" name="s" value="66"><span>التحريم</span></label><label><input type="checkbox" name="s" value="67"><span>الملك</span></label><label><input type="checkbox" name="s" value="68"><span>القلم</span></label><label><input type="checkbox" name="s" value="69"><span>الحاقة</span></label><label><input type="checkbox" name="s" value="70"><span>المعارج</span></label><label><input type="checkbox" name="s" value="71"><span>نوح</span></label><label><input type="checkbox" name="s" value="72"><span>الجن</span></label><label><input type="checkbox" name="s" value="73"><span>المزمل</span></label><label><input type="checkbox" name="s" value="74"><span>المدثر</span></label><label><input type="checkbox" name="s" value="75"><span>القيامة</span></label><label><input type="checkbox" name="s" value="76"><span>الإنسان</span></label><label><input type="checkbox" name="s" value="77"><span>المرسلات</span></label><label><input type="checkbox" name="s" value="78"><span>النبأ</span></label><label><input type="checkbox" name="s" value="79"><span>النازعات</span></label><label><input type="checkbox" name="s" value="80"><span>عبس</span></label><label><input type="checkbox" name="s" value="81"><span>التكوير</span></label><label><input type="checkbox" name="s" value="82"><span>الانفطار</span></label><label><input type="checkbox" name="s" value="83"><span>المطففين</span></label><label><input type="checkbox" name="s" value="84"><span>الانشقاق</span></label><label><input type="checkbox" name="s" value="85"><span>البروج</span></label><label><input type="checkbox" name="s" value="86"><span>الطارق</span></label><label><input type="checkbox" name="s" value="87"><span>الأعلى</span></label><label><input type="checkbox" name="s" value="88"><span>الغاشية</span></label><label><input type="checkbox" name="s" value="89"><span>الفجر</span></label><label><input type="checkbox" name="s" value="90"><span>البلد</span></label><label><input type="checkbox" name="s" value="91"><span>الشمس</span></label><label><input type="checkbox" name="s" value="92"><span>الليل</span></label><label><input type="checkbox" name="s" value="93"><span>الضحى</span></label><label><input type="checkbox" name="s" value="94"><span>الشرح</span></label><label><input type="checkbox" name="s" value="95"><span>التين</span></label><label><input type="checkbox" name="s" value="96"><span>العلق</span></label><label><input type="checkbox" name="s" value="97"><span>القدر</span></label><label><input type="checkbox" name="s" value="98"><span>البينة</span></label><label><input type="checkbox" name="s" value="99"><span>الزلزلة</span></label><label><input type="checkbox" name="s" value="100"><span>العاديات</span></label><label><input type="checkbox" name="s" value="101"><span>القارعة</span></label><label><input type="checkbox" name="s" value="102"><span>التكاثر</span></label><label><input type="checkbox" name="s" value="103"><span>العصر</span></label><label><input type="checkbox" name="s" value="104"><span>الهمزة</span></label><label><input type="checkbox" name="s" value="105"><span>الفيل</span></label><label><input type="checkbox" name="s" value="106"><span>قريش</span></label><label><input type="checkbox" name="s" value="107"><span>الماعون</span></label><label><input type="checkbox" name="s" value="108"><span>الكوثر</span></label><label><input type="checkbox" name="s" value="109"><span>الكافرون</span></label><label><input type="checkbox" name="s" value="110"><span>النصر</span></label><label><input type="checkbox" name="s" value="111"><span>المسد</span></label><label><input type="checkbox" name="s" value="112"><span>الإخلاص</span></label><label><input type="checkbox" name="s" value="113"><span>الفلق</span></label><label><input type="checkbox" name="s" value="114"><span>الناس</span></label></div></details>
+  <p class="grp">السور</p>
+  <div class="chips" id="sur"><label><input type="checkbox" name="s" value="1"><span>الفاتحة</span></label><label><input type="checkbox" name="s" value="2"><span>البقرة</span></label><label><input type="checkbox" name="s" value="3"><span>آل عمران</span></label><label><input type="checkbox" name="s" value="4"><span>النساء</span></label><label><input type="checkbox" name="s" value="5"><span>المائدة</span></label><label><input type="checkbox" name="s" value="6"><span>الأنعام</span></label><label><input type="checkbox" name="s" value="7"><span>الأعراف</span></label><label><input type="checkbox" name="s" value="8"><span>الأنفال</span></label><label><input type="checkbox" name="s" value="9"><span>التوبة</span></label><label><input type="checkbox" name="s" value="10"><span>يونس</span></label><label><input type="checkbox" name="s" value="11"><span>هود</span></label><label><input type="checkbox" name="s" value="12"><span>يوسف</span></label><label><input type="checkbox" name="s" value="13"><span>الرعد</span></label><label><input type="checkbox" name="s" value="14"><span>إبراهيم</span></label><label><input type="checkbox" name="s" value="15"><span>الحجر</span></label><label><input type="checkbox" name="s" value="16"><span>النحل</span></label><label><input type="checkbox" name="s" value="17"><span>الإسراء</span></label><label><input type="checkbox" name="s" value="18"><span>الكهف</span></label><label><input type="checkbox" name="s" value="19"><span>مريم</span></label><label><input type="checkbox" name="s" value="20"><span>طه</span></label><label><input type="checkbox" name="s" value="21"><span>الأنبياء</span></label><label><input type="checkbox" name="s" value="22"><span>الحج</span></label><label><input type="checkbox" name="s" value="23"><span>المؤمنون</span></label><label><input type="checkbox" name="s" value="24"><span>النور</span></label><label><input type="checkbox" name="s" value="25"><span>الفرقان</span></label><label><input type="checkbox" name="s" value="26"><span>الشعراء</span></label><label><input type="checkbox" name="s" value="27"><span>النمل</span></label><label><input type="checkbox" name="s" value="28"><span>القصص</span></label><label><input type="checkbox" name="s" value="29"><span>العنكبوت</span></label><label><input type="checkbox" name="s" value="30"><span>الروم</span></label><label><input type="checkbox" name="s" value="31"><span>لقمان</span></label><label><input type="checkbox" name="s" value="32"><span>السجدة</span></label><label><input type="checkbox" name="s" value="33"><span>الأحزاب</span></label><label><input type="checkbox" name="s" value="34"><span>سبأ</span></label><label><input type="checkbox" name="s" value="35"><span>فاطر</span></label><label><input type="checkbox" name="s" value="36"><span>يس</span></label><label><input type="checkbox" name="s" value="37"><span>الصافات</span></label><label><input type="checkbox" name="s" value="38"><span>ص</span></label><label><input type="checkbox" name="s" value="39"><span>الزمر</span></label><label><input type="checkbox" name="s" value="40"><span>غافر</span></label><label><input type="checkbox" name="s" value="41"><span>فصلت</span></label><label><input type="checkbox" name="s" value="42"><span>الشورى</span></label><label><input type="checkbox" name="s" value="43"><span>الزخرف</span></label><label><input type="checkbox" name="s" value="44"><span>الدخان</span></label><label><input type="checkbox" name="s" value="45"><span>الجاثية</span></label><label><input type="checkbox" name="s" value="46"><span>الأحقاف</span></label><label><input type="checkbox" name="s" value="47"><span>محمد</span></label><label><input type="checkbox" name="s" value="48"><span>الفتح</span></label><label><input type="checkbox" name="s" value="49"><span>الحجرات</span></label><label><input type="checkbox" name="s" value="50"><span>ق</span></label><label><input type="checkbox" name="s" value="51"><span>الذاريات</span></label><label><input type="checkbox" name="s" value="52"><span>الطور</span></label><label><input type="checkbox" name="s" value="53"><span>النجم</span></label><label><input type="checkbox" name="s" value="54"><span>القمر</span></label><label><input type="checkbox" name="s" value="55"><span>الرحمن</span></label><label><input type="checkbox" name="s" value="56"><span>الواقعة</span></label><label><input type="checkbox" name="s" value="57"><span>الحديد</span></label><label><input type="checkbox" name="s" value="58"><span>المجادلة</span></label><label><input type="checkbox" name="s" value="59"><span>الحشر</span></label><label><input type="checkbox" name="s" value="60"><span>الممتحنة</span></label><label><input type="checkbox" name="s" value="61"><span>الصف</span></label><label><input type="checkbox" name="s" value="62"><span>الجمعة</span></label><label><input type="checkbox" name="s" value="63"><span>المنافقون</span></label><label><input type="checkbox" name="s" value="64"><span>التغابن</span></label><label><input type="checkbox" name="s" value="65"><span>الطلاق</span></label><label><input type="checkbox" name="s" value="66"><span>التحريم</span></label><label><input type="checkbox" name="s" value="67"><span>الملك</span></label><label><input type="checkbox" name="s" value="68"><span>القلم</span></label><label><input type="checkbox" name="s" value="69"><span>الحاقة</span></label><label><input type="checkbox" name="s" value="70"><span>المعارج</span></label><label><input type="checkbox" name="s" value="71"><span>نوح</span></label><label><input type="checkbox" name="s" value="72"><span>الجن</span></label><label><input type="checkbox" name="s" value="73"><span>المزمل</span></label><label><input type="checkbox" name="s" value="74"><span>المدثر</span></label><label><input type="checkbox" name="s" value="75"><span>القيامة</span></label><label><input type="checkbox" name="s" value="76"><span>الإنسان</span></label><label><input type="checkbox" name="s" value="77"><span>المرسلات</span></label><label><input type="checkbox" name="s" value="78"><span>النبأ</span></label><label><input type="checkbox" name="s" value="79"><span>النازعات</span></label><label><input type="checkbox" name="s" value="80"><span>عبس</span></label><label><input type="checkbox" name="s" value="81"><span>التكوير</span></label><label><input type="checkbox" name="s" value="82"><span>الانفطار</span></label><label><input type="checkbox" name="s" value="83"><span>المطففين</span></label><label><input type="checkbox" name="s" value="84"><span>الانشقاق</span></label><label><input type="checkbox" name="s" value="85"><span>البروج</span></label><label><input type="checkbox" name="s" value="86"><span>الطارق</span></label><label><input type="checkbox" name="s" value="87"><span>الأعلى</span></label><label><input type="checkbox" name="s" value="88"><span>الغاشية</span></label><label><input type="checkbox" name="s" value="89"><span>الفجر</span></label><label><input type="checkbox" name="s" value="90"><span>البلد</span></label><label><input type="checkbox" name="s" value="91"><span>الشمس</span></label><label><input type="checkbox" name="s" value="92"><span>الليل</span></label><label><input type="checkbox" name="s" value="93"><span>الضحى</span></label><label><input type="checkbox" name="s" value="94"><span>الشرح</span></label><label><input type="checkbox" name="s" value="95"><span>التين</span></label><label><input type="checkbox" name="s" value="96"><span>العلق</span></label><label><input type="checkbox" name="s" value="97"><span>القدر</span></label><label><input type="checkbox" name="s" value="98"><span>البينة</span></label><label><input type="checkbox" name="s" value="99"><span>الزلزلة</span></label><label><input type="checkbox" name="s" value="100"><span>العاديات</span></label><label><input type="checkbox" name="s" value="101"><span>القارعة</span></label><label><input type="checkbox" name="s" value="102"><span>التكاثر</span></label><label><input type="checkbox" name="s" value="103"><span>العصر</span></label><label><input type="checkbox" name="s" value="104"><span>الهمزة</span></label><label><input type="checkbox" name="s" value="105"><span>الفيل</span></label><label><input type="checkbox" name="s" value="106"><span>قريش</span></label><label><input type="checkbox" name="s" value="107"><span>الماعون</span></label><label><input type="checkbox" name="s" value="108"><span>الكوثر</span></label><label><input type="checkbox" name="s" value="109"><span>الكافرون</span></label><label><input type="checkbox" name="s" value="110"><span>النصر</span></label><label><input type="checkbox" name="s" value="111"><span>المسد</span></label><label><input type="checkbox" name="s" value="112"><span>الإخلاص</span></label><label><input type="checkbox" name="s" value="113"><span>الفلق</span></label><label><input type="checkbox" name="s" value="114"><span>الناس</span></label></div>
   <p class="small" id="note"></p>
 
-  <p class="step">٤. عدد الاختبارات</p>
+  <p class="step">٤. عدد الاختبارات <span class="small" id="perq">(من كل اختبار اخترته)</span></p>
   <div class="chips"><label><input type="radio" name="n" value="3"><span>٣</span></label><label><input type="radio" name="n" value="5" checked><span>٥</span></label><label><input type="radio" name="n" value="10"><span>١٠</span></label></div>
 
   <button type="button" class="go" id="make">أنشئ رابط التكليف</button>
   <p class="err" id="err" aria-live="polite"></p>
 
   <div class="out" id="out" hidden>
-    <b>رابط التكليف جاهز</b>
-    <p class="link" id="link"></p>
+    <b>التكليف جاهز</b>
+    <p class="small">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة الحلقة.</p>
     <div class="btns">
       <a class="btn" id="wa" target="_blank" rel="noopener">أرسل للطلاب عبر واتساب</a>
-      <button type="button" class="btn ghost" id="copy">نسخ الرابط</button>
-      <a class="btn ghost" id="try" target="_blank" rel="noopener">جرّبه بنفسك</a>
+      <a class="btn ghost" id="try">جرّب التكليف كأنك طالب</a>
     </div>
-    <p class="done" id="done" aria-live="polite"></p>
-    <p class="small">لكل طالب محاولة واحدة على جهازه. النتائج تصلك من الطلاب مباشرة، ولا تُحفظ أسماؤهم أو نتائجهم على الموقع.</p>
+    <p class="small">لكل طالب محاولة واحدة على جهازه. النتائج تصلك من الطلاب مباشرة، ولا تُحفظ أسماؤهم أو نتائجهم على الموقع. وحين تصلك، الصقها في «نتائج الطلاب» أسفل هذه الصفحة.</p>
   </div>
+
+  <hr class="sep">
+  <h1 id="results">نتائج الطلاب</h1>
+  <p>انسخ رسائل النتائج التي وصلتك في واتساب (رسالة أو أكثر، أو المحادثة كلها) والصقها هنا، فتظهر في جدول واحد.</p>
+  <textarea id="paste" placeholder="الصق رسائل النتائج هنا"></textarea>
+  <p class="step" style="font-size:1rem">أسماء طلاب الحلقة <span class="small">(اختياري: اسم في كل سطر، لتعرف من لم يرسل)</span></p>
+  <textarea id="roster" class="names" placeholder="أحمد&#10;سارة&#10;يوسف"></textarea>
+  <button type="button" class="go" id="collect">اعرض النتائج</button>
+  <p class="err" id="err2" aria-live="polite"></p>
+  <div class="res" id="res"></div>
+  <p class="small">كل هذا يتم على جهازك فقط؛ لا يُرسل شيء إلى الموقع.</p>
 </div>
 <script>
 const SITE = 'https://quranic-verses.github.io/quranic-tests/';
@@ -122,13 +150,16 @@ function selLabel(j, s){
   j = j.slice().sort((a, b) => a - b); const parts = [];
   for (let i = 0; i < j.length; i++) { let k = i; while (k + 1 < j.length && j[k + 1] === j[k] + 1) k++;
     parts.push(k > i ? toAr(j[i]) + '–' + toAr(j[k]) : toAr(j[i])); i = k; }
-  const sl = s.length ? (s.length === 1 ? 'سورة ' + SUR[s[0] - 1] : toAr(s.length) + ' سور') : '';
+  // the surahs by name (a long list: the first eight, then how many more)
+  const nm = s.slice().sort((a, b) => a - b).map(x => SUR[x - 1]);
+  const sl = !nm.length ? '' : nm.length === 1 ? 'سورة ' + nm[0] : 'سور ' + (nm.length > 8 ? nm.slice(0, 8).join('، ') + ' و' + toAr(nm.length - 8) + ' سور أخرى' : nm.slice(0, -1).join('، ') + ' و' + nm[nm.length - 1]);
   if (!j.length) return sl;
   return (j.length > 1 ? 'الأجزاء ' : 'الجزء ') + parts.join('، ') + (sl ? ' + ' + sl : '');
 }
 function note(){
-  const g = vals('g')[0];
-  $('note').textContent = (g === 'surah' || g === 'farq') ? 'في هذا الاختبار اختر أكثر من جزء: أسئلته تحتاج مواضع في عدة سور.' : '';
+  const g = vals('g');
+  $('note').textContent = (g.includes('surah') || g.includes('farq')) ? 'في «أين ورد؟» و«ميّز بينهما» اختر أكثر من جزء: أسئلتهما تحتاج مواضع في عدة سور.' : '';
+  $('perq').hidden = g.length < 2;
 }
 document.addEventListener('change', e => { if (e.target.name === 'g') note(); $('out').hidden = true; $('err').textContent = ''; });
 note();
@@ -136,22 +167,69 @@ const b64 = s => { const u = new TextEncoder().encode(s); let b = ''; u.forEach(
   return btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
 let last = '';
 $('make').addEventListener('click', () => {
-  const g = vals('g')[0], j = vals('j'), s = vals('s'), n = vals('n')[0] || 5, t = $('title').value.trim();
+  const g = vals('g'), j = vals('j'), s = vals('s'), n = vals('n')[0] || 5, t = $('title').value.trim();
+  if (!g.length) { $('err').textContent = 'اختر اختبارًا واحدًا على الأقل.'; $('out').hidden = true; return; }
   if (!j.length && !s.length) { $('err').textContent = 'اختر جزءًا أو سورة على الأقل.'; $('out').hidden = true; return; }
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const hash = '#hw=' + b64(JSON.stringify({ i: id, t, g, n, j, s }));
-  last = SITE + FILE[g] + hash;
-  $('link').textContent = last;
-  const msg = (t ? 'تكليف: ' + t + '\n' : 'تكليف\n') + NAME[g] + ' · ' + selLabel(j, s) + ' · ' + toAr(n) + ' اختبارات'
+  last = SITE + FILE[g[0]] + hash;   // the first quiz's page; the student moves on to the others from there
+  const msg = (t ? 'تكليف: ' + t + '\n' : 'تكليف\n') + g.map(x => NAME[x]).join('، ') + '\n' + selLabel(j, s) + ' · ' + toAr(n) + ' اختبارات' + (g.length > 1 ? ' من كل منها' : '')
     + '\nافتح الرابط واكتب اسمك، وفي النهاية أرسل لي نتيجتك:\n' + last;
   $('wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
-  $('try').href = (FILE[g] || './') + hash;   // the same page next to this one (also works in a preview)
-  $('done').textContent = ''; $('out').hidden = false; $('out').scrollIntoView({ block: 'nearest' });
+  $('try').href = (FILE[g[0]] || './') + hash;   // the same page next to this one (also works in a preview)
+  $('out').hidden = false; $('out').scrollIntoView({ block: 'nearest' });
 });
-$('copy').addEventListener('click', () => {
-  const ok = () => { $('done').textContent = 'تم نسخ الرابط'; }, fail = () => { $('done').textContent = 'انسخ الرابط من الأعلى'; };
-  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(last).then(ok, fail); else fail();
+// ---------- «نتائج الطلاب»: read the pasted WhatsApp results into one table (all on this device) ----------
+const toN = s => +String(s).replace(/[٠-٩]/g, d => AR.indexOf(d));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const after = (line, key) => line.slice(line.indexOf(key) + key.length).trim();
+function parse(text){
+  const out = []; let title = '', cur = null;
+  text.split(/\r?\n/).forEach(raw => {
+    const line = raw.replace(/[\u200e\u200f\u202a-\u202e]/g, '');
+    if (line.includes('الطالب:')) { cur = { title, name: after(line, 'الطالب:'), sel: '', parts: [], n: null, t: null, miss: [], id: '' }; out.push(cur); return; }
+    if (line.includes('رمز التكليف:')) { if (cur) cur.id = after(line, 'رمز التكليف:').split(/\s/)[0]; cur = null; return; }
+    if (/(^|[\s:\]])تكليف(:|\s*$)/.test(line)) { title = line.includes('تكليف:') ? after(line, 'تكليف:') : ''; cur = null; return; }
+    if (!cur) return;
+    if (line.includes('النتيجة:')) { const m = after(line, 'النتيجة:').match(/([0-9٠-٩]+)\s*من\s*([0-9٠-٩]+)/); if (m) { cur.n = toN(m[1]); cur.t = toN(m[2]); } return; }
+    if (line.includes('الأسئلة من:')) { cur.sel = after(line, 'الأسئلة من:'); return; }
+    const q = line.match(/^\s*([^:\-–•][^:]*?):\s*(?:([0-9٠-٩]+)\s*من\s*([0-9٠-٩]+)|(لا أسئلة كافية))\s*$/);
+    if (q) { cur.parts.push(q[4] ? { q: q[1].trim(), skip: true } : { q: q[1].trim(), n: toN(q[2]), t: toN(q[3]) }); return; }
+    const d = line.match(/^\s*[-–•]\s*(.+?)\s*$/);   // a missed question
+    if (d) { cur.miss.push({ l: d[1].replace(/\s*\([0-9٠-٩]+\s*من\s*[0-9٠-٩]+\)$/, '') }); return; }
+  });
+  out.forEach(r => { if (r.t === null && r.parts.length) { r.n = r.parts.reduce((a, p) => a + (p.n || 0), 0); r.t = r.parts.reduce((a, p) => a + (p.t || 0), 0); } });
+  return out.filter(r => r.name && r.t);
+}
+const pct = r => Math.round(100 * r.n / r.t);
+$('collect').addEventListener('click', () => {
+  const recs = parse($('paste').value), roster = $('roster').value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  if (!recs.length) { $('err2').textContent = 'لم أجد نتائج في النص الملصق. انسخ رسائل النتائج كما وصلتك.'; $('res').innerHTML = ''; return; }
+  $('err2').textContent = '';
+  // one table per assignment (by its code, or its title and quiz)
+  const groups = new Map();
+  recs.forEach(r => { const k = r.id || r.title + '|' + r.sel; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r); });
+  let html = '';
+  groups.forEach(list => {
+    const seen = new Map(); list.forEach(r => { if (!seen.has(r.name)) seen.set(r.name, r); });   // a result sent twice counts once
+    const rows = [...seen.values()].sort((a, b) => pct(b) - pct(a));
+    const avg = Math.round(rows.reduce((a, r) => a + pct(r), 0) / rows.length);
+    const missing = roster.filter(n => !seen.has(n));
+    const cnt = new Map(); rows.forEach(r => r.miss.forEach(m => cnt.set(m.l, (cnt.get(m.l) || 0) + 1)));
+    const top = [...cnt.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const g = rows[0], quizzes = g.parts.map(p => p.q), many = quizzes.length > 1;
+    const cell = (r, q) => { const p = r.parts.find(x => x.q === q); return !p ? '' : p.skip ? '—' : toAr(p.n) + ' من ' + toAr(p.t); };
+    html += `<h3>${esc(g.title || 'تكليف')}</h3><p class="meta">${esc(quizzes.join('، '))}${g.sel ? ' · ' + esc(g.sel) : ''} · وصلت ${rows.length === 1 ? 'نتيجة واحدة' : rows.length === 2 ? 'نتيجتان' : toAr(rows.length) + (rows.length > 10 ? ' نتيجة' : ' نتائج')}${roster.length ? ' من ' + toAr(roster.length) : ''} · المتوسط ${toAr(avg)}٪</p>`
+      + '<div style="overflow-x:auto"><table><thead><tr><th>الطالب</th>' + (many ? quizzes.map(q => `<th>${esc(q)}</th>`).join('') : '') + '<th>' + (many ? 'المجموع' : 'النتيجة') + '</th><th>أخطأ في</th></tr></thead><tbody>'
+      + rows.map(r => `<tr class="${r.n === r.t ? 'full' : pct(r) < 60 ? 'low' : ''}"><td>${esc(r.name)}</td>${many ? quizzes.map(q => `<td class="part">${cell(r, q)}</td>`).join('') : ''}<td class="num">${toAr(r.n)} من ${toAr(r.t)}<span class="bar" style="width:${Math.max(4, pct(r) * .5)}px"></span></td><td>${r.miss.length ? r.miss.map(m => esc(m.l)).join('، ') : '—'}</td></tr>`).join('')
+      + missing.map(n => `<tr class="miss"><td>${esc(n)}</td>${many ? quizzes.map(() => '<td></td>').join('') : ''}<td class="num">لم يرسل</td><td></td></tr>`).join('')
+      + '</tbody></table></div>'
+      + (top.length ? '<p class="step" style="font-size:1rem">أكثر ما أخطأ فيه الطلاب</p><ol class="top">' + top.map(([l, c]) => `<li>${esc(l)} <span class="small">(${c === 1 ? 'طالب واحد' : c === 2 ? 'طالبان' : toAr(c) + ' طلاب'})</span></li>`).join('') + '</ol>' : '');
+  });
+  $('res').innerHTML = html;
+  $('res').scrollIntoView({ block: 'start', behavior: 'smooth' });
 });
+
 </script>
 </body>
 </html>
