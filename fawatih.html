@@ -164,6 +164,13 @@ body:has(#ibar:not([hidden])) .wrap{padding-bottom:130px}
 .ix{background:transparent;border:none;color:var(--muted);font-size:1.4rem;line-height:1;padding:4px 6px}
 .over .msg:empty{display:none}
 .outnote{margin:0;font-size:.9rem;color:var(--muted);line-height:1.8;grid-column:1/-1}
+.hwnext{text-align:center;border:2px solid var(--accent);border-radius:14px;padding:12px;margin:0 0 12px;background:var(--surface)}
+.hwnext p{margin:0 0 10px;font-weight:700}
+.hwscore{font-family:var(--f-display);font-size:2rem;color:var(--accent);text-align:center;margin:6px 0}
+#hwBox .panel{text-align:center} #hwBox .ghost{margin-top:8px}
+a.hwsend{display:block;text-decoration:none;text-align:center;background:var(--accent);color:var(--accent-ink);font-weight:700;border-radius:12px;padding:12px;margin-top:6px}
+.hwname{display:block;margin:12px 0 6px;font-weight:600}
+.hwname input{display:block;width:100%;margin-top:6px;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 .gbtn .qhelp{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid currentColor;font-size:.72rem;font-weight:700;line-height:1;vertical-align:1px;margin-inline-start:3px;cursor:pointer}
 #help .hsub{margin:14px 0 4px;font-size:1rem}
 #help .hsec{margin:12px 0 6px;font-size:.82rem;font-weight:700;color:var(--muted)}
@@ -445,7 +452,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     التلاوة: الشيخ محمود خليل الحصري، عبر <a href="https://alquran.cloud" target="_blank" rel="noopener">Islamic Network</a> ·
     النص: مصحف المدينة (حفص) من <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil Project</a> (tanzil.net) ·
     <a href="https://quranic-verses.github.io/quranic-tests/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> ·
-    <a href="support.html">ادعم المشروع</a>
+    <a href="support.html">ادعم المشروع</a> ·
+    <a href="teacher.html">للمعلّمين: أنشئ تكليفًا</a>
   </footer>
 </div>
 
@@ -467,6 +475,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
         <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
         <li><b>تلميح:</b> يساعدك إذا تعثرت.</li>
         <li><b>الاختبارات السابقة:</b> حُلّ أي اختبار فاتك.</li>
+        <li><b>للمعلّمين:</b> أنشئ تكليفًا لطلابك من رابط «للمعلّمين» أسفل الصفحة.</li>
       </ul>
       <h3 class="hsub">طريقة كل اختبار</h3>
     </div>
@@ -1448,6 +1457,7 @@ $('arch').addEventListener('click', e => {
 // ---------- today's results of this section in one message ----------
 function cairoDateKey(){ const c = cairoNow(); return c.year + '-' + c.month + '-' + c.day; }
 function saveSummary(n, tot, grid){
+  hwRecord(arguments[0], arguments[1]);   // an assignment test: keep its result
   if (S.practice || S.archive || !S.done) return;
   store.set('sum-' + SK(GAME) + '-' + cairoDateKey(), { num: S.idx + 1, n, total: tot, grid });
 }
@@ -1644,11 +1654,115 @@ showStrip();
 $('installBtn').addEventListener('click', doInstall);
 if (STANDALONE) $('installNote').hidden = true;
 
+// the teacher's assignment (تكليف), when the page was opened from its link
+const HWA = { name: C.name, start: it => load(0, true, false, Array(C.items).fill(it)), label: () => {
+  const q = QD.q[S.items[0]], k = q[0];
+  if (GAME !== 'rattib') return ref(k);
+  const [s, a] = k.split(':').map(Number); return 'سورة ' + SURAH[s] + ' · الآيات ' + toAr(a) + '–' + toAr(a + q[1] - 1); } };
+// ---------- «تكليف»: a teacher's assignment link (page#hw=…, made on teacher.html) ----------
+// The link holds: i = id, t = title, g = quiz, n = number of tests, j = juz, s = surahs.
+// Every student gets the same tests (shuffled with the id), one attempt per device, and sends the result by WhatsApp.
+// Each page defines HWA = { name, label(item) } before this part (see the page's own code).
+const HW = (() => {
+  const m = location.hash.match(/^#hw=([A-Za-z0-9_-]+)/); if (!m) return null;
+  try {
+    const b = atob(m[1].replace(/-/g, '+').replace(/_/g, '/'));
+    const d = JSON.parse(new TextDecoder().decode(Uint8Array.from(b, c => c.charCodeAt(0))));
+    if (!d || !d.i || !d.g || !(d.n > 0)) return null;
+    d.j = Array.isArray(d.j) ? d.j.map(Number) : []; d.s = Array.isArray(d.s) ? d.s.map(Number) : [];
+    d.n = Math.min(20, Math.round(d.n)); d.t = String(d.t || '').slice(0, 80);
+    return d;
+  } catch (e) { return null; }
+})();
+const HW_KEY = HW ? 'hw-' + HW.i : '';
+let hwTests = [];
+const hwState = () => store.get(HW_KEY, { name: '', res: [] });
+function hwSel(){ const keep = pick; pick = { mode: 'juz', juz: HW.j, surahs: HW.s, game: GAME }; const l = pickLabel(); pick = keep; return l; }
+function hwText(){
+  const st = hwState(), n = st.res.reduce((a, r) => a + r.n, 0), t = st.res.reduce((a, r) => a + r.t, 0);
+  const miss = st.res.filter(r => r.n < r.t);
+  const lines = ['تكليف' + (HW.t ? ': ' + HW.t : ''), 'الطالب: ' + st.name, HWA.name + ' · ' + hwSel(),
+    'النتيجة: ' + toAr(n) + ' من ' + toAr(t)];
+  if (miss.length) { lines.push('', 'أخطأ في:'); miss.forEach(r => lines.push('- ' + r.l + ' (' + toAr(r.n) + ' من ' + toAr(r.t) + ')')); }
+  else lines.push('', 'كل الإجابات صحيحة ✅');
+  lines.push('', 'اختبارات قرآنية');
+  return lines.join('\n');
+}
+function hwOverlay(html){
+  let o = $('hwBox');
+  if (!o) { o = document.createElement('div'); o.className = 'overlay'; o.id = 'hwBox'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); document.body.appendChild(o); }
+  o.innerHTML = '<div class="panel" dir="rtl" lang="ar">' + html + '</div>'; o.hidden = false;
+  return o;
+}
+function hwEnd(){
+  const st = hwState(), n = st.res.reduce((a, r) => a + r.n, 0), t = st.res.reduce((a, r) => a + r.t, 0);
+  const o = hwOverlay(`<h2>انتهى التكليف</h2><p class="lead">${esc(HW.t || HWA.name)}</p>
+    <p class="hwscore">${toAr(n)} من ${toAr(t)}</p>
+    <p class="small">أرسل نتيجتك لمعلّمك. لا يمكن إعادة هذا التكليف.</p>
+    <a class="start hwsend" href="https://wa.me/?text=${encodeURIComponent(hwText())}" target="_blank" rel="noopener">أرسل النتيجة عبر واتساب</a>
+    <button type="button" class="ghost" id="hwCopy">نسخ النتيجة</button>
+    <button type="button" class="ghost" id="hwClose">إغلاق</button><p class="done" id="hwMsg" aria-live="polite"></p>`);
+  o.querySelector('#hwCopy').addEventListener('click', () => {
+    const ok = () => { $('hwMsg').textContent = 'تم نسخ النتيجة'; }, fail = () => { $('hwMsg').textContent = hwText(); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(hwText()).then(ok, fail); else fail();
+  });
+  o.querySelector('#hwClose').addEventListener('click', () => { o.hidden = true; });
+}
+function hwNext(){
+  const st = hwState(), k = st.res.length;
+  if (k >= hwTests.length) { hwEnd(); return; }
+  HWA.start(hwTests[k]); S.hwk = k;
+  $('pwhat').parentNode.innerHTML = 'تكليف' + (HW.t ? ' «' + esc(HW.t) + '»' : '') + ': <b id="pwhat"></b>';
+  $('pwhat').textContent = 'الاختبار ' + toAr(k + 1) + ' من ' + toAr(hwTests.length);
+  $('again').hidden = $('change').hidden = true;
+  window.scrollTo(0, 0);
+}
+// called from saveSummary when a test ends: keep its result, then offer the next test (or the end)
+function hwRecord(n, t){
+  if (!HW || !S || !S.practice || !S.done || S.hwk === undefined) return;
+  const st = hwState();
+  if (st.res.length === S.hwk) { st.res.push({ n, t, l: HWA.label() }); store.set(HW_KEY, st); }
+  let box = $('hwNextBox');
+  if (!box) { box = document.createElement('div'); box.id = 'hwNextBox'; box.className = 'hwnext'; $('reveal').prepend(box); }
+  const left = hwTests.length - st.res.length;
+  box.innerHTML = left > 0
+    ? `<p>أنهيت الاختبار ${toAr(st.res.length)} من ${toAr(hwTests.length)}</p><button type="button" class="start" id="hwGo">الاختبار التالي</button>`
+    : `<p>أنهيت كل اختبارات التكليف</p><button type="button" class="start" id="hwGo">أرسل النتيجة لمعلّمك</button>`;
+  box.hidden = false;
+  box.querySelector('#hwGo').onclick = () => { box.hidden = true; hwNext(); };
+}
+function hwStart(){
+  if (HW.g !== GAME) { location.replace(pageOfGame(HW.g) + location.hash); return; }   // the link names another quiz's page
+  if (!$('welcome').hidden) $('welcome').hidden = true;
+  const keep = pick; pick = { mode: 'juz', juz: HW.j, surahs: HW.s, game: GAME };
+  let list = pool(); pick = keep;
+  if (!list.length) { hwOverlay('<h2>تكليف</h2><p>لا توجد أسئلة كافية لهذا الاختبار في الأجزاء والسور المختارة. أخبر معلّمك ليختار أجزاء أكثر.</p><button type="button" class="start" onclick="this.closest(\'.overlay\').hidden=true">حسنًا</button>'); return; }
+  // the same order for every student: shuffle with the assignment id
+  let h = 2166136261; for (const c of HW.i) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+  const rnd = () => (h = (Math.imul(h, 1103515245) + 12345) >>> 0) / 4294967296;
+  list = list.slice(); for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+  hwTests = Array.from({ length: HW.n }, (_, k) => list[k % list.length]);
+  const st = hwState();
+  if (st.res.length >= hwTests.length) { hwEnd(); return; }
+  if (st.name) { hwNext(); return; }
+  const o = hwOverlay(`<h2>تكليف من معلّمك</h2>${HW.t ? '<p class="lead">' + esc(HW.t) + '</p>' : ''}
+    <p>${esc(HWA.name)} · ${esc(hwSel())} · ${hwTests.length === 1 ? 'اختبار واحد' : hwTests.length === 2 ? 'اختباران' : toAr(hwTests.length) + (hwTests.length > 10 ? ' اختبارًا' : ' اختبارات')}</p>
+    <label class="hwname">اكتب اسمك <input type="text" id="hwName" maxlength="40" autocomplete="name"></label>
+    <p class="small">لك محاولة واحدة، وفي النهاية ترسل نتيجتك لمعلّمك.</p>
+    <button type="button" class="start" id="hwBegin">ابدأ</button>`);
+  const go = () => { const v = $('hwName').value.trim(); if (!v) { $('hwName').focus(); return; }
+    store.set(HW_KEY, { name: v, res: [] }); o.hidden = true; hwNext(); };
+  $('hwBegin').addEventListener('click', go);
+  $('hwName').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  $('hwName').focus();
+}
+
 load(todayIndex(), false);
 markTabs();
 if (FIRST_VISIT) showWelcome();
 if (WANT_TRAIN) pick.game = GAME;
 if (WANT_TRAIN) { if (store.get('mut-pick', null) && pool().length) startPractice(); else showPick(); }
+if (HW) hwStart();
 })();
 </script>
 
