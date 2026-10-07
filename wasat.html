@@ -1222,7 +1222,7 @@ function questionHtml(Q){
   if (GAME === 'lam') return '<p class="qask">أيّ هذه الكلمات وردت في القرآن مرة واحدة؟</p>';
   if (GAME === 'makki') return `<p class="qbig">سورة ${SURAH[Q.s]}</p><p class="qask">مكية أم مدنية؟</p>`;
   if (GAME === 'fawatih') return `<p class="qask">ما السورة التي تبدأ بهذه الكلمات؟</p><p class="qtext">${openingWords(Q.s, Q.n).map(esc).join(' ')} …</p>`;
-  if (GAME === 'tartib') return `<p class="qbig">سورة ${SURAH[Q.s]}</p><p class="qask">${Q.dir > 0 ? '٢. ما السورة التي بعدها في المصحف؟' : '١. ما السورة التي قبلها في المصحف؟'}</p>`;
+  if (GAME === 'tartib') return `<p class="qbig">سورة ${SURAH[Q.s]}</p>`;   // the question itself is under the box, like the second one
   if (GAME === 'asmaa') return `<p class="qask">ما السورة التي تُعرف بهذا الاسم؟</p><p class="qbig">«${esc(Q.alt)}»</p>`;
   if (GAME === 'naqisa') {
     const w = toks(Q.key);
@@ -1302,7 +1302,7 @@ function roundHtml(Q, a, removed, opt){
   const note = a && GAME === 'makki' && Q.disputed ? '<p class="inote2">على ما في مصحف المدينة، وفيها خلاف بين العلماء.</p>' : '';
   const verse = keep && GAME !== 'makki' && !opt.noVerse ? '<div class="answers">' + openVerse(Q) + '</div>' : '';
   const sub = `<p class="qask qsub">${GAME === 'tartib' ? (Q.dir > 0 ? '٢. ما السورة التي بعدها في المصحف؟' : '١. ما السورة التي قبلها في المصحف؟') : Q.dir > 0 ? '٢. ما الآية التي بعدها؟' : '١. ما الآية التي قبلها؟'}</p>`;
-  const head = opt.noCard ? sub : `<section class="card">${questionHtml(Q)}</section>` + (GAME === 'qabl' ? sub : '');
+  const head = opt.noCard ? sub : `<section class="card">${questionHtml(Q)}</section>` + (GAME === 'qabl' || GAME === 'tartib' ? sub : '');
   return `${head}<div class="choices${GAME === 'qabl' ? ' long' : ''}${GAME === 'lam' ? ' three' : ''}${SURAH_OPTS.includes(GAME) || GAME === 'makki' ? ' names' : ''}">${btns}</div>${note}${verse}`;
 }
 function renderMcq(){
