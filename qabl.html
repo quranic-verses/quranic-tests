@@ -1202,7 +1202,8 @@ function trioCard(it, aBefore, aAfter){
   const k = QD.q[it][0], [s, a] = k.split(':').map(Number), bk = s + ':' + (a - 1), fk = s + ':' + (a + 1);
   const end = n => ' <span class="anum">﴿' + toAr(n) + '﴾</span>';
   // the box is just the three verses (the player's answers are listed under it: «إجاباتك»)
-  const text = toks(bk).map(esc).join(' ') + end(a - 1) + ' ' + toks(k).map(esc).join(' ') + end(a) + ' ' + toks(fk).map(esc).join(' ') + end(a + 1);
+  // the two answers (the verse before and the verse after) in green, as after the first question
+  const text = '<mark class="qprev">' + toks(bk).map(esc).join(' ') + '</mark>' + end(a - 1) + ' ' + toks(k).map(esc).join(' ') + end(a) + ' <mark class="qprev">' + toks(fk).map(esc).join(' ') + '</mark>' + end(a + 1);
   const keys = [bk, k, fk].join('|'), on = playing === keys;
   const btn = `<span class="acts">${tafsirLink(k)}<button type="button" class="play${on ? ' on' : ''}" data-key="${keys}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآيات الثلاث بصوت الحصري'}">${on ? '⏸' : '▶'}</button></span>`;
   return `<div class="ayah trio"><div class="head"><div class="ref">سورة ${SURAH[s]} · الآيات ${toAr(a - 1)}–${toAr(a + 1)}`
@@ -1253,12 +1254,13 @@ function renderMcq(){
     $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [], { noCard: GAME === 'tartib' && k > 0 })).join('');
   } else if (GAME === 'qabl' && S.ans.length === 1) {
     // «ما قبلها؟ ما بعدها؟» after the first answer: the choices go, and the verse before joins the question's own box,
-    // before it as in the mushaf (green if the answer was right, red if not); the second question follows
+    // before it as in the mushaf, in green (the right verse); under the box «إجاباتك» shows what was chosen (✓ or ✗); the second question follows
     const a0 = S.ans[0], Q0 = question(...R[0]), [s, a] = Q0.key.split(':').map(Number);
     const end = n => ' <span class="anum">﴿' + toAr(n) + '﴾</span>';
     $('stage').innerHTML = `<section class="card"><div class="facts"><span class="chip">سورة ${SURAH[s]} · الآيتان ${toAr(a - 1)}–${toAr(a)}</span>`
-      + (a0.ok ? '<span class="qres ok">✓ أصبت</span>' : '<span class="qres bad">✗ أخطأت</span>') + playOnly(Q0.target + '|' + Q0.key) + '</div>'
-      + `<p class="qtext"><mark class="qprev${a0.ok ? '' : ' miss'}">${toks(Q0.target).map(esc).join(' ')}</mark>${end(a - 1)} ${toks(Q0.key).map(esc).join(' ')}${end(a)}</p></section>`
+      + playOnly(Q0.target + '|' + Q0.key) + '</div>'
+      + `<p class="qtext"><mark class="qprev">${toks(Q0.target).map(esc).join(' ')}</mark>${end(a - 1)} ${toks(Q0.key).map(esc).join(' ')}${end(a)}</p></section>`
+      + yourAnswers(R[0][0], a0, null)
       + roundHtml(question(...R[1]), null, S.hidden, { noCard: true });
   } else if (GAME === 'tartib' && S.ans.length === 1) {
     // «ترتيب السور» and «ما قبلها؟ ما بعدها؟»: the first answer stays on screen (marked), and the second question follows right under it
