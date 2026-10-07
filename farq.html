@@ -414,7 +414,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="grp">متشابهات القرآن الكريم</p>
       <div class="tchips"><label><input type="checkbox" name="tg" value="surah"><span>أين ورد؟</span></label><label><input type="checkbox" name="tg" value="farq"><span>ميّز بينهما</span></label></div>
       <p class="grp">تثبيت الحفظ</p>
-      <div class="tchips"><label><input type="checkbox" name="tg" value="akhir"><span>آخر الآية</span></label><label><input type="checkbox" name="tg" value="qabl" checked><span>ما قبلها؟ ما بعدها؟</span></label><label><input type="checkbox" name="tg" value="rattib"><span>رتّب الآيات</span></label></div>
+      <div class="tchips"><label><input type="checkbox" name="tg" value="awwal"><span>أول الآية</span></label><label><input type="checkbox" name="tg" value="wasat"><span>وسط الآية</span></label><label><input type="checkbox" name="tg" value="akhir"><span>آخر الآية</span></label><label><input type="checkbox" name="tg" value="qabl" checked><span>ما قبلها؟ ما بعدها؟</span></label><label><input type="checkbox" name="tg" value="rattib"><span>رتّب الآيات</span></label></div>
       <p class="tstep">٣. الأجزاء والسور</p>
       <p class="grp">الأجزاء</p>
       <div class="tchips juz"><label><input type="checkbox" name="tj" value="1"><span>١</span></label><label><input type="checkbox" name="tj" value="2"><span>٢</span></label><label><input type="checkbox" name="tj" value="3"><span>٣</span></label><label><input type="checkbox" name="tj" value="4"><span>٤</span></label><label><input type="checkbox" name="tj" value="5"><span>٥</span></label><label><input type="checkbox" name="tj" value="6"><span>٦</span></label><label><input type="checkbox" name="tj" value="7"><span>٧</span></label><label><input type="checkbox" name="tj" value="8"><span>٨</span></label><label><input type="checkbox" name="tj" value="9"><span>٩</span></label><label><input type="checkbox" name="tj" value="10"><span>١٠</span></label><label><input type="checkbox" name="tj" value="11"><span>١١</span></label><label><input type="checkbox" name="tj" value="12"><span>١٢</span></label><label><input type="checkbox" name="tj" value="13"><span>١٣</span></label><label><input type="checkbox" name="tj" value="14"><span>١٤</span></label><label><input type="checkbox" name="tj" value="15"><span>١٥</span></label><label><input type="checkbox" name="tj" value="16"><span>١٦</span></label><label><input type="checkbox" name="tj" value="17"><span>١٧</span></label><label><input type="checkbox" name="tj" value="18"><span>١٨</span></label><label><input type="checkbox" name="tj" value="19"><span>١٩</span></label><label><input type="checkbox" name="tj" value="20"><span>٢٠</span></label><label><input type="checkbox" name="tj" value="21"><span>٢١</span></label><label><input type="checkbox" name="tj" value="22"><span>٢٢</span></label><label><input type="checkbox" name="tj" value="23"><span>٢٣</span></label><label><input type="checkbox" name="tj" value="24"><span>٢٤</span></label><label><input type="checkbox" name="tj" value="25"><span>٢٥</span></label><label><input type="checkbox" name="tj" value="26"><span>٢٦</span></label><label><input type="checkbox" name="tj" value="27"><span>٢٧</span></label><label><input type="checkbox" name="tj" value="28"><span>٢٨</span></label><label><input type="checkbox" name="tj" value="29"><span>٢٩</span></label><label><input type="checkbox" name="tj" value="30"><span>٣٠</span></label></div>
@@ -453,7 +453,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
 
   <nav class="sections" aria-label="الأقسام">
     <a class="sbtn on" id="secMut" href="./" aria-current="page">متشابهات القرآن الكريم</a>
-    <a class="sbtn" id="secHifz" href="akhir.html">تثبيت الحفظ</a>
+    <a class="sbtn" id="secHifz" href="awwal.html">تثبيت الحفظ</a>
     <a class="sbtn" id="secInfo" href="lam.html">معلومات قرآنية</a>
   </nav>
   <nav class="games" aria-label="نوع السؤال">
@@ -497,7 +497,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <a class="btn-link ghostlink" id="shareNative" href="#" target="_blank" rel="noopener">مشاركة</a>
     </div>
     <div class="support">
-      <p><b>«اختبارات قرآنية» مجانية وبلا إعلانات</b><br>إن نفعك الموقع، فساعد على استمراره وتطويره.</p>
+      <p><b>«اختبارات قرآنية» مجاني وبلا إعلانات</b><br>ساعد على استمراره وتطويره.</p>
       <div class="sbtns"><a class="sbtn2" href="support.html">ادعم المشروع</a></div>
     </div>
     <div class="row" hidden>
@@ -574,6 +574,20 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     </div>
     </div></details>
     <p class="hsec">تثبيت الحفظ</p>
+    <details class="hgame" data-g="awwal"><summary>أول الآية</summary><div class="hbody">
+      <p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأولى، فاكتبها كلمةً كلمة.</p><ul>
+    <li>اكتب الكلمة الأولى ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
+    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
+    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    </div></details>
+    <details class="hgame" data-g="wasat"><summary>وسط الآية</summary><div class="hbody">
+      <p class="lead">تظهر لك آية حُذفت ثلاث كلمات من وسطها، فاكتبها كلمةً كلمة.</p><ul>
+    <li>اكتب الكلمة الناقصة الأولى ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
+    <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
+    <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    </div></details>
     <details class="hgame" data-g="akhir"><summary>آخر الآية</summary><div class="hbody">
       <p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأخيرة، فاكتبها كلمةً كلمة.</p><ul>
     <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
@@ -585,7 +599,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="lead">آية واحدة، وسؤالان: ما الآية التي قبلها؟ ثم ما الآية التي بعدها؟</p><ul>
     <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
     <li>تظهر بداية كل اختيار، والاختيارات من الآيات القريبة ومن آيات تبدأ بالكلمة نفسها.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li></ul>
+    <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li>
+    <li>زر ▶ بجانب الآية يُسمعك تلاوتها بصوت الشيخ الحصري.</li></ul>
     </div></details>
     <details class="hgame" data-g="rattib"><summary>رتّب الآيات</summary><div class="hbody">
       <p class="lead">خمس آيات متتالية من سورة واحدة، بغير ترتيبها. رتّبها كما في المصحف.</p><ul>
@@ -1012,9 +1027,9 @@ const juzOf = (s, a) => (DIFF.m[s + ':' + a] || [0])[0];
 
 // ---------- practice setup (on the page, not a pop-up): section, quiz and questions in one go, then «ابدأ» ----------
 const CATALOG = [['mut', 'متشابهات القرآن الكريم', [['surah', 'أين ورد؟', ''], ['farq', 'ميّز بينهما', 'farq.html']]],
-  ['hifz', 'تثبيت الحفظ', [['akhir', 'آخر الآية', 'akhir.html'], ['qabl', 'ما قبلها؟ ما بعدها؟', 'qabl.html'], ['rattib', 'رتّب الآيات', 'rattib.html']]],
+  ['hifz', 'تثبيت الحفظ', [['awwal', 'أول الآية', 'awwal.html'], ['wasat', 'وسط الآية', 'wasat.html'], ['akhir', 'آخر الآية', 'akhir.html'], ['qabl', 'ما قبلها؟ ما بعدها؟', 'qabl.html'], ['rattib', 'رتّب الآيات', 'rattib.html']]],
   ['info', 'معلومات قرآنية', [['lam', 'لم تتكرر', 'lam.html'], ['makki', 'مكية أم مدنية؟', 'makki.html'], ['fawatih', 'فواتح السور', 'fawatih.html'], ['tartib', 'ترتيب السور', 'tartib.html'], ['asmaa', 'أسماء السور', 'asmaa.html']]]];
-const MISS_KEYS = { surah: 'mut-miss', farq: 'farq-miss', akhir: 'akhir-miss', qabl: 'qabl3-miss', rattib: 'rattib2-miss', lam: 'lam-miss', makki: 'makki-miss', fawatih: 'fawatih-miss', tartib: 'tartib2-miss', asmaa: 'asmaa-miss' };
+const MISS_KEYS = { surah: 'mut-miss', farq: 'farq-miss', akhir: 'akhir-miss', awwal: 'awwal-miss', wasat: 'wasat-miss', qabl: 'qabl3-miss', rattib: 'rattib2-miss', lam: 'lam-miss', makki: 'makki-miss', fawatih: 'fawatih-miss', tartib: 'tartib2-miss', asmaa: 'asmaa-miss' };
 const secOf = g => CATALOG.find(c => c[2].some(x => x[0] === g)) || CATALOG[0];
 const pageOfGame = g => { const f = secOf(g)[2].find(x => x[0] === g)[2]; return f || (location.hostname.endsWith('github.io') ? './' : 'index.html'); };
 if (!pick.game || !CATALOG.some(c => c[2].some(x => x[0] === pick.game))) pick.game = GAME;
@@ -1126,7 +1141,7 @@ function setNav(practice){
   $('gameSurah').href = home + tag;
   $('gameFarq').href = 'farq.html' + tag;
   // the section tabs keep practice mode too
-  $('secMut').href = home + tag; $('secHifz').href = 'akhir.html' + tag; $('secInfo').href = 'lam.html' + tag;
+  $('secMut').href = home + tag; $('secHifz').href = 'awwal.html' + tag; $('secInfo').href = 'lam.html' + tag;
   $('gameSurah').classList.toggle('on', GAME === 'surah'); $('gameFarq').classList.toggle('on', GAME === 'farq');
 }
 [['gameSurah', 'surah'], ['gameFarq', 'farq']].forEach(([id, g]) => $(id).addEventListener('click', e => {
@@ -1453,6 +1468,8 @@ const EXAM_HOW = {
   farq: 'موضعان متشابهان: اكتب سورة الموضع المحدَّد بإطار، ثم سورة الموضع الآخر.',
   akhir: 'اكتب الكلمات الثلاث الأخيرة من الآية، كلمةً بعد كلمة.',
   qabl: 'اختر الآية التي قبل هذه الآية، ثم الآية التي بعدها.',
+  awwal: 'اكتب الكلمات الثلاث الأولى من الآية، كلمةً بعد كلمة.',
+  wasat: 'اكتب الكلمات الثلاث الناقصة من وسط الآية، كلمةً بعد كلمة.',
   rattib: 'رتّب الآيات كما في المصحف: اسحب الآية من المقبض ⠿ إلى مكانها، ثم اضغط «تأكيد».',
   lam: 'اختر الكلمة التي لم تتكرر في القرآن.', makki: 'اختر: مكية أم مدنية؟', fawatih: 'اختر السورة التي تبدأ بهذه الكلمات.',
   tartib: 'اختر السورة التي قبلها، ثم السورة التي بعدها.', asmaa: 'اختر السورة التي تُعرف بهذا الاسم.' };
@@ -1581,8 +1598,8 @@ function hwStart(){
 // ---------- «للمعلّمين»: make an assignment and read the results, on this page like «تدرّب» ----------
 (() => {
 const SITE = 'https://quranic-verses.github.io/quranic-tests/';
-const FILE = { surah: '', farq: 'farq.html', akhir: 'akhir.html', qabl: 'qabl.html', rattib: 'rattib.html' };
-const NAME = { surah: 'أين ورد؟', farq: 'ميّز بينهما', akhir: 'آخر الآية', qabl: 'ما قبلها؟ ما بعدها؟', rattib: 'رتّب الآيات' };
+const FILE = { surah: '', farq: 'farq.html', akhir: 'akhir.html', awwal: 'awwal.html', wasat: 'wasat.html', qabl: 'qabl.html', rattib: 'rattib.html' };
+const NAME = { surah: 'أين ورد؟', farq: 'ميّز بينهما', akhir: 'آخر الآية', awwal: 'أول الآية', wasat: 'وسط الآية', qabl: 'ما قبلها؟ ما بعدها؟', rattib: 'رتّب الآيات' };
 const AR = '٠١٢٣٤٥٦٧٨٩';
 const vals = name => [...document.querySelectorAll('#teach input[name="' + name + '"]:checked')].map(x => +x.value || x.value);
 const wrap = document.querySelector('.wrap');
