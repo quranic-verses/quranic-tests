@@ -35,7 +35,7 @@ try { var t = JSON.parse(localStorage.getItem('mut-theme')); if (t === 'dark' ||
   --bg:#EDF1EE; --surface:#FBFCFB; --ink:#15241F; --muted:#5C6E68; --line:#CCD8D3;
   --accent:#0E6B57; --accent-ink:#FFFFFF; --gold:#A87A1E;
   --scrim:rgba(14,22,20,.55); --hint-bg:#F5ECD6; --ok:#1F8A5B; --ok-bg:#DDF1E6; --bad:#B23A3A; --bad-bg:#F6E0DE; --empty:#E3EAE6;
-  --f-display:"Changa","IBM Plex Sans Arabic",sans-serif;
+  --f-display:"Tajawal","Changa","IBM Plex Sans Arabic",sans-serif;
   --f-quran:"Amiri Quran","Amiri","Traditional Arabic",serif;
   --f-ui:"Tajawal","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
 }
@@ -192,6 +192,17 @@ a.hwsend{display:block;text-decoration:none;text-align:center;background:var(--a
 .hgame{border:1px solid var(--line);border-radius:12px;margin:0 0 6px;background:var(--surface)}
 .hgame summary{cursor:pointer;padding:9px 12px;font-weight:700}
 .hgame .hbody{padding:0 12px 10px}
+/* the welcome window and «؟»: sections, the three modes, install + support */
+#welcome .wsecs{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+#welcome .wsecs li{display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px 12px;line-height:1.45}
+#welcome .wsecs b{color:var(--accent)} #welcome .wsecs span{font-size:.88rem;color:var(--muted)}
+#welcome .wmodes{display:flex;flex-direction:column;gap:4px}
+#welcome .wmodes p{margin:0;font-size:.9rem;color:var(--muted)} #welcome .wmodes b{display:inline-block;min-width:6.2em;color:var(--ink)}
+.qtextra{display:flex;gap:8px} .qtextra > *{flex:1;text-align:center}
+.qtextra .ghost{padding:8px 12px}
+.qtsup{display:block;text-decoration:none;font-weight:600;border:1px solid var(--gold);color:var(--gold);border-radius:10px;padding:8px 12px}
+.qtextra .ghost[hidden] + .qtsup{flex:1}
+.qtfree{text-align:center}
 .hgame.cur{border:2px solid var(--accent)} .hgame.cur summary{color:var(--accent)}
 .hgame.cur summary::after{content:" · هذا الاختبار";font-weight:400;font-size:.8rem;color:var(--muted)}
 #help.one .hall, #help.one .hsec, #help.one .hgame:not(.cur){display:none}
@@ -522,7 +533,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <div class="tpane" id="t-cls"></div>
 
     <div class="tpane" id="t-make" hidden>
-      <p class="tsmall">اختر الاختبارات والأجزاء، وأرسل الرابط لطلابك. كل طالب يكتب اسمه ويحل الأسئلة نفسها، ثم يرسل لك نتيجته في واتساب مع ما أخطأ فيه.</p>
+      <p class="tsmall">اختر الاختبارات والأجزاء، ثم أرسل التكليف إلى فصل من فصولك فتظهر لك النتائج تلقائيًا، أو برابط في واتساب فيرسل لك كل طالب نتيجته. كل الطلاب يحلّون الأسئلة نفسها.</p>
       <div id="t-for" hidden><p class="tstep">إلى</p><div class="tchips" id="t-forc"></div></div>
       <p class="tstep">١. عنوان التكليف <span class="tsmall">(اختياري)</span></p>
       <input type="text" id="t-title" maxlength="60" placeholder="مثال: واجب الأسبوع · حلقة الفجر">
@@ -641,11 +652,11 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <div class="hall">
       <h2 id="helpTitle">طريقة الاستخدام</h2>
       <ul>
-        <li><b>اختبار اليوم:</b> تتجدد الاختبارات كل يوم عند منتصف الليل بتوقيت القاهرة.</li>
+        <li><b>اختبار اليوم:</b> اختبارات جديدة كل يوم، تتجدد عند منتصف الليل بتوقيت القاهرة. وما فاتك تجده في «الاختبارات السابقة».</li>
         <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
-        <li><b>تلميح:</b> يساعدك إذا تعثرت.</li>
-        <li><b>الاختبارات السابقة:</b> حُلّ أي اختبار فاتك.</li>
-        <li><b>للمُعلّمين:</b> أنشئ تكليفًا لطلابك من زر «للمُعلّمين» أعلى الصفحة، واجمع نتائجهم في جدول.</li>
+        <li><b>تلميح:</b> يساعدك إذا تعثرت، والرقم بجانبه هو ما بقي لك منه.</li>
+        <li><b>للمُعلّمين:</b> أنشئ فصلًا لطلابك، وأرسل لهم تكليفات، وتظهر لك نتائجهم تلقائيًا.</li>
+        <li><b>طالب في حلقة؟</b> انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة، فتجد تكليفاته في «تكليفاتي»، وتصله نتيجتك حين تنهي.</li>
       </ul>
       <h3 class="hsub">طريقة كل اختبار</h3>
     </div>
@@ -683,21 +694,22 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     </div>
     </div></details>
     <p class="hsec">تثبيت الحفظ</p>
-    <details class="hgame" data-g="awwal"><summary>أول الآية</summary><div class="hbody">
+    <details class="hgame" data-g="awwal"><summary>أكمل الآيات: أول الآية</summary><div class="hbody">
       <p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأولى، فاكتبها كلمةً كلمة.</p><ul>
     <li>اكتب الكلمة الأولى ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
     <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
     <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
-    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li>
+    <li>انتقل بين «أول الآية» و«وسط الآية» و«آخر الآية» من الأزرار فوق الآية.</li></ul>
     </div></details>
-    <details class="hgame" data-g="wasat"><summary>وسط الآية</summary><div class="hbody">
+    <details class="hgame" data-g="wasat"><summary>أكمل الآيات: وسط الآية</summary><div class="hbody">
       <p class="lead">تظهر لك آية حُذفت ثلاث كلمات من وسطها، فاكتبها كلمةً كلمة.</p><ul>
     <li>اكتب الكلمة الناقصة الأولى ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
     <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
     <li>لديك ٦ محاولات. كل كلمة خاطئة تكلّفك محاولة.</li>
     <li>زر «تلميح» يكشف لك الكلمة التالية ويكلّفك محاولة. الرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
     </div></details>
-    <details class="hgame" data-g="akhir"><summary>آخر الآية</summary><div class="hbody">
+    <details class="hgame" data-g="akhir"><summary>أكمل الآيات: آخر الآية</summary><div class="hbody">
       <p class="lead">تظهر لك آية حُذفت كلماتها الثلاث الأخيرة، فاكتبها كلمةً كلمة.</p><ul>
     <li>اكتب الكلمة التالية ثم اضغط ✓، ويمكنك كتابة أكثر من كلمة مفصولة بمسافة.</li>
     <li>لا يلزم التشكيل ولا رسم المصحف: «الصلاة» و«الصلوة» سواء، وكذلك الهمزات والتاء المربوطة.</li>
@@ -708,45 +720,54 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="lead">آية واحدة، وسؤالان: ما الآية التي قبلها؟ ثم ما الآية التي بعدها؟</p><ul>
     <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
     <li>تظهر بداية كل اختيار، والاختيارات من الآيات القريبة ومن آيات تبدأ بالكلمة نفسها.</li>
+    <li>بعد إجابتك عن السؤال الأول تظهر الآية التي قبلها باللون الأخضر، وتحتها «إجاباتك»، ثم السؤال الثاني.</li>
+    <li>في النهاية تظهر الآيات الثلاث معًا كما في المصحف، والآيتان المطلوبتان باللون الأخضر.</li>
     <li>زر «تلميح» يحذف خيارين خاطئين، ولك تلميح واحد في كل اختبار. الاختبار الذي تخطئ فيه أو تستعمل فيه التلميح يُحسب في «أخطائي».</li>
-    <li>زر ▶ بجانب الآية يُسمعك تلاوتها بصوت الشيخ الحصري.</li></ul>
+    <li>زر ▶ يُسمعك تلاوة الآيات بصوت الشيخ الحصري.</li></ul>
     </div></details>
     <details class="hgame" data-g="rattib"><summary>رتّب الآيات</summary><div class="hbody">
       <p class="lead">خمس آيات متتالية من سورة واحدة، بغير ترتيبها. رتّبها كما في المصحف.</p><ul>
     <li>اسحب الآية من المقبض ⠿ وضعها في مكانها، ثم اضغط «تأكيد».</li>
     <li>بعد كل تأكيد تصير الآيات التي في مكانها الصحيح خضراء، والتي في غير مكانها حمراء.</li>
     <li>لديك ٤ محاولات. كل تأكيد بترتيب غير صحيح يكلّفك محاولة.</li>
-    <li>زر «تلميح» يضع سهمًا ▲ أو ▼ على آية في غير مكانها: حرّكها إلى أعلى أو إلى أسفل. يكلّفك محاولة، والرقم بجانبه هو عدد التلميحات المتبقية لك.</li></ul>
+    <li>الآية التي تصير خضراء تثبت في مكانها، وتتحرك الآيات الأخرى حولها.</li>
+    <li>زر «تلميح» يضع سهمًا ▲ أو ▼ على آية في غير مكانها: حرّكها إلى أعلى أو إلى أسفل. يكلّفك محاولة، والرقم بجانبه هو عدد التلميحات المتبقية لك.</li>
+    <li>في النهاية تظهر الآيات بترتيبها الصحيح، وتحتها ترتيبك.</li></ul>
     </div></details>
     <p class="hsec">معلومات قرآنية</p>
     <details class="hgame" data-g="lam"><summary>لم تتكرر</summary><div class="hbody">
       <p class="lead">ثلاث كلمات كما وردت في المصحف: واحدة منها فقط لم تتكرر في القرآن، فاخترها.</p><ul>
     <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>بعد الإجابة تظهر الآية التي وردت فيها الكلمة.</li></ul>
+    <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗، وتظهر الآية التي وردت فيها الكلمة.</li></ul>
     </div></details>
     <details class="hgame" data-g="makki"><summary>مكية أم مدنية؟</summary><div class="hbody">
       <p class="lead">سورة واحدة كل يوم: هل هي مكية أم مدنية؟</p><ul>
     <li>التصنيف على ما في مصحف المدينة النبوية.</li>
-    <li>بعض السور فيها خلاف بين العلماء، ويُنبَّه عليه بعد الإجابة.</li></ul>
+    <li>بعض السور فيها خلاف بين العلماء، ويُنبَّه عليه بعد الإجابة.</li>
+    <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗.</li></ul>
     </div></details>
     <details class="hgame" data-g="fawatih"><summary>فواتح السور</summary><div class="hbody">
       <p class="lead">تظهر لك أول كلمات من سورة، فاختر السورة من أربع سور.</p><ul>
     <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li>
+    <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗، وتظهر أول آية من السورة.</li></ul>
     </div></details>
     <details class="hgame" data-g="tartib"><summary>ترتيب السور</summary><div class="hbody">
       <p class="lead">سورة واحدة كل يوم، وسؤالان: ما السورة التي قبلها في ترتيب المصحف؟ ثم ما السورة التي بعدها؟</p><ul>
     <li>لكل سؤال أربعة اختيارات، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li>
+    <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗، وتظهر أول آية من السورة.</li></ul>
     </div></details>
     <details class="hgame" data-g="asmaa"><summary>أسماء السور</summary><div class="hbody">
       <p class="lead">لبعض السور أسماء أخرى مشهورة عند العلماء، مثل «براءة» لسورة التوبة. اختر السورة التي تُعرف بالاسم المذكور.</p><ul>
     <li>سؤال واحد كل يوم، واختيار واحد فقط.</li>
-    <li>زر «تلميح» يحذف خيارين خاطئين.</li></ul>
+    <li>زر «تلميح» يحذف خيارين خاطئين.</li>
+    <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗، وتظهر أول آية من السورة.</li></ul>
     </div></details>
-    <p class="small" id="installNote">لتثبيت التطبيق على شاشة هاتفك: من قائمة المتصفح اختر «إضافة إلى الشاشة الرئيسية» (في الآيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»).</p>
-    <button type="button" class="ghost" id="installBtn" hidden>تثبيت التطبيق على الهاتف</button>
+    <p class="small" id="installNote" hidden></p>
     <button type="button" id="helpGo" class="start">حسنًا</button>
+    <div class="qtextra"><button type="button" class="ghost" id="installBtn">ثبّت التطبيق</button><a class="qtsup" href="support.html">ادعم المشروع</a></div>
+    <p class="small qtfree">«اختبارات قرآنية» مجاني وبلا إعلانات.</p>
   </div>
 </div>
 
@@ -755,16 +776,20 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <div class="panel" dir="rtl" lang="ar">
     <button type="button" class="x" id="welcomeX" aria-label="إغلاق">×</button>
     <h2 id="welcomeTitle">اختبارات قرآنية</h2>
-    <p class="lead">اختبارات قصيرة كل يوم لحافظي القرآن، في ثلاثة أقسام:</p>
-    <ul>
-      <li><b>متشابهات القرآن الكريم:</b> أين ورد؟ · ميّز بينهما</li>
-      <li><b>تثبيت الحفظ:</b> آخر الآية · ما قبلها؟ ما بعدها؟ · رتّب الآيات</li>
-      <li><b>معلومات قرآنية:</b> لم تتكرر · مكية أم مدنية؟ · فواتح السور · ترتيب السور · أسماء السور</li>
+    <p class="lead">اختبارات قصيرة كل يوم تثبّت حفظك للقرآن الكريم، مجانية وبلا إعلانات.</p>
+    <ul class="wsecs">
+      <li><b>متشابهات القرآن الكريم</b><span>أين ورد؟ · ميّز بينهما</span></li>
+      <li><b>تثبيت الحفظ</b><span>أكمل الآيات · ما قبلها؟ ما بعدها؟ · رتّب الآيات</span></li>
+      <li><b>معلومات قرآنية</b><span>لم تتكرر · مكية أم مدنية؟ · فواتح السور · ترتيب السور · أسماء السور</span></li>
     </ul>
-    <p class="small"><b>اختبار اليوم:</b> تتجدد الاختبارات كل يوم عند منتصف الليل بتوقيت القاهرة.</p>
-    <p class="small"><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها، وتدرّب عليها متى شئت.</p>
-    <p class="small">زر «؟» أعلى الصفحة يشرح طريقة كل اختبار.</p>
+    <div class="wmodes">
+      <p><b>اختبار اليوم</b>جديد كل يوم بعد منتصف الليل</p>
+      <p><b>تدرّب</b>على الأجزاء والسور التي تحفظها</p>
+      <p><b>للمُعلّمين</b>فصول وتكليفات ونتائج الطلاب</p>
+    </div>
+    <p class="small">طالب في حلقة؟ انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة.</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
+    <div class="qtextra"><button type="button" class="ghost" id="welcomeInst">ثبّت التطبيق</button><a class="qtsup" href="support.html">ادعم المشروع</a></div>
   </div>
 </div>
 <div class="overlay" id="ihelp" role="dialog" aria-modal="true" aria-labelledby="ihelpTitle" hidden>
@@ -1863,7 +1888,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('ihelp'
 window.addEventListener('appinstalled', () => { showStrip(); });
 showStrip();
 $('installBtn').addEventListener('click', doInstall);
-if (STANDALONE) $('installNote').hidden = true;
+
 
 // the teacher's assignment (تكليف), when the page was opened from its link
 const HWA = { name: C.name, start: it => load(0, true, false, Array(C.items).fill(it)), label: () => {
@@ -2132,6 +2157,13 @@ function joinView(code){
 subs.push(() => { const o = $('acctBox'); if (!o || o.hidden || !view) return; if (view === 'home') { if (signedIn() && !role()) roleView(); else if (role() === 'teacher') goTeach(); else home(); } else if (view !== 'done' && view !== 'role') joinView(view); });
 
 function init(){
+  // the welcome window and the «؟» window: install the app (or how to) and support the project
+  const canInstall = () => !(STANDALONE || store.get('mut-installed', 0));
+  ['welcomeInst', 'installBtn'].forEach(id => { const b = $(id); if (!b) return;
+    b.hidden = !canInstall();
+    b.addEventListener('click', () => { if (id === 'welcomeInst') { hideWelcome(); if (installEvt) doInstall(); } if (!installEvt) howInstall(); }); });
+  addEventListener('appinstalled', () => { ['welcomeInst', 'installBtn'].forEach(id => { if ($(id)) $(id).hidden = true; }); });
+  document.querySelectorAll('#welcome .qtsup').forEach(a => a.addEventListener('click', () => store.set('mut-welcome', 1)));
   const side = document.querySelector('header .head-side');
   if (side && !$('acctBtn')) {
     btn = document.createElement('button'); btn.type = 'button'; btn.className = 'help-btn ghost acct-btn'; btn.id = 'acctBtn';
