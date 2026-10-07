@@ -1925,15 +1925,14 @@ function hwRecord(n, t){
   const st = hwState();
   if (st.res.filter(r => r.q === GAME).length === S.hwk) { st.res.push({ q: GAME, n, t, l: HWA.label() }); store.set(HW_KEY, st); }
   if (S.hwAdv) return; S.hwAdv = true;
-  // a short pause to see the answer, then the next question comes by itself (or at once with «التالي»)
+  // the student reads the answer, then moves on with «التالي» (nothing moves by itself)
   let box = $('exNext');
   if (!box) { box = document.createElement('div'); box.id = 'exNext'; box.className = 'exnext'; document.body.appendChild(box); }
   const g = hwNextQ(st), last = !g;
-  box.innerHTML = `<span>${n >= t ? '✓ إجابة صحيحة' : 'انتهى هذا السؤال'}</span><button type="button" class="start" id="exGo">${last ? 'النتيجة' : 'التالي'}</button><i><b></b></i>`;
+  box.innerHTML = `<span>${n >= t ? '✓ إجابة صحيحة' : 'انتهى هذا السؤال'}</span><button type="button" class="start" id="exGo">${last ? 'النتيجة' : 'التالي'}</button>`;
   box.hidden = false;
-  const go = () => { clearTimeout(S.hwTimer); box.hidden = true; hwNext(); };
+  const go = () => { box.hidden = true; hwNext(); };
   box.querySelector('#exGo').onclick = go;
-  S.hwTimer = setTimeout(go, 4000);
 }
 function hwStart(){
   const st0 = hwState(), g0 = hwNextQ(st0);
