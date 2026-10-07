@@ -798,6 +798,9 @@ const SURAH = {}; QD.s.forEach(([n, name]) => SURAH[n] = FIX[n] || name);
 const AR_DIG = '٠١٢٣٤٥٦٧٨٩';
 const toAr = n => String(n).replace(/\d/g, d => AR_DIG[d]);
 const $ = id => document.getElementById(id);
+// no jumping to the top of the page: scroll (gently) only when what was just opened or loaded is out of sight above
+function bring(el){ if (typeof el === 'string') el = document.querySelector(el); if (!el) return;
+  const r = el.getBoundingClientRect(); if (r.top < 0 || r.top > innerHeight - 80) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
 const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const N = QD.q.length;
 
@@ -1300,7 +1303,7 @@ function nextRound(){
   S.showing = false; $('msg').textContent = ''; $('msg').className = 'msg';
   finishIfOver(); save(); render();
   if (S.done) sfx(isWon() ? 'win' : 'lose');
-  window.scrollTo(0, 0);
+  bring('#stage');
 }
 
 // ---------- «أخطائي»: questions answered with a mistake or a hint, kept until answered cleanly ----------
@@ -1495,7 +1498,7 @@ function renderPick(){
 }
 function showPick(){
   renderPick(); $('pick').hidden = false; document.querySelector('.wrap').classList.add('picking');
-  $('modeTrain').classList.add('on'); $('modeDaily').classList.remove('on'); window.scrollTo(0, 0);
+  $('modeTrain').classList.add('on'); $('modeDaily').classList.remove('on'); bring($('pick'));
 }
 function hidePick(){ $('pick').hidden = true; document.querySelector('.wrap').classList.remove('picking'); if (S) setNav(S.practice); }
 function startPractice(){
@@ -1508,7 +1511,7 @@ function startPractice(){
   while (items.length < C.items) items.push(items[items.length % Math.max(1, list.length)]);   // a short «أخطائي» list repeats
   load(0, true, false, items);
   $('pwhat').textContent = pickLabel();
-  window.scrollTo(0, 0);
+  bring('#stage');
 }
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => { pick.mode = t.dataset.mode; renderPick(); }));
 $('surChips').innerHTML = Array.from({length: 114}, (_, i) =>
@@ -1566,7 +1569,7 @@ $('hintBtn').addEventListener('click', useHint);
 $('guessForm').addEventListener('submit', e => {
   e.preventDefault(); const n = S.guesses.length; guessType($('guess').value);
   if (S.guesses.length !== n) { const last = S.guesses[S.guesses.length - 1]; sfx(S.done ? (isWon() ? 'win' : 'lose') : (last.ok ? 'ok' : 'bad')); }
-  if (!S.done) $('guess').focus();
+  if (!S.done) $('guess').focus({ preventScroll: true });
 });
 
 // ---------- archive ----------
@@ -1601,7 +1604,7 @@ $('arch').addEventListener('click', e => {
   if (e.target === $('arch')) return hideArch();
   const r = e.target.closest('.arow'); if (!r) return;
   const i = +r.dataset.i; hideArch();
-  load(i, false, i !== todayIndex()); window.scrollTo(0, 0);
+  load(i, false, i !== todayIndex()); bring('#stage');
 });
 
 // ---------- today's results of this section in one message ----------
@@ -1751,7 +1754,7 @@ const tafsirLink = key => { const [s, a] = key.split(':').map(Number), p = pageO
   return `<a class="mlink" href="https://quran.ksu.edu.sa/index.php#aya=${s}_${a}&m=hafs&qaree=husary&trans=ar_mu" target="_blank" rel="noopener" title="التفسير الميسر للآية وموضعها في مصحف المدينة" aria-label="التفسير الميسر للآية وموضعها في مصحف المدينة (صفحة ${toAr(p)})"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg></a>`; };
 
 // ---------- welcome (first visit to any page of the site) and install banner ----------
-function showWelcome(){ $('welcome').hidden = false; $('welcomeGo').focus(); }
+function showWelcome(){ $('welcome').hidden = false; $('welcomeGo').focus({ preventScroll: true }); }
 function hideWelcome(){ $('welcome').hidden = true; store.set('mut-welcome', 1); }
 $('welcomeGo').addEventListener('click', hideWelcome);
 $('welcomeX').addEventListener('click', hideWelcome);
@@ -1790,7 +1793,7 @@ function howInstall(){
   const os = IOS ? 'ios' : /android/i.test(navigator.userAgent) ? 'android' : 'pc';
   const ul = $('ihelpList'), mine = ul.querySelector('[data-os="' + os + '"]');
   ul.prepend(mine); ul.querySelectorAll('li').forEach(li => li.classList.toggle('mine', li === mine));
-  $('ihelp').hidden = false; $('ihelpGo').focus();
+  $('ihelp').hidden = false; $('ihelpGo').focus({ preventScroll: true });
 }
 const hideHow = () => { $('ihelp').hidden = true; };
 $('istripGo').addEventListener('click', () => installEvt ? doInstall() : howInstall());
@@ -1909,7 +1912,7 @@ function hwNext(){
   const nx = $('exNext'); if (nx) nx.hidden = true;
   examBar(before + k + 1, all);
   document.querySelector('.wrap').classList.remove('exam-wait');
-  window.scrollTo(0, 0);
+  bring('#exHead');
 }
 // called from saveSummary when a test ends: keep its result, then offer the next test, the next quiz, or the end
 function hwRecord(n, t){
@@ -1955,11 +1958,11 @@ function hwStart(){
     <label class="hwname">اكتب اسمك <input type="text" id="hwName" maxlength="40" autocomplete="name"></label>
     <p class="small">لك محاولة واحدة، وفي النهاية ترسل نتيجتك لمعلّمك.</p>
     <button type="button" class="start" id="hwBegin">ابدأ</button>`);
-  const go = () => { const v = $('hwName').value.trim(); if (!v) { $('hwName').focus(); return; }
+  const go = () => { const v = $('hwName').value.trim(); if (!v) { $('hwName').focus({ preventScroll: true }); return; }
     store.set(HW_KEY, { name: v, res: [] }); o.hidden = true; begin(); };
   $('hwBegin').addEventListener('click', go);
   $('hwName').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
-  $('hwName').focus();
+  $('hwName').focus({ preventScroll: true });
 }
 
 // ---------- «للمعلّمين»: make an assignment and read the results, on this page like «تدرّب» ----------
@@ -1976,7 +1979,7 @@ function showTeach(){
   $('teach').hidden = false; wrap.classList.add('teaching');
   ['modeDaily', 'modeTrain'].forEach(id => { $(id).classList.remove('on'); $(id).setAttribute('aria-pressed', false); });
   $('modeTeach').classList.add('on'); $('modeTeach').setAttribute('aria-current', 'true');
-  window.scrollTo(0, 0);
+  bring($('teach'));
 }
 function hideTeach(){
   if ($('teach').hidden) return;
