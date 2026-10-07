@@ -460,16 +460,70 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
 #teach .bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-inline-start:6px;opacity:.7}
 #teach ol.top{padding-inline-start:1.4em} #teach ol.top li{margin:0 0 4px}
 #teach .tpane[hidden]{display:none}
+/* «فصولي» */
+#teach .gsi{min-height:44px;margin:6px 0}
+#teach .tlink{background:none;border:0;padding:4px 0;color:var(--accent);font-weight:600;text-decoration:underline;cursor:pointer;font-size:.9rem}
+#teach .tdanger{color:var(--bad);display:block;margin:22px auto 0}
+#teach .tme{margin-top:10px}
+#teach .tcl{display:grid;gap:8px;margin:10px 0}
+#teach .tcard{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:right;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+#teach .tcard b{font-family:var(--f-display);font-size:1.1rem;color:var(--accent)} #teach .tcard span{color:var(--muted);font-size:.86rem;font-weight:400}
+#teach .trow{display:flex;gap:8px} #teach .trow input{flex:1;min-width:0} #teach .trow button{flex:none}
+#teach .tch{font-family:var(--f-display);font-size:1.4rem;color:var(--accent);margin:6px 0 10px}
+#teach .tinv{margin-top:0} #teach .tcode{font-size:1.5rem;letter-spacing:.12em;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--accent)}
+#teach .tasg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px}
+#teach .tasg summary{cursor:pointer;display:flex;flex-direction:column;gap:2px;list-style:none}
+#teach .tasg summary::-webkit-details-marker{display:none}
+#teach .tasg summary b{font-size:1.05rem} #teach .tasg summary b::before{content:"▸ ";color:var(--muted)} #teach .tasg[open] summary b::before{content:"▾ "}
+#teach .tasg table{margin-top:10px}
+#teach .tdone{font-weight:700;color:var(--accent);font-size:.9rem}
+#teach .tasg .tbtns{align-items:center} #teach .tasg .tdel{padding:8px 14px;font-size:.9rem;border-color:var(--bad);color:var(--bad)}
+#teach .tstu{list-style:none;padding:0;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+#teach .tstu li{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line)} #teach .tstu li:last-child{border-bottom:0}
+/* «حسابي» window and the header button */
+.acct-btn{position:relative}
+.acct-btn svg{width:19px;height:19px}
+.acct-btn.in{border-color:var(--accent)}
+.ini{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.95rem;line-height:1}
+.ini.sm{width:22px;height:22px;font-size:.8rem;vertical-align:middle} .ini.sm svg{width:14px;height:14px}
+.adot{position:absolute;top:0;left:0;width:10px;height:10px;border-radius:50%;background:var(--bad);border:2px solid var(--bg)}
+.panel.acct h3{font-family:var(--f-display);font-size:1.12rem;margin:6px 0 0;color:var(--ink)}
+.panel.acct .who{display:flex;align-items:center;gap:10px} .panel.acct .who .ini{width:38px;height:38px;font-size:1.2rem}
+.panel.acct .who div{display:flex;flex-direction:column;line-height:1.35}
+.panel .gsi{min-height:44px;display:flex;justify-content:center}
+.gdemo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center} .gdemo span{flex-basis:100%;text-align:center;color:var(--muted);font-size:.8rem}
+.panel .aor{text-align:center}
+.panel .acrow{display:flex;gap:8px} .panel.acct a{color:var(--accent)} .panel .acrow input{flex:1;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);text-transform:uppercase;letter-spacing:.08em}
+.panel .aerr{margin:0;color:var(--bad);font-weight:600;min-height:0}
+.panel .aerr:empty{display:none}
+.panel .aok{margin:0;color:var(--ok);font-weight:700}
+.panel .acls{font-size:.92rem}
+.alist{display:flex;flex-direction:column;gap:8px}
+.panel .tlink{background:none;border:0;padding:0;color:var(--accent);font-weight:600;text-decoration:underline;cursor:pointer;font-size:inherit}
+.rolebtn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:right;background:var(--bg);color:var(--ink);border:1.5px solid var(--accent);border-radius:14px;padding:14px 16px}
+.rolebtn b{font-family:var(--f-display);font-size:1.2rem;color:var(--accent)} .rolebtn span{font-weight:400;font-size:.9rem;color:var(--muted)}
+.rolebtn:hover{background:var(--surface)}
+.asg{display:grid;grid-template-columns:1fr auto;gap:0 10px;text-decoration:none;color:var(--ink);background:var(--bg);border:1px solid var(--accent);border-radius:12px;padding:10px 12px}
+.asg .at{font-weight:700} .asg .am{grid-row:2;color:var(--muted);font-size:.84rem}
+.asg .as{grid-row:1/3;grid-column:2;align-self:center;font-weight:700;color:var(--accent);white-space:nowrap}
+.asg.done{border-color:var(--line)} .asg.done .as{color:var(--ok)}
+#hwBox .hwsent{font-weight:700;color:var(--accent);margin:0} #hwBox .hwafter{display:flex;flex-direction:column;gap:8px}
+#hwBox .hwwa{display:block;text-align:center;text-decoration:none;font-weight:700;padding:10px;border:1px solid var(--accent);border-radius:10px}
+#hwBox .gsi{margin:0 auto}
 </style>
   <section class="psetup" id="teach" aria-labelledby="teachTitle" hidden>
     <h2 id="teachTitle">للمُعلّمين</h2>
-    <div class="tabs" id="teachTabs" style="grid-template-columns:1fr 1fr">
-      <button type="button" class="ptab on" data-tt="make">أنشئ تكليفًا</button>
-      <button type="button" class="ptab" data-tt="res">نتائج الطلاب</button>
+    <div class="tabs" id="teachTabs" style="grid-template-columns:1fr 1fr 1fr">
+      <button type="button" class="ptab on" data-tt="cls">فصولي</button>
+      <button type="button" class="ptab" data-tt="make">أنشئ تكليفًا</button>
+      <button type="button" class="ptab" data-tt="res">نتائج واتساب</button>
     </div>
 
-    <div class="tpane" id="t-make">
+    <div class="tpane" id="t-cls"></div>
+
+    <div class="tpane" id="t-make" hidden>
       <p class="tsmall">اختر الاختبارات والأجزاء، وأرسل الرابط لطلابك. كل طالب يكتب اسمه ويحل الأسئلة نفسها، ثم يرسل لك نتيجته في واتساب مع ما أخطأ فيه.</p>
+      <div id="t-for" hidden><p class="tstep">إلى</p><div class="tchips" id="t-forc"></div></div>
       <p class="tstep">١. عنوان التكليف <span class="tsmall">(اختياري)</span></p>
       <input type="text" id="t-title" maxlength="60" placeholder="مثال: واجب الأسبوع · حلقة الفجر">
       <p class="tstep">٢. الاختبارات <span class="tsmall">(اختر واحدًا أو أكثر)</span></p>
@@ -489,12 +543,12 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="terr" id="t-err" aria-live="polite"></p>
       <div class="tout" id="t-out" hidden>
         <b>التكليف جاهز</b>
-        <p class="tsmall">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة الحلقة.</p>
+        <p class="tsmall" id="t-outA">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة الحلقة.</p>
         <div class="tbtns">
           <a class="fill" id="t-wa" target="_blank" rel="noopener">أرسل للطلاب عبر واتساب</a>
           <a class="line" id="t-try" href="#">جرّب التكليف كأنك طالب</a>
         </div>
-        <p class="tsmall">لكل طالب محاولة واحدة على جهازه. النتائج تصلك من الطلاب مباشرة، ولا تُحفظ أسماؤهم أو نتائجهم على الموقع. وحين تصلك، الصقها في «نتائج الطلاب».</p>
+        <p class="tsmall" id="t-outB">لكل طالب محاولة واحدة على جهازه. النتائج تصلك من الطلاب مباشرة، ولا تُحفظ أسماؤهم أو نتائجهم على الموقع. وحين تصلك، الصقها في «نتائج الطلاب».</p>
       </div>
     </div>
 
@@ -1812,8 +1866,277 @@ const HWA = { name: C.name, start: it => load(0, true, false, Array(C.items).fil
   const q = QD.q[S.items[0]], k = q[0];
   if (GAME !== 'rattib') return ref(k);
   const [s, a] = k.split(':').map(Number); return 'سورة ' + SURAH[s] + ' · الآيات ' + toAr(a) + '–' + toAr(a + q[1] - 1); } };
+// ---------- الحساب والفصول: optional Google sign-in, joining a teacher's class, «تكليفاتي» ----------
+// The data lives in the project's Google Sheet, through its Apps Script web app (API_URL).
+// Away from the live site (a preview) a copy of the same backend runs in the browser (mock_backend.js) with demo accounts.
+const ACCT = (() => {
+const API_URL = 'https://script.google.com/macros/s/AKfycbxwgKCF9ivdeeQFqvimrKBh4ZayfQz9wFHv1175LskGSfLMQkxc0vlCQQTSIwOVt78/exec';
+const CLIENT_ID = '1085731699993-jcbe56816bik30fo2belalcr714j6nbg.apps.googleusercontent.com';
+const LIVE = location.hostname === 'quranic-verses.github.io';
+const SITE = 'https://quranic-verses.github.io/quranic-tests/';
+const K = 'qt-acct', KM = 'qt-members', KC = 'qt-mine';
+const q = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+let me = store.get(K, null);                 // { token, exp, name, email }
+const members = () => store.get(KM, []);     // classes joined with a name: [{ code, className, teacher, memberId, key, name }]
+const signedIn = () => !!(me && me.email);
+const fresh = () => !!(me && me.token && me.exp * 1000 > Date.now() + 60000);
+const subs = [];
+const changed = () => { paintBtn(); subs.forEach(f => { try { f(); } catch (e) {} }); };
+
+function loadScript(src){
+  return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.async = true; s.onload = res; s.onerror = () => rej(new Error('offline')); document.head.appendChild(s); });
+}
+// ----- the backend -----
+let mockP = null;
+function backend(body){
+  if (!LIVE) {
+    mockP = mockP || loadScript('mock_backend.js').then(() => window.QT_MOCK);
+    return mockP.then(fn => new Promise(r => setTimeout(() => r(JSON.parse(fn(JSON.stringify(body)))), 250)));
+  }
+  return fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+    .then(r => r.json(), () => { throw new Error('offline'); });
+}
+function api(action, data, google){
+  const body = Object.assign({ action }, data || {});
+  const go = () => backend(body).then(r => { if (!r || !r.ok) throw new Error((r && r.error) || 'error'); return r; });
+  if (!google) return go();
+  return token().then(t => { body.token = t; return go(); });
+}
+const ERR = { offline: 'تعذّر الاتصال. تأكد من الإنترنت ثم أعد المحاولة.', no_class: 'لم نجد فصلًا بهذا الرمز. تأكد منه واطلبه من معلّمك.',
+  not_signed_in: 'سجّل الدخول أولًا.', expired: 'انتهت جلسة الدخول. سجّل الدخول مرة أخرى.', bad_token: 'انتهت جلسة الدخول. سجّل الدخول مرة أخرى.',
+  name_required: 'اكتب الاسم أولًا.', not_owner: 'هذا الفصل ليس من فصولك.', not_member: 'لست في هذا الفصل.', title_required: 'اكتب عنوانًا.' };
+const errText = e => ERR[e && e.message] || 'حدث خطأ. أعد المحاولة بعد قليل.';
+
+// ----- Google sign-in (Google Identity Services) -----
+let gisP = null, waiting = [];
+function gis(){
+  return gisP = gisP || loadScript('https://accounts.google.com/gsi/client').then(() => {
+    google.accounts.id.initialize({ client_id: CLIENT_ID, callback: r => onCred(r.credential), auto_select: true, cancel_on_tap_outside: false, use_fedcm_for_prompt: true, context: 'signin', ux_mode: 'popup' });
+    return google;
+  });
+}
+function payload(t){
+  const b = atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'));
+  return JSON.parse(new TextDecoder().decode(Uint8Array.from(b, c => c.charCodeAt(0))));
+}
+function onCred(t){
+  try { const p = payload(t); me = { token: t, exp: p.exp, name: p.name || p.email, email: p.email }; } catch (e) { return; }
+  store.set(K, me); try { sessionStorage.removeItem(KC); } catch (e) {}
+  // signing in from «للمُعلّمين» means a teacher; from a class invitation or an assignment, a student; elsewhere we ask once
+  if (!role()) {
+    const hw = $('hwBox'), t = $('teach'), box = $('acctBox'), open = box && !box.hidden;
+    if (open && view && view !== 'home' && view !== 'role') setRole('student');   // joining a class
+    else if (!open && hw && !hw.hidden) setRole('student');                        // starting an assignment
+    else if (!open && t && !t.hidden) setRole('teacher');                          // «فصولي»
+  }
+  waiting.splice(0).forEach(w => w.res(me.token));
+  changed();
+}
+// معلّم أم طالب؟ (only decides what opens first; anyone can still do both)
+const KR = 'qt-role';
+const role = () => signedIn() ? (store.get(KR, {})[me.email] || '') : '';
+function setRole(r){ const m = store.get(KR, {}); m[me.email] = r; store.set(KR, m); }
+// a valid ID token (they last an hour): a silent sign-in again when it ran out
+function token(){
+  if (fresh()) return Promise.resolve(me.token);
+  if (!signedIn()) return Promise.reject(new Error('not_signed_in'));
+  if (!LIVE) return Promise.reject(new Error('expired'));
+  return gis().then(g => new Promise((res, rej) => {
+    waiting.push({ res, rej });
+    g.accounts.id.prompt();
+    setTimeout(() => { const i = waiting.findIndex(w => w.res === res); if (i >= 0) { waiting.splice(i, 1); rej(new Error('expired')); } }, 20000);
+  }));
+}
+// the «Sign in with Google» button (in a preview: two demo accounts)
+function renderSignIn(el){
+  if (!el) return;
+  if (!LIVE) {
+    el.innerHTML = '<div class="gdemo"><button type="button" class="ghost" data-demo="t">دخول تجريبي: معلّم</button><button type="button" class="ghost" data-demo="s">دخول تجريبي: طالب</button><span>في المعاينة فقط؛ على الموقع يظهر زر Google</span></div>';
+    el.querySelectorAll('[data-demo]').forEach(b => b.onclick = () => {
+      const t = b.dataset.demo === 't', enc = o => btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      onCred(enc({ alg: 'none' }) + '.' + enc({ aud: CLIENT_ID, iss: 'https://accounts.google.com', exp: Math.floor(Date.now() / 1000) + 3600, email_verified: 'true',
+        email: t ? 'teacher@example.com' : 'student@example.com', name: t ? 'الأستاذ أحمد' : 'يوسف محمد' }) + '.demo');
+    });
+    return;
+  }
+  el.innerHTML = '<span class="small">جارٍ التحميل…</span>';
+  gis().then(g => { el.innerHTML = ''; g.accounts.id.renderButton(el, { theme: 'outline', size: 'large', shape: 'pill', text: 'continue_with', locale: 'ar', width: Math.min(300, el.clientWidth || 300) }); },
+    () => { el.innerHTML = '<span class="small">تعذّر تحميل زر Google. تأكد من الإنترنت.</span>'; });
+}
+function signOut(){
+  if (LIVE && window.google && google.accounts) google.accounts.id.disableAutoSelect();
+  me = null; store.set(K, null); try { sessionStorage.removeItem(KC); } catch (e) {}
+  changed();
+}
+
+// ----- classes -----
+function saveMember(m){ const l = members().filter(x => x.code !== m.code); l.push(m); store.set(KM, l); }
+function joinByName(code, name){
+  return api('join', { code, name }).then(r => { saveMember({ code: r.cls.code, className: r.cls.name, teacher: r.cls.teacher, memberId: r.memberId, key: r.key, name: r.name }); try { sessionStorage.removeItem(KC); } catch (e) {} changed(); return r; });
+}
+function joinGoogle(code){ return api('join', { code }, true).then(r => { try { sessionStorage.removeItem(KC); } catch (e) {} changed(); return r; }); }
+// how this device answers for a class: the name it joined with, else the Google account
+function memberAuth(code){
+  const m = members().find(x => x.code === code);
+  if (m) return Promise.resolve({ memberId: m.memberId, key: m.key });
+  if (signedIn()) return token().then(t => ({ token: t }));
+  return Promise.reject(new Error('not_member'));
+}
+const inClass = code => members().some(x => x.code === code) || signedIn();
+// all my assignments: from the Google account and from every class joined with a name
+function mine(force){
+  if (!force) { try { const c = JSON.parse(sessionStorage.getItem(KC)); if (c && Date.now() - c.at < 300000) return Promise.resolve(c.list); } catch (e) {} }
+  const calls = [];
+  if (signedIn()) calls.push(api('myAssignments', {}, true));
+  members().forEach(m => calls.push(api('myAssignments', { memberId: m.memberId, key: m.key })));
+  if (!calls.length) return Promise.resolve([]);
+  return Promise.allSettled(calls).then(rs => {
+    const ok = rs.filter(r => r.status === 'fulfilled');
+    if (!ok.length) throw rs[0].reason;
+    const seen = new Map();
+    ok.forEach(r => r.value.assignments.forEach(a => { if (!seen.has(a.id) || a.done) seen.set(a.id, a); }));
+    const list = [...seen.values()].sort((a, b) => (a.done - b.done) || String(b.created).localeCompare(String(a.created)));
+    try { sessionStorage.setItem(KC, JSON.stringify({ at: Date.now(), list })); } catch (e) {}
+    return list;
+  });
+}
+const b64 = s => { const u = new TextEncoder().encode(s); let b = ''; u.forEach(c => b += String.fromCharCode(c));
+  return btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+// the assignment's link (the same #hw= link the teacher sends, with the class code)
+function hwLink(a, local){
+  const s = a.spec || {}, g = Array.isArray(s.g) ? s.g : [s.g];
+  const hash = '#hw=' + b64(JSON.stringify({ i: a.id, c: a.classCode, t: s.t || a.title, g, n: s.n, j: s.j || [], s: s.s || [] }));
+  let page = ''; try { page = pageOfGame(g[0]); } catch (e) {}
+  return local ? (page || (LIVE ? './' : 'index.html')) + hash : SITE + (page === './' || page === 'index.html' ? '' : page) + hash;
+}
+function openLink(href){
+  const u = new URL(href, location.href);
+  if (u.pathname === location.pathname) { location.hash = u.hash; location.reload(); } else location.href = u.href;
+}
+
+// ----- the header button and the «حسابي» window -----
+const PERSON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+let btn = null, pending = 0;
+function paintBtn(){
+  if (!btn) return;
+  btn.classList.toggle('in', signedIn());
+  btn.innerHTML = (signedIn() ? '<span class="ini">' + q([...String(me.name).trim()][0] || '؟') + '</span>' : PERSON) + (pending ? '<i class="adot"></i>' : '');
+  const l = signedIn() ? 'حسابي: ' + me.name : 'حسابي وتكليفاتي';
+  btn.setAttribute('aria-label', l + (pending ? ' (تكليفات لم تحلّها)' : '')); btn.title = l;
+}
+function box(html){
+  let o = $('acctBox');
+  if (!o) { o = document.createElement('div'); o.className = 'overlay'; o.id = 'acctBox'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-label', 'حسابي');
+    o.addEventListener('click', e => { if (e.target === o || e.target.closest('.x')) close(); }); document.body.appendChild(o); }
+  o.innerHTML = '<div class="panel acct" dir="rtl" lang="ar"><button type="button" class="x" aria-label="إغلاق">×</button>' + html + '</div>';
+  o.hidden = false; o.querySelector('.panel').scrollTop = 0;
+  return o;
+}
+function close(){ const o = $('acctBox'); if (o) o.hidden = true; view = null; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('acctBox') && !$('acctBox').hidden) close(); });
+let view = null;   // what the window shows: 'home', 'role', 'done' or a class code being joined
+// a teacher's place: «للمُعلّمين» → «فصولي»
+function goTeach(){
+  close();
+  const t = $('modeTeach'); if (t) t.click();
+  const b = document.querySelector('#teachTabs [data-tt="cls"]'); if (b && !b.classList.contains('on')) b.click();
+}
+function roleView(){
+  view = 'role';
+  const o = box(`<h2>أهلًا ${q(me.name)}</h2><p class="lead">كيف ستستخدم «اختبارات قرآنية»؟</p>
+    <button type="button" class="rolebtn" data-r="teacher"><b>أنا معلّم</b><span>أنشئ فصولًا لطلابك، وأرسل لهم تكليفات، وتابع نتائجهم.</span></button>
+    <button type="button" class="rolebtn" data-r="student"><b>أنا طالب</b><span>انضم إلى فصل معلّمك، وحلّ تكليفاته، وتصله نتائجك تلقائيًا.</span></button>
+    <p class="small">يمكنك تغيير اختيارك لاحقًا من «حسابي».</p>`);
+  o.querySelectorAll('.rolebtn').forEach(b => b.onclick = () => { setRole(b.dataset.r); if (b.dataset.r === 'teacher') goTeach(); else home(); });
+}
+// the header button: a teacher goes to «فصولي», a student to «حسابي» (asked once after signing in)
+function openAcct(){ if (!signedIn()) home(); else if (!role()) roleView(); else if (role() === 'teacher') goTeach(); else home(); }
+function asgRow(a){
+  const s = a.spec || {}, names = (Array.isArray(s.g) ? s.g : [s.g]).map(g => { try { return quizName(g); } catch (e) { return g; } });
+  return `<a class="asg${a.done ? ' done' : ''}" href="${q(hwLink(a, true))}" data-href="${q(hwLink(a, true))}"><span class="at">${q(a.title)}</span>`
+    + `<span class="am">${q(a.className)} · ${q(names.join('، '))}${a.due ? ' · حتى ' + q(a.due) : ''}</span>`
+    + `<span class="as">${a.done ? '✓ ' + toAr(a.score) + ' من ' + toAr(a.total) : 'ابدأ ←'}</span></a>`;
+}
+function home(){
+  view = 'home';
+  const joined = members(), cls = joined.map(m => `<li>${q(m.className)} <span class="small">· ${q(m.teacher)} · باسم «${q(m.name)}»</span></li>`).join('');
+  const o = box(`<h2>حسابي</h2>
+    ${signedIn() ? `<div class="who"><span class="ini">${q([...String(me.name).trim()][0] || '؟')}</span><div><b>${q(me.name)}</b><span class="small">${q(me.email)}</span></div></div>`
+      : `<p class="small">الدخول اختياري. ادخل بحساب Google لتنضم إلى فصل معلّمك وتصلك تكليفاته وتُرسل نتائجك إليه تلقائيًا. ويمكنك الانضمام إلى فصل باسمك فقط دون حساب.</p><div class="gsi" id="acctGsi"></div>`}
+    <h3>تكليفاتي</h3><div class="alist" id="acctList">${signedIn() || joined.length ? '<p class="small">جارٍ التحميل…</p>' : '<p class="small">انضم إلى فصل معلّمك برمز الفصل، فتظهر تكليفاته هنا.</p>'}</div>
+    ${cls ? '<p class="small">فصولي بالاسم:</p><ul class="acls">' + cls + '</ul>' : ''}
+    <h3>انضم إلى فصل</h3>
+    <div class="acrow"><input type="text" id="acctCode" maxlength="8" dir="ltr" autocomplete="off" autocapitalize="characters" placeholder="رمز الفصل" aria-label="رمز الفصل"><button type="button" id="acctJoin">انضم</button></div>
+    <p class="aerr" id="acctErr" aria-live="polite"></p>
+    ${signedIn() && role() ? `<p class="small">دخلت ${role() === 'teacher' ? 'معلّمًا' : 'طالبًا'} · <button type="button" class="tlink" id="acctRole">تغيير</button>${role() === 'teacher' ? ' · <button type="button" class="tlink" id="acctCls">فصولي</button>' : ''}</p>`
+      : `<p class="small">معلّم؟ أنشئ فصلك من <a href="#teach" id="acctTeach">«للمُعلّمين»</a>.</p>`}
+    ${signedIn() ? '<button type="button" class="ghost" id="acctOut">تسجيل الخروج</button>' : ''}`);
+  renderSignIn($('acctGsi'));
+  const join = () => { const c = $('acctCode').value.trim().toUpperCase(); if (!c) { $('acctCode').focus({ preventScroll: true }); return; } joinView(c); };
+  $('acctJoin').onclick = join; $('acctCode').onkeydown = e => { if (e.key === 'Enter') join(); };
+  if ($('acctTeach')) $('acctTeach').onclick = () => close();
+  if ($('acctRole')) $('acctRole').onclick = roleView;
+  if ($('acctCls')) $('acctCls').onclick = goTeach;
+  if ($('acctOut')) $('acctOut').onclick = signOut;
+  o.querySelector('#acctList').addEventListener('click', e => { const a = e.target.closest('a.asg'); if (a) { e.preventDefault(); openLink(a.dataset.href); } });
+  if (signedIn() || joined.length) mine(true).then(list => {
+    if (view !== 'home' || !$('acctList')) return;
+    pending = list.filter(a => !a.done).length; paintBtn();
+    $('acctList').innerHTML = list.length ? list.map(asgRow).join('') : '<p class="small">لا تكليفات بعد. حين يرسل معلّمك تكليفًا يظهر هنا.</p>';
+  }, e => { if ($('acctList')) $('acctList').innerHTML = `<p class="aerr">${q(errText(e))}</p>`; });
+}
+function joinView(code){
+  view = code;
+  const o = box(`<h2>انضم إلى فصل</h2><p class="small">جارٍ البحث عن الفصل…</p>`);
+  api('classInfo', { code }).then(r => {
+    if (view !== code) return;
+    const c = r.cls, had = members().find(m => m.code === c.code);
+    box(`<h2>انضم إلى فصل</h2><p class="lead">${q(c.name)}</p><p class="small">المعلّم: ${q(c.teacher)} · رمز الفصل: <b dir="ltr">${q(c.code)}</b></p>
+      ${had ? `<p class="aok">✓ أنت في هذا الفصل باسم «${q(had.name)}».</p><button type="button" class="start" id="joinHome">تكليفاتي</button>`
+      : signedIn() ? `<button type="button" class="start" id="joinG">انضم باسم ${q(me.name)}</button>`
+      : `<div class="gsi" id="joinGsi"></div><p class="small aor">أو بدون حساب:</p>
+         <label class="hwname">اكتب اسمك كما يعرفه معلّمك<input type="text" id="joinName" maxlength="40" autocomplete="name"></label>
+         <button type="button" class="start" id="joinN">انضم</button>
+         <p class="small">احتفظ بهذا الجهاز: الانضمام بالاسم يُحفظ عليه فقط.</p>`}
+      <p class="aerr" id="joinErr" aria-live="polite"></p>`);
+    renderSignIn($('joinGsi'));
+    const done = r2 => (view = 'done', box(`<h2>انضممت إلى الفصل ✓</h2><p class="lead">${q(r2.cls.name)}</p><p>تكليفات معلّمك تظهر لك في «تكليفاتي»: زر <span class="ini sm">${signedIn() ? q([...String(me.name).trim()][0]) : PERSON}</span> أعلى الصفحة.</p><button type="button" class="start" id="joinHome">تكليفاتي</button>`)
+      .querySelector('#joinHome').onclick = home);
+    const fail = e => { $('joinErr').textContent = errText(e); o.querySelectorAll('button').forEach(b => b.disabled = false); };
+    if ($('joinHome')) $('joinHome').onclick = home;
+    if ($('joinG')) $('joinG').onclick = e => { e.target.disabled = true; joinGoogle(c.code).then(done, fail); };
+    if ($('joinN')) {
+      const go = () => { const n = $('joinName').value.trim(); if (!n) { $('joinName').focus({ preventScroll: true }); return; } $('joinN').disabled = true; joinByName(c.code, n).then(done, fail); };
+      $('joinN').onclick = go; $('joinName').onkeydown = e => { if (e.key === 'Enter') go(); };
+    }
+  }, e => { if (view === code) box(`<h2>انضم إلى فصل</h2><p class="aerr">${q(errText(e))}</p><button type="button" class="ghost" id="joinBack">رجوع</button>`).querySelector('#joinBack').onclick = home; });
+}
+// signing in while the window is open: show it again with the account
+subs.push(() => { const o = $('acctBox'); if (!o || o.hidden || !view) return; if (view === 'home') { if (signedIn() && !role()) roleView(); else if (role() === 'teacher') goTeach(); else home(); } else if (view !== 'done' && view !== 'role') joinView(view); });
+
+function init(){
+  const side = document.querySelector('header .head-side');
+  if (side && !$('acctBtn')) {
+    btn = document.createElement('button'); btn.type = 'button'; btn.className = 'help-btn ghost acct-btn'; btn.id = 'acctBtn';
+    side.insertBefore(btn, $('soundBtn') || side.firstChild.nextSibling);
+    btn.addEventListener('click', openAcct);
+    paintBtn();
+  }
+  // a class invitation link: …#join=CODE (opened, or pasted into this open page)
+  const joinHash = () => { const m = location.hash.match(/^#join=([A-Za-z0-9]{4,8})/); if (!m) return false;
+    history.replaceState(null, '', location.pathname + location.search);
+    setTimeout(() => { if ($('welcome')) $('welcome').hidden = true; joinView(m[1].toUpperCase()); }); return true; };
+  addEventListener('hashchange', joinHash);
+  if (joinHash()) {}
+  // a dot on the button when the teacher sent something not yet solved (checked at most every 5 minutes)
+  else if ((signedIn() && fresh()) || members().length) mine(false).then(l => { pending = l.filter(a => !a.done).length; paintBtn(); }, () => {});
+}
+return { api, token, signedIn, user: () => me, members, memberAuth, inClass, joinByName, joinGoogle, renderSignIn, signOut, home, mine, hwLink, openLink, errText, init, LIVE, SITE,
+  role, onChange: f => subs.push(f), refresh: () => { try { sessionStorage.removeItem(KC); } catch (e) {} } };
+})();
+ACCT.init();
 // ---------- «تكليف»: a teacher's assignment link (page#hw=…, made on teacher.html) ----------
-// The link holds: i = id, t = title, g = the quizzes (one or more, in order), n = tests per quiz, j = juz, s = surahs.
+// The link holds: i = id, c = class code (when sent to a class), t = title, g = the quizzes (one or more, in order), n = tests per quiz, j = juz, s = surahs.
 // Every student gets the same tests (shuffled with the id), one attempt per device, and sends the result by WhatsApp.
 // The quizzes are done one after the other; each runs on its own page (the link moves on with the same address part).
 // Each page defines HWA = { start(item), label() } before this part (see the page's own code).
@@ -1827,6 +2150,7 @@ const HW = (() => {
     if (!d.gs.length) return null;
     d.j = Array.isArray(d.j) ? d.j.map(Number) : []; d.s = Array.isArray(d.s) ? d.s.map(Number) : [];
     d.n = Math.min(20, Math.round(d.n)); d.t = String(d.t || '').slice(0, 80);
+    d.c = String(d.c || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);   // a class's assignment: the result goes to the teacher by itself
     return d;
   } catch (e) { return null; }
 })();
@@ -1890,6 +2214,7 @@ function hwOverlay(html){
 function hwEnd(){
   const st = hwState(), res = st.res.filter(r => !r.skip);
   const nx = $('exNext'); if (nx) nx.hidden = true;
+  if (HW.c) { hwEndClass(st, res); return; }
   const o = hwOverlay(`<h2>أنهيت التكليف</h2>${HW.t ? '<p class="lead">' + esc(HW.t) + '</p>' : ''}
     <p class="hwscore">${toAr(right(res))} من ${toAr(res.length)}</p>
     <p><b>الخطوة الأخيرة:</b> اضغط الزر وأرسل الرسالة لمعلّمك في واتساب.</p>
@@ -1900,6 +2225,34 @@ function hwEnd(){
     const ok = () => { $('hwMsg').textContent = 'تم نسخ النتيجة'; }, fail = () => { $('hwMsg').textContent = hwText(); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(hwText()).then(ok, fail); else fail();
   });
+}
+// a class's assignment: the result is sent to the teacher's class by itself (WhatsApp only if that fails)
+function hwEndClass(st, res){
+  const o = hwOverlay(`<h2>أنهيت التكليف</h2>${HW.t ? '<p class="lead">' + esc(HW.t) + '</p>' : ''}
+    <p class="hwscore">${toAr(right(res))} من ${toAr(res.length)}</p>
+    <p class="hwsent" id="hwSent" aria-live="polite">${st.sent ? '✓ وصلت نتيجتك لمعلّمك' : 'جارٍ إرسال نتيجتك لمعلّمك…'}</p><div class="hwafter" id="hwAfter"></div>`);
+  o.classList.add('final');
+  const after = ok => {
+    $('hwAfter').innerHTML = ok ? '<button type="button" class="start" id="hwMine">تكليفاتي</button>'
+      : `<button type="button" class="start" id="hwRetry">أعد المحاولة</button><a class="ghost hwwa" href="https://wa.me/?text=${encodeURIComponent(hwText())}" target="_blank" rel="noopener">أو أرسلها لمعلّمك عبر واتساب</a>`;
+    if ($('hwMine')) $('hwMine').onclick = () => { o.hidden = true; ACCT.home(); };
+    if ($('hwRetry')) $('hwRetry').onclick = send;
+  };
+  const send = () => {
+    $('hwSent').textContent = 'جارٍ إرسال نتيجتك لمعلّمك…'; $('hwAfter').innerHTML = '';
+    const data = { assignmentId: HW.i, score: right(res), total: res.length,
+      detail: st.res.map(r => r.skip ? { q: r.q, skip: 1 } : { q: r.q, n: r.n, t: r.t, l: r.l }) };
+    const attempt = () => ACCT.memberAuth(HW.c).then(a => ACCT.api('submit', Object.assign({}, data, a)));
+    attempt().catch(e => {   // not in the class yet (it failed at the start): join now, then send
+      if (e.message !== 'not_member') throw e;
+      return (ACCT.signedIn() ? ACCT.joinGoogle(HW.c) : ACCT.joinByName(HW.c, st.name)).then(attempt);
+    }).then(r => {
+      const s2 = hwState(); s2.sent = true; store.set(HW_KEY, s2); ACCT.refresh();
+      $('hwSent').textContent = r.already ? 'سبق أن أرسلت نتيجة هذا التكليف (' + toAr(r.score) + ' من ' + toAr(r.total) + ')؛ تُحسب المحاولة الأولى فقط.' : '✓ وصلت نتيجتك لمعلّمك';
+      after(true);
+    }, e => { $('hwSent').textContent = ACCT.errText(e); after(false); });
+  };
+  if (st.sent) after(true); else send();
 }
 // where the student is: the next quiz not finished; on another page → go there; all done → the end
 function hwNext(){
@@ -1953,13 +2306,23 @@ function hwStart(){
     o.querySelector('#hwSkip').addEventListener('click', () => { o.hidden = true; hwNext(); });
   };
   if (st0.name) { begin(); return; }
+  const startAs = v => { if (hwState().name) return; store.set(HW_KEY, { name: v, res: [] }); const b = $('hwBox'); if (b) b.hidden = true; begin(); };
+  if (HW.c) {   // already in the class on this device (by name or with Google): no need to ask the name
+    const m = ACCT.members().find(x => x.code === HW.c);
+    if (m) { startAs(m.name); return; }
+    if (ACCT.signedIn()) { ACCT.joinGoogle(HW.c).catch(() => {}); startAs(ACCT.user().name); return; }
+  }
   const o = hwOverlay(`<h2>تكليف من معلّمك</h2>${HW.t ? '<p class="lead">' + esc(HW.t) + '</p>' : ''}
     <p>${HW.gs.map(g => esc(quizName(g))).join('، ')}<br>${esc(hwSel())} · ${hwCount(HW.n)}${HW.gs.length > 1 ? ' في كل منها' : ''}</p>
+    ${HW.c ? '<div class="gsi" id="hwGsi"></div><p class="small aor">أو بدون حساب:</p>' : ''}
     <label class="hwname">اكتب اسمك <input type="text" id="hwName" maxlength="40" autocomplete="name"></label>
-    <p class="small">لك محاولة واحدة، وفي النهاية ترسل نتيجتك لمعلّمك.</p>
+    <p class="small">${HW.c ? 'لك محاولة واحدة، وتصل نتيجتك لمعلّمك تلقائيًا حين تنهي.' : 'لك محاولة واحدة، وفي النهاية ترسل نتيجتك لمعلّمك.'}</p>
     <button type="button" class="start" id="hwBegin">ابدأ</button>`);
+  if (HW.c) { ACCT.renderSignIn($('hwGsi')); ACCT.onChange(() => { if (ACCT.signedIn() && !hwState().name) { ACCT.joinGoogle(HW.c).catch(() => {}); startAs(ACCT.user().name); } }); }
   const go = () => { const v = $('hwName').value.trim(); if (!v) { $('hwName').focus({ preventScroll: true }); return; }
-    store.set(HW_KEY, { name: v, res: [] }); o.hidden = true; begin(); };
+    if (!HW.c) { startAs(v); return; }
+    $('hwBegin').disabled = true;   // join the class with this name (if that fails now, it is tried again when sending the result)
+    ACCT.joinByName(HW.c, v).then(() => startAs(v), () => startAs(v)); };
   $('hwBegin').addEventListener('click', go);
   $('hwName').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   $('hwName').focus({ preventScroll: true });
@@ -1979,7 +2342,7 @@ function showTeach(){
   $('teach').hidden = false; wrap.classList.add('teaching');
   ['modeDaily', 'modeTrain'].forEach(id => { $(id).classList.remove('on'); $(id).setAttribute('aria-pressed', false); });
   $('modeTeach').classList.add('on'); $('modeTeach').setAttribute('aria-current', 'true');
-  bring($('teach'));
+  bring($('teach')); clsShow();
 }
 function hideTeach(){
   if ($('teach').hidden) return;
@@ -1994,7 +2357,7 @@ $('teachX').addEventListener('click', hideTeach);
 document.addEventListener('click', e => { const a = e.target.closest('a[href="#teach"]'); if (a && a.id !== 'modeTeach') { e.preventDefault(); showTeach(); } });
 $('teachTabs').addEventListener('click', e => { const b = e.target.closest('.ptab'); if (!b) return;
   $('teachTabs').querySelectorAll('.ptab').forEach(x => x.classList.toggle('on', x === b));
-  $('t-make').hidden = b.dataset.tt !== 'make'; $('t-res').hidden = b.dataset.tt !== 'res'; });
+  ['cls', 'make', 'res'].forEach(k => { $('t-' + k).hidden = b.dataset.tt !== k; }); clsShow(); });
 function selLabel(j, s){
   j = j.slice().sort((a, b) => a - b); const parts = [];
   for (let i = 0; i < j.length; i++) { let k = i; while (k + 1 < j.length && j[k + 1] === j[k] + 1) k++;
@@ -2019,6 +2382,9 @@ $('t-makeBtn').addEventListener('click', () => {
   const g = vals('tg'), j = vals('tj'), s = vals('ts'), n = vals('tn')[0] || 5, t = $('t-title').value.trim();
   if (!g.length) { $('t-err').textContent = 'اختر اختبارًا واحدًا على الأقل.'; $('t-out').hidden = true; return; }
   if (!j.length && !s.length) { $('t-err').textContent = 'اختر جزءًا أو سورة على الأقل.'; $('t-out').hidden = true; return; }
+  const tc = (document.querySelector('#teach input[name="tc"]:checked') || {}).value || '';
+  if (tc) { toClass(tc, { t, g, n, j, s }); return; }   // to one of my classes (see «فصولي» below)
+  outMode('');
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const hash = '#hw=' + b64(JSON.stringify({ i: id, t, g, n, j, s }));
   const link = SITE + FILE[g[0]] + hash;   // the first quiz's page; the student moves on to the others from there
@@ -2083,7 +2449,161 @@ $('t-collect').addEventListener('click', () => {
   $('t-table').scrollIntoView({ block: 'start', behavior: 'smooth' });
 });
 
-if (location.hash === '#teach') { showTeach(); setTimeout(() => { $('welcome').hidden = true; }); }   // a teacher opening the teachers' link: no welcome window on top
+// ---------- «فصولي»: the teacher's classes (Google sign-in). Students join by code or link, get the assignments in «تكليفاتي»,
+// and their results come back here by themselves. (Put inside teach.js's (() => { … })(), so it uses its vals, selLabel, NAME, FILE, b64, tryHref.)
+let myCls = null, curCls = null, forPick = null;
+const qx = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const nStu = n => n === 1 ? 'طالب واحد' : n === 2 ? 'طالبان' : toAr(n) + (n >= 3 && n <= 10 ? ' طلاب' : ' طالبًا');
+const day = iso => { try { return new Date(iso).toLocaleDateString('ar-EG', { day: 'numeric', month: 'long' }); } catch (e) { return ''; } };
+const gsOf = spec => (Array.isArray(spec.g) ? spec.g : [spec.g]).filter(Boolean);
+const wa = t => 'https://wa.me/?text=' + encodeURIComponent(t);
+// a button that needs a second press (deleting)
+function twice(b, label, fn){
+  b.onclick = () => { if (b.dataset.sure) { fn(); return; } b.dataset.sure = 1; const t = b.textContent; b.textContent = label;
+    setTimeout(() => { delete b.dataset.sure; b.textContent = t; }, 3500); };
+}
+function loadCls(){ return ACCT.api('me', {}, true).then(r => { myCls = r.teach; fillFor(); return r; }); }
+function clsShow(){ if (!$('t-cls').hidden) renderCls(); else { fillFor(); if (ACCT.signedIn() && !myCls) loadCls().catch(() => {}); } }
+function renderCls(){
+  const p = $('t-cls');
+  if (!ACCT.signedIn()) {
+    myCls = null; curCls = null; fillFor();
+    p.innerHTML = `<p class="tsmall">أنشئ فصلًا لكل حلقة أو مجموعة: ينضم طلابك إليه برمز أو رابط، وتصلهم تكليفاتك في «تكليفاتي»، وتظهر لك نتائجهم هنا تلقائيًا: من حلّ ومن لم يحل، وأكثر ما أخطؤوا فيه.</p>
+      <p class="tstep">ادخل بحساب Google</p><div class="gsi" id="t-gsi"></div>
+      <p class="tsmall">الطلاب لا يحتاجون حسابًا: يكفيهم الاسم ورمز الفصل.<br>ولإرسال تكليف برابط واتساب دون فصل، اختر «أنشئ تكليفًا».</p>`;
+    ACCT.renderSignIn($('t-gsi'));
+    return;
+  }
+  if (curCls) { renderClass(curCls); return; }
+  p.innerHTML = '<p class="tsmall">جارٍ تحميل فصولك…</p>';
+  loadCls().then(listCls, e => { p.innerHTML = `<p class="terr">${qx(ACCT.errText(e))}</p><button type="button" class="ghost" id="t-again">أعد المحاولة</button>`; $('t-again').onclick = renderCls; });
+}
+function listCls(){
+  const p = $('t-cls'), u = ACCT.user();
+  if (!u) { renderCls(); return; }
+  p.innerHTML = `<p class="tsmall tme">${qx(u.name)} · <bdi>${qx(u.email)}</bdi> · <button type="button" class="tlink" id="t-me">حسابي</button> · <button type="button" class="tlink" id="t-out">تسجيل الخروج</button></p>
+    ${myCls.length ? '<div class="tcl">' + myCls.map(c => `<button type="button" class="tcard" data-code="${qx(c.code)}"><b>${qx(c.name)}</b><span>رمز الفصل: <bdi>${qx(c.code)}</bdi></span></button>`).join('') + '</div>'
+      : '<p class="tsmall">لا فصول بعد. أنشئ فصلك الأول:</p>'}
+    <p class="tstep">فصل جديد</p>
+    <div class="trow"><input type="text" id="t-newCls" maxlength="60" placeholder="اسم الفصل، مثال: حلقة الفجر"><button type="button" id="t-addCls">أنشئ</button></div>
+    <p class="terr" id="t-clsErr" aria-live="polite"></p>`;
+  $('t-out').onclick = () => ACCT.signOut();
+  $('t-me').onclick = () => ACCT.home();
+  p.querySelectorAll('.tcard').forEach(b => b.onclick = () => { curCls = b.dataset.code; renderClass(curCls); });
+  const add = () => {
+    const n = $('t-newCls').value.trim(); if (!n) { $('t-newCls').focus({ preventScroll: true }); return; }
+    $('t-addCls').disabled = true;
+    ACCT.api('createClass', { name: n }, true).then(r => { myCls.push(r.cls); fillFor(); curCls = r.cls.code; renderClass(curCls); },
+      e => { $('t-clsErr').textContent = ACCT.errText(e); $('t-addCls').disabled = false; });
+  };
+  $('t-addCls').onclick = add; $('t-newCls').onkeydown = e => { if (e.key === 'Enter') add(); };
+}
+// one class: invite, its assignments with every student's result, its students
+function renderClass(code){
+  const p = $('t-cls');
+  p.innerHTML = '<button type="button" class="tlink" id="t-back">→ فصولي</button><p class="tsmall">جارٍ التحميل…</p>';
+  $('t-back').onclick = () => { curCls = null; renderCls(); };
+  ACCT.api('classReport', { code }, true).then(R => {
+    if (curCls !== code) return;
+    const c = R.cls, joinLink = ACCT.SITE + '#join=' + c.code;
+    const invite = `انضم إلى فصل «${c.name}» في اختبارات قرآنية لتصلك تكليفاتي:\n${joinLink}\n\nأو افتح الموقع واضغط زر الحساب أعلى الصفحة، واكتب رمز الفصل: ${c.code}`;
+    const asg = R.assignments.slice().sort((a, b) => String(b.created).localeCompare(String(a.created)));
+    const resOf = {}; R.results.forEach(r => { (resOf[r.assignmentId] = resOf[r.assignmentId] || {})[r.memberId] = r; });
+    const pct = r => r.total ? Math.round(100 * r.score / r.total) : 0;
+    const asgHtml = asg.map((a, i) => {
+      const spec = a.spec || {}, gs = gsOf(spec), many = gs.length > 1, rs = resOf[a.id] || {};
+      const done = R.members.filter(m => rs[m.memberId]).map(m => rs[m.memberId]).sort((x, y) => pct(y) - pct(x));
+      const left = R.members.filter(m => !rs[m.memberId]);
+      // results of students no longer in the class still count
+      Object.values(rs).forEach(r => { if (!R.members.some(m => m.memberId === r.memberId)) done.push(r); });
+      const missOf = r => (Array.isArray(r.detail) ? r.detail : []).filter(d => !d.skip && d.n < d.t).map(d => (many ? (NAME[d.q] || d.q) + ' · ' : '') + d.l);
+      const cnt = new Map(); done.forEach(r => missOf(r).forEach(l => cnt.set(l, (cnt.get(l) || 0) + 1)));
+      const top = [...cnt.entries()].sort((x, y) => y[1] - x[1]).slice(0, 6);
+      const avg = done.length ? Math.round(done.reduce((s, r) => s + pct(r), 0) / done.length) : 0;
+      return `<details class="tasg"${i === 0 ? ' open' : ''} data-id="${qx(a.id)}"><summary><b>${qx(a.title)}</b>
+          <span class="tsmall">${qx(gs.map(g => NAME[g] || g).join('، '))} · ${qx(selLabel(spec.j || [], spec.s || []))} · ${day(a.created)}</span>
+          <span class="tdone">حلّه ${toAr(done.length)} من ${toAr(R.members.length)}${done.length ? ' · المتوسط ' + toAr(avg) + '٪' : ''}</span></summary>
+        ${done.length || left.length ? `<div style="overflow-x:auto"><table><thead><tr><th>الطالب</th><th>النتيجة</th><th>أخطأ في</th></tr></thead><tbody>
+          ${done.map(r => { const ms = missOf(r); return `<tr class="${r.score >= r.total ? 'full' : pct(r) < 60 ? 'low' : ''}"><td>${qx(r.name)}</td><td class="num">${toAr(r.score)} من ${toAr(r.total)}</td><td>${ms.length ? qx(ms.join('، ')) : '—'}</td></tr>`; }).join('')}
+          ${left.map(m => `<tr class="miss"><td>${qx(m.name)}</td><td class="num">لم يحل بعد</td><td></td></tr>`).join('')}
+        </tbody></table></div>` : '<p class="tsmall">لا طلاب في الفصل بعد.</p>'}
+        ${top.length ? '<p class="grp">أكثر ما أخطأ فيه الطلاب</p><ol class="top">' + top.map(([l, n]) => `<li>${qx(l)} <span class="tsmall">(${nStu(n)})</span></li>`).join('') + '</ol>' : ''}
+        <div class="tbtns">${left.length ? `<a class="line" target="_blank" rel="noopener" href="${qx(wa('تذكير بتكليف «' + a.title + '»، لم يحلّه بعد:\n' + left.map(m => '- ' + m.name).join('\n') + '\n\nتجده في «تكليفاتي» في اختبارات قرآنية، أو من الرابط:\n' + ACCT.hwLink({ id: a.id, classCode: c.code, title: a.title, spec })))}">ذكّر من لم يحل عبر واتساب</a>` : ''}
+          <button type="button" class="ghost tdel" data-del="${qx(a.id)}">حذف التكليف</button></div>
+      </details>`;
+    }).join('');
+    p.innerHTML = `<button type="button" class="tlink" id="t-back">→ فصولي</button>
+      <h3 class="tch">${qx(c.name)}</h3>
+      <div class="tout tinv"><span class="tsmall">رمز الفصل</span> <b class="tcode" dir="ltr">${qx(c.code)}</b>
+        <p class="tsmall">أرسل رابط الانضمام لطلابك مرة واحدة: يكتب الطالب اسمه أو يدخل بحساب Google، ثم تصله كل تكليفاتك.</p>
+        <div class="tbtns"><a class="fill" target="_blank" rel="noopener" href="${qx(wa(invite))}">ادعُ الطلاب عبر واتساب</a><a class="line" href="#" id="t-newAsg">تكليف جديد لهذا الفصل</a></div></div>
+      <p class="tstep">التكليفات</p>
+      ${asgHtml || '<p class="tsmall">لا تكليفات بعد. اضغط «تكليف جديد لهذا الفصل».</p>'}
+      <p class="tstep">الطلاب <span class="tsmall">(${toAr(R.members.length)})</span></p>
+      ${R.members.length ? '<ul class="tstu">' + R.members.map(m => `<li><span>${qx(m.name)}${m.google ? ' <span class="tsmall">· Google</span>' : ''}</span><button type="button" class="tlink" data-rm="${qx(m.memberId)}">إزالة</button></li>`).join('') + '</ul>'
+        : '<p class="tsmall">لم ينضم أحد بعد. أرسل لهم رابط الانضمام.</p>'}
+      <div class="tbtns"><a class="line" href="#" id="t-csv">نزّل النتائج (Excel)</a><a class="line" href="#" id="t-reload">تحديث</a></div>
+      <p class="terr" id="t-cErr" aria-live="polite"></p>
+      <button type="button" class="tlink tdanger" id="t-arch">حذف الفصل</button>`;
+    $('t-back').onclick = () => { curCls = null; renderCls(); };
+    $('t-reload').onclick = e => { e.preventDefault(); renderClass(code); };
+    $('t-newAsg').onclick = e => { e.preventDefault(); forPick = code; document.querySelector('#teachTabs [data-tt="make"]').click(); };
+    const fail = e => { $('t-cErr').textContent = ACCT.errText(e); };
+    p.querySelectorAll('[data-del]').forEach(b => twice(b, 'اضغط مرة أخرى للحذف', () => { b.disabled = true; ACCT.api('deleteAssignment', { id: b.dataset.del }, true).then(() => renderClass(code), fail); }));
+    p.querySelectorAll('[data-rm]').forEach(b => twice(b, 'تأكيد الإزالة؟', () => { b.disabled = true; ACCT.api('removeMember', { code, memberId: b.dataset.rm }, true).then(() => renderClass(code), fail); }));
+    twice($('t-arch'), 'اضغط مرة أخرى: يُحذف الفصل وتكليفاته', () => ACCT.api('archiveClass', { code }, true).then(() => { myCls = (myCls || []).filter(x => x.code !== code); curCls = null; fillFor(); renderCls(); }, fail));
+    // Excel opens this file (CSV with a BOM, so Arabic shows right)
+    $('t-csv').onclick = e => {
+      e.preventDefault();
+      const cell = v => '"' + String(v).replace(/"/g, '""') + '"';
+      const old = asg.slice().reverse(), rows = [['الطالب', ...old.map(a => a.title)]];
+      const people = R.members.map(m => [m.memberId, m.name]);
+      R.results.forEach(r => { if (!people.some(x => x[0] === r.memberId)) people.push([r.memberId, r.name]); });
+      people.forEach(([id, name]) => rows.push([name, ...old.map(a => { const r = (resOf[a.id] || {})[id]; return r ? r.score + '/' + r.total : 'لم يحل'; })]));
+      const blob = new Blob(['﻿' + rows.map(r => r.map(cell).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'نتائج ' + c.name + '.csv';
+      document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    };
+  }, e => {
+    if (curCls !== code) return;
+    p.innerHTML = `<button type="button" class="tlink" id="t-back">→ فصولي</button><p class="terr">${qx(ACCT.errText(e))}</p><button type="button" class="ghost" id="t-again">أعد المحاولة</button>`;
+    $('t-back').onclick = () => { curCls = null; renderCls(); }; $('t-again').onclick = () => renderClass(code);
+  });
+}
+// «أنشئ تكليفًا»: send it to one of my classes, or only as a WhatsApp link
+function fillFor(){
+  const w = $('t-for');
+  if (!ACCT.signedIn() || !myCls || !myCls.length) { w.hidden = true; $('t-forc').innerHTML = ''; return; }
+  const was = document.querySelector('#teach input[name="tc"]:checked');
+  const sel = forPick !== null ? forPick : was ? was.value : (curCls || myCls[0].code); forPick = null;
+  $('t-forc').innerHTML = myCls.map(c => `<label><input type="radio" name="tc" value="${qx(c.code)}"${c.code === sel ? ' checked' : ''}><span>${qx(c.name)}</span></label>`).join('')
+    + `<label><input type="radio" name="tc" value=""${sel === '' ? ' checked' : ''}><span>رابط واتساب فقط</span></label>`;
+  w.hidden = false;
+}
+const OUT = { a: $('t-outA').textContent, b: $('t-outB').textContent, wa: $('t-wa').textContent };
+function outMode(cname){
+  $('t-outA').textContent = cname ? `وصل التكليف إلى طلاب «${cname}»: يجدونه في «تكليفاتي». ويمكنك تنبيههم في مجموعة الحلقة أيضًا.` : OUT.a;
+  $('t-outB').textContent = cname ? 'لكل طالب محاولة واحدة، ونتائجهم تظهر لك في «فصولي» تلقائيًا.' : OUT.b;
+  $('t-wa').textContent = cname ? 'نبّه الطلاب عبر واتساب' : OUT.wa;
+}
+function toClass(code, spec){
+  const c = (myCls || []).find(x => x.code === code) || { name: '' };
+  const title = spec.t || 'تكليف ' + day(new Date().toISOString());
+  $('t-makeBtn').disabled = true; $('t-err').textContent = ''; $('t-out').hidden = true;
+  ACCT.api('createAssignment', { classCode: code, title, spec }, true).then(r => {
+    $('t-makeBtn').disabled = false;
+    const a = { id: r.assignment.id, classCode: code, title, spec }, g = gsOf(spec);
+    const msg = 'تكليف جديد: ' + title + '\n' + g.map(x => NAME[x]).join('، ') + '\n' + selLabel(spec.j, spec.s) + ' · ' + toAr(spec.n) + ' اختبارات' + (g.length > 1 ? ' من كل منها' : '')
+      + '\nتجده في «تكليفاتي» في اختبارات قرآنية، أو افتحه من الرابط:\n' + ACCT.hwLink(a);
+    $('t-wa').href = wa(msg);
+    // trying it yourself: the same questions, but not as a student of the class
+    tryHref = (FILE[g[0]] || (location.hostname.endsWith('github.io') ? './' : 'index.html')) + '#hw=' + b64(JSON.stringify({ i: r.assignment.id, t: title, g, n: spec.n, j: spec.j, s: spec.s }));
+    outMode(c.name); $('t-out').hidden = false; $('t-out').scrollIntoView({ block: 'nearest' });
+  }, e => { $('t-makeBtn').disabled = false; $('t-err').textContent = ACCT.errText(e); });
+}
+ACCT.onChange(() => { myCls = null; if (!ACCT.signedIn()) curCls = null; if (!$('teach').hidden) clsShow(); else fillFor(); });
+
+if (location.hash === '#teach') { showTeach(); setTimeout(() => { $('welcome').hidden = true; ['modeDaily', 'modeTrain'].forEach(id => $(id).classList.remove('on')); }); }   // a teacher opening the teachers' link: no welcome window on top
 })();
 
 load(todayIndex(), false);
