@@ -43,6 +43,9 @@ a{color:var(--accent)}
 .qr{margin-top:14px} .qr svg{width:160px;height:160px;background:#fff;border-radius:10px;padding:6px} .qr svg path{fill:#000}
 @media (max-width:600px){.qr{display:none}}
 .thanks{text-align:center;font-family:var(--f-display);color:var(--accent);font-size:1.2rem;margin-top:30px}
+
+:root[data-theme="dark"] .btn.ghost{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--accent)}}
 </style>
 </head>
 <body>
@@ -50,7 +53,7 @@ a{color:var(--accent)}
   <a class="back" href="./">← العودة إلى الاختبارات</a>
 
   <h1>ادعم المشروع</h1>
-  <p>«اختبارات قرآنية» مجانية للجميع، بلا إعلانات ولا حسابات، وستبقى كذلك بإذن الله.</p>
+  <p>«اختبارات قرآنية» مجانية للجميع، بلا إعلانات ولا يلزمها حساب، وستبقى كذلك بإذن الله.</p>
   <p>إن أحببت أن تُعين على استمرارها، فدعمك يساعد على:</p>
   <ul>
     <li>تكاليف النطاق والاستضافة.</li>

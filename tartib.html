@@ -33,7 +33,7 @@ try { var t = JSON.parse(localStorage.getItem('mut-theme')); if (t === 'dark' ||
 /* Layout: one narrow centred column — verse card, answer slots, guess box, guess log */
 :root{
   --bg:#EDF1EE; --surface:#FBFCFB; --ink:#15241F; --muted:#5C6E68; --line:#CCD8D3;
-  --accent:#0E6B57; --accent-ink:#FFFFFF; --gold:#A87A1E;
+  --accent:#0E6B57; --accent-ink:#FFFFFF; --gold:#8C6414;
   --scrim:rgba(14,22,20,.55); --hint-bg:#F5ECD6; --ok:#1F8A5B; --ok-bg:#DDF1E6; --bad:#B23A3A; --bad-bg:#F6E0DE; --empty:#E3EAE6;
   --f-display:"Tajawal","Changa","IBM Plex Sans Arabic",sans-serif;
   --f-quran:"Amiri Quran","Amiri","Traditional Arabic",serif;
@@ -149,7 +149,10 @@ header .head-side{display:contents}
 .ast.ok{color:var(--ok)} .ast.bad{color:var(--bad)} .ast.new{color:var(--muted)} .ast.cur{color:var(--gold)}
 .btn-link{display:inline-flex;align-items:center;justify-content:center;font-weight:600;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 16px;text-decoration:none}
 .btn-link.ghostlink{background:transparent;color:var(--accent)}
-.istrip{display:flex;align-items:center;gap:8px;margin:8px 0 2px;padding:7px 10px;border:1px solid var(--accent);border-radius:12px;background:var(--surface);font-size:.85rem;line-height:1.5}
+.istrip{display:flex;align-items:center;gap:8px;margin:6px 0 0;padding:5px 8px 5px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.8rem;line-height:1.45}
+.lead2.firsttry{background:var(--hint-bg);border:1px solid var(--gold);border-radius:12px;padding:8px 12px;color:var(--ink);font-weight:600}
+.lead2.firsttry::before{content:"جرّب الآن: ";color:var(--gold);font-weight:800}
+#welcome .wlinks{text-align:center;margin-top:-4px} #welcome .wlinks a{color:var(--muted)}
 .istrip .ist{flex:1;color:var(--ink)} .istrip .ist b{color:var(--accent)}
 .istrip .isbtns{display:flex;gap:6px;flex:none}
 .istrip a.sm{display:inline-block;padding:6px 10px;font-size:.88rem;border-radius:10px;text-decoration:none;font-weight:600}
@@ -361,15 +364,15 @@ button.sm{padding:6px 10px;font-size:.88rem}
 .qres{font-family:var(--f-ui);font-weight:700;font-size:.8rem;align-self:center;white-space:nowrap} .qres.ok{color:var(--ok)} .qres.bad{color:var(--bad)}
 .placedlist{display:flex;flex-direction:column;gap:6px}
 .placed{display:flex;gap:10px;align-items:flex-start;background:var(--ok-bg);border:1px solid var(--ok);border-radius:12px;padding:8px 12px}
-.pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:6px}
+.pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ok);color:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:6px}
 .pt,.vbtn{font-family:var(--f-quran);font-size:clamp(1.15rem,4.6vw,1.35rem);line-height:2.1;font-weight:400}
 .vchoices{display:flex;flex-direction:column;gap:8px}
 .vbtn{background:var(--surface);color:var(--ink);border:1px solid var(--line);text-align:right;padding:8px 12px}
 .dlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .ditem{display:flex;gap:8px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 12px;user-select:none;-webkit-user-select:none}
 .ditem .pn{background:var(--line);color:var(--ink)}
-.ditem.good{background:var(--ok-bg);border-color:var(--ok)} .ditem.good .pn{background:var(--ok);color:#fff}
-.ditem.bad{background:var(--bad-bg);border-color:var(--bad)} .ditem.bad .pn{background:var(--bad);color:#fff}
+.ditem.good{background:var(--ok-bg);border-color:var(--ok)} .ditem.good .pn{background:var(--ok);color:var(--surface)}
+.ditem.bad{background:var(--bad-bg);border-color:var(--bad)} .ditem.bad .pn{background:var(--bad);color:var(--surface)}
 .choice.full{padding:0;text-align:right;font-family:var(--f-ui)} .choice.full .ayah{border:none;background:transparent}
 .ditem.dragging{border:2px dashed var(--accent);opacity:.85;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .handle{flex:none;width:36px;min-height:44px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--muted);cursor:grab;touch-action:none}
@@ -418,7 +421,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <nav class="modes three" aria-label="نوع الاختبار">
     <button type="button" class="mbtn" id="modeDaily"><span class="mt">اختبار اليوم</span><span class="ms">لحافظي القرآن</span></button>
     <button type="button" class="mbtn" id="modeTrain"><span class="mt">تدرّب</span><span class="ms">على ما حفظته</span></button>
-    <a class="mbtn teach" id="modeTeach" href="#teach"><span class="mt">للمُعلّمين</span><span class="ms">أنشئ تكليفًا</span></a>
+    <a class="mbtn teach" id="modeTeach" href="#teach"><span class="mt">للمُعلّمين</span><span class="ms">فصول وتكليفات</span></a>
   </nav>
 
   <section class="psetup" id="pick" aria-labelledby="pickTitle" hidden>
@@ -469,7 +472,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
 #teach tr.low td.num{color:var(--bad)} #teach tr.full td.num{color:var(--accent)}
 #teach tr.miss td{color:var(--muted)} #teach td.part{white-space:nowrap;font-size:.86rem}
 #teach .bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-inline-start:6px;opacity:.7}
-#teach ol.top{padding-inline-start:1.4em} #teach ol.top li{margin:0 0 4px}
+#teach ol.top{padding-inline-start:1.6em;list-style-type:arabic-indic} #teach ol.top li{margin:0 0 4px}
+#teach a:not(.fill):not(.line){color:var(--accent)} #teach .tguide{margin:-4px 0 10px}
 #teach .tpane[hidden]{display:none}
 /* «فصولي» */
 #teach .gsi{min-height:44px;margin:6px 0}
@@ -524,6 +528,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
 </style>
   <section class="psetup" id="teach" aria-labelledby="teachTitle" hidden>
     <h2 id="teachTitle">للمُعلّمين</h2>
+    <p class="tsmall tguide">أول مرة؟ اقرأ <a href="guide.html">دليل المعلّم</a>: ثلاث خطوات مع الصور.</p>
     <div class="tabs" id="teachTabs" style="grid-template-columns:1fr 1fr 1fr">
       <button type="button" class="ptab on" data-tt="cls">فصولي</button>
       <button type="button" class="ptab" data-tt="make">أنشئ تكليفًا</button>
@@ -554,7 +559,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p class="terr" id="t-err" aria-live="polite"></p>
       <div class="tout" id="t-out" hidden>
         <b>التكليف جاهز</b>
-        <p class="tsmall" id="t-outA">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة الحلقة.</p>
+        <p class="tsmall" id="t-outA">أرسله لطلابك في واتساب: تفتح رسالة جاهزة فيها رابط التكليف، فاختر المحادثة أو مجموعة طلابك.</p>
         <div class="tbtns">
           <a class="fill" id="t-wa" target="_blank" rel="noopener">أرسل للطلاب عبر واتساب</a>
           <a class="line" id="t-try" href="#">جرّب التكليف كأنك طالب</a>
@@ -566,7 +571,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <div class="tpane" id="t-res" hidden>
       <p class="tsmall">انسخ رسائل النتائج التي وصلتك في واتساب (رسالة أو أكثر، أو المحادثة كلها) والصقها هنا، فتظهر في جدول واحد.</p>
       <textarea id="t-paste" placeholder="الصق رسائل النتائج هنا"></textarea>
-      <p class="tstep" style="font-size:1rem">أسماء طلاب الحلقة <span class="tsmall">(اختياري: اسم في كل سطر، لتعرف من لم يرسل)</span></p>
+      <p class="tstep" style="font-size:1rem">أسماء طلابك <span class="tsmall">(اختياري: اسم في كل سطر، لتعرف من لم يرسل)</span></p>
       <textarea id="t-roster" class="names" placeholder="أحمد&#10;سارة&#10;يوسف"></textarea>
       <button type="button" class="start tgo" id="t-collect">اعرض النتائج</button>
       <p class="terr" id="t-err2" aria-live="polite"></p>
@@ -632,9 +637,11 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <footer class="credits">
     التلاوة: الشيخ محمود خليل الحصري، عبر <a href="https://alquran.cloud" target="_blank" rel="noopener">Islamic Network</a> ·
     النص: مصحف المدينة (حفص) من <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil Project</a> (tanzil.net) ·
-    <a href="https://quranic-verses.github.io/quranic-tests/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a> ·
+    <a href="about.html">من نحن</a> ·
+    <a href="mailto:quranicstuff@gmail.com">تواصل معنا</a> ·
+    <a href="privacy.html">سياسة الخصوصية</a> ·
     <a href="support.html">ادعم المشروع</a> ·
-    <a href="#teach">للمُعلّمين: أنشئ تكليفًا</a>
+    <a href="guide.html">دليل المعلّم</a>
   </footer>
 </div>
 
@@ -655,8 +662,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
         <li><b>اختبار اليوم:</b> اختبارات جديدة كل يوم، تتجدد عند منتصف الليل بتوقيت القاهرة. وما فاتك تجده في «الاختبارات السابقة».</li>
         <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
         <li><b>تلميح:</b> يساعدك إذا تعثرت، والرقم بجانبه هو ما بقي لك منه.</li>
-        <li><b>للمُعلّمين:</b> أنشئ فصلًا لطلابك، وأرسل لهم تكليفات، وتظهر لك نتائجهم تلقائيًا.</li>
-        <li><b>طالب في حلقة؟</b> انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة، فتجد تكليفاته في «تكليفاتي»، وتصله نتيجتك حين تنهي.</li>
+        <li><b>للمُعلّمين:</b> أنشئ فصلًا لطلابك، وأرسل لهم تكليفات، وتظهر لك نتائجهم تلقائيًا. خطوات ذلك في <a href="guide.html">دليل المعلّم</a>.</li>
+        <li><b>طالب؟</b> انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة، فتجد تكليفاته في «تكليفاتي»، وتصله نتيجتك حين تنهي.</li>
       </ul>
       <h3 class="hsub">طريقة كل اختبار</h3>
     </div>
@@ -787,9 +794,10 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
       <p><b>تدرّب</b>على الأجزاء والسور التي تحفظها</p>
       <p><b>للمُعلّمين</b>فصول وتكليفات ونتائج الطلاب</p>
     </div>
-    <p class="small">طالب في حلقة؟ انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة.</p>
+    <p class="small">طالب؟ انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة.</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
     <div class="qtextra"><button type="button" class="ghost" id="welcomeInst">ثبّت التطبيق</button><a class="qtsup" href="support.html">ادعم المشروع</a></div>
+    <p class="small wlinks"><a href="about.html">من نحن</a> · <a href="privacy.html">سياسة الخصوصية</a> · <a href="guide.html">دليل المعلّم</a></p>
   </div>
 </div>
 <div class="overlay" id="ihelp" role="dialog" aria-modal="true" aria-labelledby="ihelpTitle" hidden>
@@ -2163,6 +2171,16 @@ function init(){
     b.hidden = !canInstall();
     b.addEventListener('click', () => { if (id === 'welcomeInst') { hideWelcome(); if (installEvt) doInstall(); } if (!installEvt) howInstall(); }); });
   addEventListener('appinstalled', () => { ['welcomeInst', 'installBtn'].forEach(id => { if ($(id)) $(id).hidden = true; }); });
+  // the first visit: the welcome alone (no strip under the header yet); «ابدأ» then points at today's question
+  if (typeof FIRST_VISIT !== 'undefined' && FIRST_VISIT && $('istrip')) $('istrip').hidden = true;
+  if ($('welcomeGo')) $('welcomeGo').addEventListener('click', () => {
+    const l = $('lead');
+    if (typeof FIRST_VISIT === 'undefined' || !FIRST_VISIT || !l || l.hidden || !l.textContent.trim() || (typeof HW !== 'undefined' && HW)) return;
+    l.classList.add('firsttry'); bring(l);
+    const inp = $('guess'); if (inp && !inp.disabled) inp.focus({ preventScroll: true });
+    const off = () => { l.classList.remove('firsttry'); document.removeEventListener('pointerdown', off, true); document.removeEventListener('keydown', off, true); };
+    setTimeout(() => { document.addEventListener('pointerdown', off, true); document.addEventListener('keydown', off, true); }, 300);
+  });
   document.querySelectorAll('#welcome .qtsup').forEach(a => a.addEventListener('click', () => store.set('mut-welcome', 1)));
   const side = document.querySelector('header .head-side');
   if (side && !$('acctBtn')) {
@@ -2634,7 +2652,7 @@ function fillFor(){
 }
 const OUT = { a: $('t-outA').textContent, b: $('t-outB').textContent, wa: $('t-wa').textContent };
 function outMode(cname){
-  $('t-outA').textContent = cname ? `وصل التكليف إلى طلاب «${cname}»: يجدونه في «تكليفاتي». ويمكنك تنبيههم في مجموعة الحلقة أيضًا.` : OUT.a;
+  $('t-outA').textContent = cname ? `وصل التكليف إلى طلاب «${cname}»: يجدونه في «تكليفاتي». ويمكنك تنبيههم في مجموعة طلابك على واتساب أيضًا.` : OUT.a;
   $('t-outB').textContent = cname ? 'لكل طالب محاولة واحدة، ونتائجهم تظهر لك في «فصولي» تلقائيًا.' : OUT.b;
   $('t-wa').textContent = cname ? 'نبّه الطلاب عبر واتساب' : OUT.wa;
 }
