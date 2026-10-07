@@ -332,6 +332,15 @@ button.sm{padding:6px 10px;font-size:.88rem}
 .pair2{display:flex;flex-direction:column;gap:6px}
 .anum{color:var(--gold);font-size:.85em;white-space:nowrap}
 .ayah mark.miss{border-bottom-color:var(--bad)}
+.qtext mark.qprev, .ayah mark.qprev{background:transparent;color:var(--ok);border-bottom:2px solid var(--ok)} .qtext mark.qprev.miss, .ayah mark.qprev.miss{color:var(--bad);border-bottom-color:var(--bad)}
+.yans{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.yans .yh{margin:0 0 6px;font-weight:700;font-size:.95rem}
+.yrow{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-radius:10px;margin-top:6px;border:1.5px solid}
+.yrow.ok{border-color:var(--ok);background:var(--ok-bg)} .yrow.bad{border-color:var(--bad);background:var(--bad-bg)}
+.yrow .ym{font-weight:800} .yrow.ok .ym{color:var(--ok)} .yrow.bad .ym{color:var(--bad)}
+.yrow .yq{font-size:.8rem;font-weight:700;color:var(--muted);white-space:nowrap}
+.yrow .yt{font-family:var(--f-quran);font-size:1.1rem;line-height:1.9}
+.qres{font-family:var(--f-ui);font-weight:700;font-size:.8rem;align-self:center;white-space:nowrap} .qres.ok{color:var(--ok)} .qres.bad{color:var(--bad)}
 .placedlist{display:flex;flex-direction:column;gap:6px}
 .placed{display:flex;gap:10px;align-items:flex-start;background:var(--ok-bg);border:1px solid var(--ok);border-radius:12px;padding:8px 12px}
 .pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:6px}
@@ -807,6 +816,7 @@ function loose(w){
 // («مسئولا» and «مسؤولا» both = «مَّسْـُٔولًا»)
 const noSeat = w => loose(String(w).replace(/[ئؤ]/g, ''));
 const same = (a, b) => loose(a) === loose(b) || noSeat(a) === noSeat(b);
+const playOnly = k => { const on = playing === k; return `<button type="button" class="play" data-key="${k}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآية بصوت الحصري'}">${on ? '⏸' : '▶'}</button>`; };
 const ref = k => { const [s, a] = k.split(':'); return 'سورة ' + SURAH[s] + ' · الآية ' + toAr(a); };
 const juzOf = k => (QD.m[k] || [0])[0];
 // a fixed shuffle per question, so the options keep their order after a reload
@@ -1074,8 +1084,8 @@ function questionHtml(Q){
     const text = w.map((x, i) => i === Q.i ? '<span class="blank" aria-label="الكلمة الناقصة"></span>' : esc(x)).join(' ');
     return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${text}</p>`;
   }
-  // «ما قبلها؟ ما بعدها؟»: only the verse in the box; the question is written under it (see roundHtml)
-  return `<div class="facts"><span class="chip">${ref(Q.key)}</span></div><p class="qtext">${toks(Q.key).map(esc).join(' ')}</p>`;
+  // «ما قبلها؟ ما بعدها؟»: only the verse in the box (with its recitation); the question is written under it (see roundHtml)
+  return `<div class="facts"><span class="chip">${ref(Q.key)}</span>${playOnly(Q.key)}</div><p class="qtext">${toks(Q.key).map(esc).join(' ')}</p>`;
 }
 const SURAH_OPTS = ['fawatih', 'tartib', 'asmaa'];   // their choices are surah numbers
 const optText = (Q, o) => SURAH_OPTS.includes(GAME) ? 'سورة ' + SURAH[Q.opts[o]] : GAME === 'qabl' ? esc(short(Q.opts[o], 7)) : esc(Q.opts[o]);
@@ -1107,14 +1117,18 @@ function trioCard(it, aBefore, aAfter){
   // one recitation of the three and one mushaf link (to the middle verse)
   const k = QD.q[it][0], [s, a] = k.split(':').map(Number), bk = s + ':' + (a - 1), fk = s + ':' + (a + 1);
   const end = n => ' <span class="anum">﴿' + toAr(n) + '﴾</span>';
-  const ans = (key, an) => `<mark class="${an && !an.ok ? 'miss' : ''}">${toks(key).map(esc).join(' ')}</mark>`;
-  const text = ans(bk, aBefore) + end(a - 1) + ' ' + toks(k).map(esc).join(' ') + end(a) + ' ' + ans(fk, aAfter) + end(a + 1);
-  const wb = aBefore && !aBefore.ok, wa = aAfter && !aAfter.ok;
-  const wrong = wb && wa ? 'أخطأت في الآيتين' : wb ? 'أخطأت في الآية التي قبلها' : wa ? 'أخطأت في الآية التي بعدها' : '';
+  // the box is just the three verses (the player's answers are listed under it: «إجاباتك»)
+  const text = toks(bk).map(esc).join(' ') + end(a - 1) + ' ' + toks(k).map(esc).join(' ') + end(a) + ' ' + toks(fk).map(esc).join(' ') + end(a + 1);
   const keys = [bk, k, fk].join('|'), on = playing === keys;
   const btn = `<span class="acts">${tafsirLink(k)}<button type="button" class="play${on ? ' on' : ''}" data-key="${keys}" aria-label="${on ? 'إيقاف التلاوة' : 'استمع للآيات الثلاث بصوت الحصري'}">${on ? '⏸' : '▶'}</button></span>`;
   return `<div class="ayah trio"><div class="head"><div class="ref">سورة ${SURAH[s]} · الآيات ${toAr(a - 1)}–${toAr(a + 1)}`
-    + (wrong ? ' <span class="tag">' + wrong + '</span>' : '') + where(k) + `</div>${btn}</div><p>${text}</p></div>`;
+    + where(k) + `</div>${btn}</div><p>${text}</p></div>` + yourAnswers(it, aBefore, aAfter);
+}
+// «إجاباتك» under the box: what the player chose for each question, right (✓, green) or wrong (✗, red)
+function yourAnswers(it, aB, aA){
+  const row = (d, an, q) => { if (!an) return ''; const Q = question(it, d);
+    return `<div class="yrow ${an.ok ? 'ok' : 'bad'}"><span class="ym">${an.ok ? '✓' : '✗'}</span><span class="yq">${q}</span><span class="yt">${esc(short(Q.opts[an.pick], 7))}</span></div>`; };
+  return `<div class="yans"><p class="yh">إجاباتك</p>${row(-1, aB, 'التي قبلها')}${row(1, aA, 'التي بعدها')}</div>`;
 }
 // The quizzes that keep their choices on screen after answering (option A): every choice stays a button;
 // the right one is green with ✓, a wrong pick is red with ✗, the player's own choice has a thick border and «إجابتك»,
@@ -1149,14 +1163,20 @@ function renderMcq(){
   const r = S.ans.length - (S.showing ? 1 : 0);      // the answer on screen
   const R = rounds();
   if (S.done && GAME === 'qabl') {
-    // the verse with both questions, each with its choices marked, then the three verses together in one box
-    $('stage').innerHTML = S.items.map((it, k) => { const a1 = S.ans[2 * k], a2 = S.ans[2 * k + 1];
-      return roundHtml(question(it, -1), a1, a1 ? (a1.rm || []) : [], { noVerse: true })
-        + roundHtml(question(it, 1), a2, a2 ? (a2.rm || []) : [], { noVerse: true, noCard: true })
-        + '<div class="answers">' + trioCard(it, a1, a2) + '</div>'; }).join('');
+    // the end: the three verses together in one box, as in the mushaf (a wrong answer is marked in it)
+    $('stage').innerHTML = '<div class="answers">' + S.items.map((it, k) => trioCard(it, S.ans[2 * k], S.ans[2 * k + 1])).join('') + '</div>';
   } else if (S.done && KEEP.includes(GAME)) {
     $('stage').innerHTML = R.map((x, k) => roundHtml(question(...x), S.ans[k], S.ans[k] ? (S.ans[k].rm || []) : [], { noCard: GAME === 'tartib' && k > 0 })).join('');
-  } else if ((GAME === 'tartib' || GAME === 'qabl') && S.ans.length === 1) {
+  } else if (GAME === 'qabl' && S.ans.length === 1) {
+    // «ما قبلها؟ ما بعدها؟» after the first answer: the choices go, and the verse before joins the question's own box,
+    // before it as in the mushaf (green if the answer was right, red if not); the second question follows
+    const a0 = S.ans[0], Q0 = question(...R[0]), [s, a] = Q0.key.split(':').map(Number);
+    const end = n => ' <span class="anum">﴿' + toAr(n) + '﴾</span>';
+    $('stage').innerHTML = `<section class="card"><div class="facts"><span class="chip">سورة ${SURAH[s]} · الآيتان ${toAr(a - 1)}–${toAr(a)}</span>`
+      + (a0.ok ? '<span class="qres ok">✓ أصبت</span>' : '<span class="qres bad">✗ أخطأت</span>') + playOnly(Q0.target + '|' + Q0.key) + '</div>'
+      + `<p class="qtext"><mark class="qprev${a0.ok ? '' : ' miss'}">${toks(Q0.target).map(esc).join(' ')}</mark>${end(a - 1)} ${toks(Q0.key).map(esc).join(' ')}${end(a)}</p></section>`
+      + roundHtml(question(...R[1]), null, S.hidden, { noCard: true });
+  } else if (GAME === 'tartib' && S.ans.length === 1) {
     // «ترتيب السور» and «ما قبلها؟ ما بعدها؟»: the first answer stays on screen (marked), and the second question follows right under it
     const a0 = S.ans[0];
     $('stage').innerHTML = roundHtml(question(...R[0]), a0, a0.rm || []) + roundHtml(question(...R[1]), null, S.hidden, { noCard: true });
