@@ -1065,10 +1065,11 @@ function renderOrder(){
   const Q = question(S.items[0]), [s] = Q.key.split(':');
   if (S.done) {
     const last = S.chk && S.chk.length ? S.chk : S.arr;
-    $('stage').innerHTML = '<p class="qask qsub">ترتيبك' + (isWon() ? ' <span class="okt">✓ رتّبتها</span>' : '') + '</p><ol class="dlist done">' + last.map((j, i) => j === i
+    // the right order first (the verses written out, as in the mushaf), then the player's order with each verse marked
+    $('stage').innerHTML = '<div class="answers">' + passageCard(Q.hid, '') + '</div><p class="qask qsub">ترتيبك' + (isWon() ? ' <span class="okt">✓ رتّبتها</span>' : '') + '</p><ol class="dlist done">' + last.map((j, i) => j === i
         ? `<li class="ditem good"><span class="mk ok" aria-label="في مكانها">✓</span><span class="pn">${toAr(i + 1)}</span><span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span></li>`
         : `<li class="ditem bad"><span class="mk bad" aria-label="في غير مكانها">✗</span><span class="pn">${toAr(i + 1)}</span><span class="pt">${toks(Q.hid[j]).map(esc).join(' ')}</span><span class="belong">مكانها ${toAr(j + 1)}</span></li>`).join('')
-      + '</ol><div class="answers">' + passageCard(Q.hid, '').replace(/<p>[\s\S]*<\/p><\/div>$/, '</div>').replace('class="ayah"', 'class="ayah short"') + '</div>';
+      + '</ol>';
   } else {
     // a verse is green while it stays where the last check found it right
     // after «تأكيد» each verse that has not moved since is green (right place) or red (wrong place)
