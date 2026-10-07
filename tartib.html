@@ -23,6 +23,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230E6B57'/%3E%3Crect x='17' y='17' width='30' height='30' fill='%23D9AE55'/%3E%3Crect x='17' y='17' width='30' height='30' fill='%23D9AE55' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%230E6B57'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%23D9AE55' stroke-width='2'/%3E%3C/svg%3E">
 <script>
 try { var t = JSON.parse(localStorage.getItem('mut-theme')); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+try { if (JSON.parse(localStorage.getItem('qt-font'))) document.documentElement.classList.add('big'); } catch (e) {}
 </script>
 <title>ترتيب السور · اختبارات قرآنية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,6 +121,23 @@ button:disabled{opacity:.5;cursor:default}
 .ayah mark{background:transparent;color:var(--accent);font-weight:700;border-bottom:2px solid var(--gold)}
 .modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .modes.three{grid-template-columns:repeat(3,1fr)}
+.mbtn[hidden], .help-btn[hidden]{display:none!important}
+/* a little larger text for everyone; «كبير» in the settings makes it larger still */
+html{font-size:106.25%} html.big{font-size:122%}
+.myasg{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:8px;padding:11px 14px;font-size:1.05rem;border-radius:12px;background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}
+.myasg[hidden]{display:none}
+.myasg .acnt{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:var(--bad);color:var(--surface);font-size:.85rem}
+.wrap.exam .myasg{display:none!important}
+/* the teachers' page (teacher.html): only its own section */
+.tpage .modes, .tpage .istrip, .tpage .myasg, .tpage .sections, .tpage .games{display:none!important}
+/* «الإعدادات» in the «؟» window */
+.hset{border:1px solid var(--line);border-radius:12px;padding:6px 12px;background:var(--surface)}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)} .hrow:last-child{border-bottom:0}
+.hrow > span:first-child{font-weight:600}
+.hrow .ghost{padding:6px 14px}
+.hseg{display:inline-flex;border:1px solid var(--accent);border-radius:10px;overflow:hidden}
+.hseg button{border:0;border-radius:0;background:transparent;color:var(--accent);padding:6px 14px}
+.hseg button.on{background:var(--accent);color:var(--accent-ink)}
 a.mbtn{text-decoration:none}
 .games{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .gbtn{text-align:center;padding:7px 4px;text-decoration:none;color:var(--muted);font-weight:600;font-size:clamp(.8rem,3.9vw,.95rem);white-space:nowrap;background:var(--surface)}
@@ -408,7 +426,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
   <header>
     <h1>اختبارات قرآنية</h1>
     <div class="head-side"><div class="meta"><span id="pnum"></span><span class="sep">|</span><button type="button" class="arch-link" id="archBtn">الاختبارات السابقة</button><span id="pdate" class="dates"></span></div>
-    <button type="button" class="help-btn ghost" id="soundBtn" aria-label="إيقاف الأصوات"></button>
+    <button type="button" class="help-btn ghost" id="soundBtn" aria-label="إيقاف الأصوات" hidden></button>
     <button type="button" class="help-btn ghost" id="themeBtn" aria-label="الوضع الداكن"></button>
     <button type="button" class="help-btn ghost" id="helpBtn" aria-label="طريقة الاختبار">؟</button></div>
   </header>
@@ -418,10 +436,10 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <button type="button" class="ix" id="istripX" aria-label="إخفاء">×</button>
   </div>
 
-  <nav class="modes three" aria-label="نوع الاختبار">
+  <nav class="modes" aria-label="نوع الاختبار">
     <button type="button" class="mbtn" id="modeDaily"><span class="mt">اختبار اليوم</span><span class="ms">لحافظي القرآن</span></button>
     <button type="button" class="mbtn" id="modeTrain"><span class="mt">تدرّب</span><span class="ms">على ما حفظته</span></button>
-    <a class="mbtn teach" id="modeTeach" href="#teach"><span class="mt">للمُعلّمين</span><span class="ms">فصول وتكليفات</span></a>
+    <a class="mbtn teach" id="modeTeach" href="#teach" hidden><span class="mt">للمُعلّمين</span><span class="ms">فصول وتكليفات</span></a>
   </nav>
 
   <section class="psetup" id="pick" aria-labelledby="pickTitle" hidden>
@@ -641,6 +659,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <a href="mailto:quranicstuff@gmail.com">تواصل معنا</a> ·
     <a href="privacy.html">سياسة الخصوصية</a> ·
     <a href="support.html">ادعم المشروع</a> ·
+    <a href="teacher.html">للمُعلّمين</a> ·
     <a href="guide.html">دليل المعلّم</a>
   </footer>
 </div>
@@ -662,8 +681,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
         <li><b>اختبار اليوم:</b> اختبارات جديدة كل يوم، تتجدد عند منتصف الليل بتوقيت القاهرة. وما فاتك تجده في «الاختبارات السابقة».</li>
         <li><b>تدرّب:</b> اختر الأجزاء والسور التي تحفظها وتدرّب متى شئت، أو راجع «أخطائي».</li>
         <li><b>تلميح:</b> يساعدك إذا تعثرت، والرقم بجانبه هو ما بقي لك منه.</li>
-        <li><b>للمُعلّمين:</b> أنشئ فصلًا لطلابك، وأرسل لهم تكليفات، وتظهر لك نتائجهم تلقائيًا. خطوات ذلك في <a href="guide.html">دليل المعلّم</a>.</li>
-        <li><b>طالب؟</b> انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة، فتجد تكليفاته في «تكليفاتي»، وتصله نتيجتك حين تنهي.</li>
+        <li><b>للمُعلّمين:</b> صفحة خاصة تنشئ فيها فصلًا لطلابك، وترسل لهم تكليفات، وتظهر لك نتائجهم تلقائيًا. افتحها من «للمُعلّمين» أسفل الصفحة، وخطواتها في <a href="guide.html">دليل المعلّم</a>.</li>
+        <li><b>طالب؟</b> افتح رابط الانضمام الذي يرسله معلّمك (أو اضغط «انضم إلى فصل» في الإعدادات أدناه)، فيظهر لك زر «تكليفاتي»، وتصل نتيجتك لمعلّمك حين تنهي.</li>
       </ul>
       <h3 class="hsub">طريقة كل اختبار</h3>
     </div>
@@ -771,6 +790,13 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <li>زر «تلميح» يحذف خيارين خاطئين.</li>
     <li>بعد الإجابة تبقى الاختيارات أمامك: الصحيحة بعلامة ✓، وإجابتك إن أخطأت بعلامة ✗، وتظهر أول آية من السورة.</li></ul>
     </div></details>
+    <div class="hset" aria-label="الإعدادات">
+      <p class="hsec" style="margin:4px 0 0">الإعدادات</p>
+      <div class="hrow"><span>حجم الخط</span><span class="hseg"><button type="button" data-fs="0">عادي</button><button type="button" data-fs="1">كبير</button></span></div>
+      <div class="hrow"><span>الأصوات</span><button type="button" class="ghost" id="setSound">مفعّلة</button></div>
+      <div class="hrow"><span>فصل معلّمك</span><button type="button" class="ghost" id="setAcct">انضم إلى فصل</button></div>
+      <div class="hrow"><span>للمُعلّمين</span><button type="button" class="ghost" id="setTeach">صفحة المعلّمين</button></div>
+    </div>
     <p class="small" id="installNote" hidden></p>
     <button type="button" id="helpGo" class="start">حسنًا</button>
     <div class="qtextra"><button type="button" class="ghost" id="installBtn">ثبّت التطبيق</button><a class="qtsup" href="support.html">ادعم المشروع</a></div>
@@ -792,12 +818,11 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && location.h
     <div class="wmodes">
       <p><b>اختبار اليوم</b>جديد كل يوم بعد منتصف الليل</p>
       <p><b>تدرّب</b>على الأجزاء والسور التي تحفظها</p>
-      <p><b>للمُعلّمين</b>فصول وتكليفات ونتائج الطلاب</p>
     </div>
-    <p class="small">طالب؟ انضم إلى فصل معلّمك من زر الحساب <svg class="hico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> أعلى الصفحة.</p>
+    <p class="small">طالب؟ افتح رابط الانضمام الذي يرسله معلّمك، فتظهر لك «تكليفاتي».</p>
     <button type="button" id="welcomeGo" class="start">ابدأ</button>
     <div class="qtextra"><button type="button" class="ghost" id="welcomeInst">ثبّت التطبيق</button><a class="qtsup" href="support.html">ادعم المشروع</a></div>
-    <p class="small wlinks"><a href="about.html">من نحن</a> · <a href="privacy.html">سياسة الخصوصية</a> · <a href="guide.html">دليل المعلّم</a></p>
+    <p class="small wlinks"><a href="teacher.html">للمُعلّمين</a> · <a href="about.html">من نحن</a> · <a href="privacy.html">سياسة الخصوصية</a></p>
   </div>
 </div>
 <div class="overlay" id="ihelp" role="dialog" aria-modal="true" aria-labelledby="ihelpTitle" hidden>
@@ -2067,12 +2092,13 @@ function openLink(href){
 // ----- the header button and the «حسابي» window -----
 const PERSON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4.5 4.5-6 8-6s6.5 1.5 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 let btn = null, pending = 0;
+// «تكليفاتي»: a plain button under «اختبار اليوم | تدرّب», only for students (joined a class, or chose «أنا طالب»)
 function paintBtn(){
   if (!btn) return;
-  btn.classList.toggle('in', signedIn());
-  btn.innerHTML = (signedIn() ? '<span class="ini">' + q([...String(me.name).trim()][0] || '؟') + '</span>' : PERSON) + (pending ? '<i class="adot"></i>' : '');
-  const l = signedIn() ? 'حسابي: ' + me.name : 'حسابي وتكليفاتي';
-  btn.setAttribute('aria-label', l + (pending ? ' (تكليفات لم تحلّها)' : '')); btn.title = l;
+  btn.hidden = !(members().length || role() === 'student');
+  btn.innerHTML = 'تكليفاتي' + (pending ? ' <span class="acnt">' + toAr(pending) + '</span>' : '');
+  btn.setAttribute('aria-label', 'تكليفاتي' + (pending ? ' (' + toAr(pending) + ' لم تحلّها)' : ''));
+  const sa = $('setAcct'); if (sa) sa.textContent = signedIn() || members().length ? 'حسابي وتكليفاتي' : 'انضم إلى فصل';
 }
 function box(html){
   let o = $('acctBox');
@@ -2088,6 +2114,7 @@ let view = null;   // what the window shows: 'home', 'role', 'done' or a class c
 // a teacher's place: «للمُعلّمين» → «فصولي»
 function goTeach(){
   close();
+  if (!window.QT_TEACHER) { location.href = 'teacher.html'; return; }   // the teachers have their own page
   const t = $('modeTeach'); if (t) t.click();
   const b = document.querySelector('#teachTabs [data-tt="cls"]'); if (b && !b.classList.contains('on')) b.click();
 }
@@ -2150,7 +2177,7 @@ function joinView(code){
          <p class="small">احتفظ بهذا الجهاز: الانضمام بالاسم يُحفظ عليه فقط.</p>`}
       <p class="aerr" id="joinErr" aria-live="polite"></p>`);
     renderSignIn($('joinGsi'));
-    const done = r2 => (view = 'done', box(`<h2>انضممت إلى الفصل ✓</h2><p class="lead">${q(r2.cls.name)}</p><p>تكليفات معلّمك تظهر لك في «تكليفاتي»: زر <span class="ini sm">${signedIn() ? q([...String(me.name).trim()][0]) : PERSON}</span> أعلى الصفحة.</p><button type="button" class="start" id="joinHome">تكليفاتي</button>`)
+    const done = r2 => (view = 'done', box(`<h2>انضممت إلى الفصل ✓</h2><p class="lead">${q(r2.cls.name)}</p><p>تكليفات معلّمك تظهر لك في زر «تكليفاتي» تحت «اختبار اليوم» و«تدرّب».</p><button type="button" class="start" id="joinHome">تكليفاتي</button>`)
       .querySelector('#joinHome').onclick = home);
     const fail = e => { $('joinErr').textContent = errText(e); o.querySelectorAll('button').forEach(b => b.disabled = false); };
     if ($('joinHome')) $('joinHome').onclick = home;
@@ -2182,12 +2209,31 @@ function init(){
     setTimeout(() => { document.addEventListener('pointerdown', off, true); document.addEventListener('keydown', off, true); }, 300);
   });
   document.querySelectorAll('#welcome .qtsup').forEach(a => a.addEventListener('click', () => store.set('mut-welcome', 1)));
-  const side = document.querySelector('header .head-side');
-  if (side && !$('acctBtn')) {
-    btn = document.createElement('button'); btn.type = 'button'; btn.className = 'help-btn ghost acct-btn'; btn.id = 'acctBtn';
-    side.insertBefore(btn, $('soundBtn') || side.firstChild.nextSibling);
-    btn.addEventListener('click', openAcct);
-    paintBtn();
+  const nav = document.querySelector('.wrap > nav.modes');
+  if (nav && !$('myAsg')) {
+    btn = document.createElement('button'); btn.type = 'button'; btn.className = 'myasg'; btn.id = 'myAsg';
+    nav.after(btn); btn.addEventListener('click', openAcct);
+  }
+  // «الإعدادات» in the «؟» window: sounds, text size, the class
+  const fs = () => { const big = !!store.get('qt-font', 0); document.documentElement.classList.toggle('big', big);
+    document.querySelectorAll('[data-fs]').forEach(b => { const on = (+b.dataset.fs === 1) === big; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); };
+  document.querySelectorAll('[data-fs]').forEach(b => b.addEventListener('click', () => { store.set('qt-font', +b.dataset.fs); fs(); }));
+  fs();
+  const snd = () => { const b = $('setSound'); if (b) { b.textContent = SOUND ? 'مفعّلة' : 'متوقفة'; b.setAttribute('aria-pressed', SOUND); } };
+  if ($('setSound')) $('setSound').addEventListener('click', () => { $('soundBtn').click(); snd(); });
+  snd();
+  if ($('setAcct')) $('setAcct').addEventListener('click', () => { const x = $('helpX'); if (x) x.click(); openAcct(); });
+  if ($('setTeach')) $('setTeach').addEventListener('click', () => { location.href = 'teacher.html'; });
+  paintBtn();
+  // the install / support strip: after the player's first result, at the bottom of the page (the question comes first)
+  const strip = $('istrip'), foot = document.querySelector('.wrap > footer');
+  if (strip && foot) foot.before(strip);
+  if (strip && typeof showStrip === 'function') {
+    const gate = () => { if (!store.get('qt-did', 0) || window.QT_TEACHER) strip.hidden = true; };
+    const orig = showStrip; showStrip = function(){ orig(); gate(); }; gate();
+    const wrap = document.querySelector('.wrap');
+    new MutationObserver(() => { if (wrap.classList.contains('over') && !wrap.classList.contains('exam') && !store.get('qt-did', 0)) { store.set('qt-did', 1); showStrip(); } })
+      .observe(wrap, { attributes: true, attributeFilter: ['class'] });
   }
   // a class invitation link: …#join=CODE (opened, or pasted into this open page)
   const joinHash = () => { const m = location.hash.match(/^#join=([A-Za-z0-9]{4,8})/); if (!m) return false;
@@ -2411,6 +2457,7 @@ function showTeach(){
   bring($('teach')); clsShow();
 }
 function hideTeach(){
+  if (window.QT_TEACHER) { location.href = location.hostname.endsWith('github.io') ? './' : 'index.html'; return; }   // the teachers' page: back to the quizzes
   if ($('teach').hidden) return;
   $('teach').hidden = true; wrap.classList.remove('teaching');
   $('modeTeach').classList.remove('on'); $('modeTeach').removeAttribute('aria-current');
@@ -2674,8 +2721,11 @@ function toClass(code, spec){
 ACCT.onChange(() => { myCls = null; if (!ACCT.signedIn()) curCls = null; if (!$('teach').hidden) clsShow(); else fillFor(); });
 
 const TH = location.hash.match(/^#teach(?:=(make|res|c:([A-Za-z0-9]+)))?$/);   // the teachers' link, or a refresh inside the section
-if (TH) { if (TH[2]) curCls = TH[2].toUpperCase(); showTeach();
-  if (TH[1] === 'make' || TH[1] === 'res') document.querySelector('#teachTabs [data-tt="' + TH[1] + '"]').click();
+// the teachers have their own page, teacher.html (the home page built with QT_TEACHER): old #teach links go there
+if (TH && !window.QT_TEACHER) location.replace('teacher.html' + location.hash);
+else if (TH || window.QT_TEACHER) { if (TH && TH[2]) curCls = TH[2].toUpperCase(); showTeach();
+  $('teachX').textContent = 'العودة إلى الاختبارات';
+  if (TH && (TH[1] === 'make' || TH[1] === 'res')) document.querySelector('#teachTabs [data-tt="' + TH[1] + '"]').click();
   setTimeout(() => { $('welcome').hidden = true; ['modeDaily', 'modeTrain'].forEach(id => $(id).classList.remove('on')); }); }   // a teacher opening the teachers' link: no welcome window on top
 })();
 
