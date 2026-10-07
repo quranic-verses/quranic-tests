@@ -845,6 +845,7 @@ const C = CONF[GAME];
 const MAX_WRONG = C.tries || 0;   // آخر الآية / رتّب الآيات: tries
 const TRY = C.kind !== 'mcq';     // the quizzes played with tries (type a word / tap the next verse)
 const WANT_TRAIN = location.hash === '#train';
+const WANT_PICK = location.hash === '#pick';
 const SITE_URL = 'https://quranic-verses.github.io/quranic-tests/';
 const START = Date.UTC(2026, 9, 6); // test #1 = 6 Oct 2026, Cairo date
 const FIX = {14:'إبراهيم',34:'سبأ',78:'النبأ',76:'الإنسان',82:'الانفطار',84:'الانشقاق'};
@@ -1554,7 +1555,7 @@ function renderPick(){
 }
 function showPick(){
   renderPick(); $('pick').hidden = false; document.querySelector('.wrap').classList.add('picking');
-  $('modeTrain').classList.add('on'); $('modeDaily').classList.remove('on'); bring($('pick'));
+  $('modeTrain').classList.add('on'); $('modeDaily').classList.remove('on'); bring($('pick')); setHash('#pick');
 }
 function hidePick(){ $('pick').hidden = true; document.querySelector('.wrap').classList.remove('picking'); if (S) setNav(S.practice); }
 function startPractice(){
@@ -1565,7 +1566,7 @@ function startPractice(){
   for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
   const items = list.slice(0, C.items);
   while (items.length < C.items) items.push(items[items.length % Math.max(1, list.length)]);   // a short «أخطائي» list repeats
-  load(0, true, false, items);
+  load(0, true, false, resumeOr(list, items));
   $('pwhat').textContent = pickLabel();
   bring('#stage');
 }
@@ -1599,7 +1600,7 @@ $('games').innerHTML = GAMES.map(([g, id, name, file]) => `<a class="gbtn" id="$
 $('games').classList.toggle('many', GAMES.length > 3);
 [['mut', 'secMut'], ['hifz', 'secHifz'], ['info', 'secInfo']].forEach(([s, id]) => { const on = s === SEC[0]; $(id).classList.toggle('on', on); if (on) $(id).setAttribute('aria-current', 'page'); });
 function setNav(practice){
-  if (!practice && location.hash === '#train') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  if (!$('teach') || $('teach').hidden) setHash(practice ? '#train' : '');   // a refresh stays in the same mode
   $('modeDaily').classList.toggle('on', !practice); $('modeDaily').setAttribute('aria-pressed', !practice);
   $('modeTrain').classList.toggle('on', practice); $('modeTrain').setAttribute('aria-pressed', practice);
   const home = location.hostname.endsWith('github.io') ? './' : 'index.html';
@@ -1868,6 +1869,19 @@ const HWA = { name: C.name, start: it => load(0, true, false, Array(C.items).fil
   const q = QD.q[S.items[0]], k = q[0];
   if (GAME !== 'rattib') return ref(k);
   const [s, a] = k.split(':').map(Number); return 'سورة ' + SURAH[s] + ' · الآيات ' + toAr(a) + '–' + toAr(a + q[1] - 1); } };
+// ---------- a refresh stays where the player was: the mode is kept in the address (#train, #pick, #teach…) ----------
+function setHash(h){
+  if (/^#(hw|join)=/.test(location.hash) || location.hash === h || (!h && !location.hash)) return;
+  try { history.replaceState(null, '', location.pathname + location.search + h); } catch (e) {}
+}
+// practice: the same question again after a refresh (the first practice of a page opened with #train)
+function resumeOr(list, pickNow){
+  let r = null;
+  if (!window.__qtResumed) { window.__qtResumed = true; if (WANT_TRAIN) { try { r = JSON.parse(sessionStorage.getItem('qt-prac-' + GAME)); } catch (e) {} } }
+  if (r !== null && (Array.isArray(r) ? Array.isArray(pickNow) && r.length === pickNow.length && r.every(x => list.includes(x)) : !Array.isArray(pickNow) && list.includes(r))) pickNow = r;
+  try { sessionStorage.setItem('qt-prac-' + GAME, JSON.stringify(pickNow)); } catch (e) {}
+  return pickNow;
+}
 // ---------- الحساب والفصول: optional Google sign-in, joining a teacher's class, «تكليفاتي» ----------
 // The data lives in the project's Google Sheet, through its Apps Script web app (API_URL).
 // Away from the live site (a preview) a copy of the same backend runs in the browser (mock_backend.js) with demo accounts.
@@ -2465,9 +2479,12 @@ function twice(b, label, fn){
     setTimeout(() => { delete b.dataset.sure; b.textContent = t; }, 3500); };
 }
 function loadCls(){ return ACCT.api('me', {}, true).then(r => { myCls = r.teach; fillFor(); return r; }); }
-function clsShow(){ if (!$('t-cls').hidden) renderCls(); else { fillFor(); if (ACCT.signedIn() && !myCls) loadCls().catch(() => {}); } }
+function teachHash(){ const b = document.querySelector('#teachTabs .ptab.on'), tt = b ? b.dataset.tt : 'cls';
+  return tt === 'cls' ? (curCls && ACCT.signedIn() ? '#teach=c:' + curCls : '#teach') : '#teach=' + tt; }
+function clsShow(){ setHash(teachHash()); if (!$('t-cls').hidden) renderCls(); else { fillFor(); if (ACCT.signedIn() && !myCls) loadCls().catch(() => {}); } }
 function renderCls(){
   const p = $('t-cls');
+  if (!$('teach').hidden && !p.hidden) setHash(teachHash());
   if (!ACCT.signedIn()) {
     myCls = null; curCls = null; fillFor();
     p.innerHTML = `<p class="tsmall">أنشئ فصلًا لكل حلقة أو مجموعة: ينضم طلابك إليه برمز أو رابط، وتصلهم تكليفاتك في «تكليفاتي»، وتظهر لك نتائجهم هنا تلقائيًا: من حلّ ومن لم يحل، وأكثر ما أخطؤوا فيه.</p>
@@ -2503,6 +2520,7 @@ function listCls(){
 // one class: invite, its assignments with every student's result, its students
 function renderClass(code){
   const p = $('t-cls');
+  if (!$('teach').hidden) setHash(teachHash());
   p.innerHTML = '<button type="button" class="tlink" id="t-back">→ فصولي</button><p class="tsmall">جارٍ التحميل…</p>';
   $('t-back').onclick = () => { curCls = null; renderCls(); };
   ACCT.api('classReport', { code }, true).then(R => {
@@ -2605,13 +2623,17 @@ function toClass(code, spec){
 }
 ACCT.onChange(() => { myCls = null; if (!ACCT.signedIn()) curCls = null; if (!$('teach').hidden) clsShow(); else fillFor(); });
 
-if (location.hash === '#teach') { showTeach(); setTimeout(() => { $('welcome').hidden = true; ['modeDaily', 'modeTrain'].forEach(id => $(id).classList.remove('on')); }); }   // a teacher opening the teachers' link: no welcome window on top
+const TH = location.hash.match(/^#teach(?:=(make|res|c:([A-Za-z0-9]+)))?$/);   // the teachers' link, or a refresh inside the section
+if (TH) { if (TH[2]) curCls = TH[2].toUpperCase(); showTeach();
+  if (TH[1] === 'make' || TH[1] === 'res') document.querySelector('#teachTabs [data-tt="' + TH[1] + '"]').click();
+  setTimeout(() => { $('welcome').hidden = true; ['modeDaily', 'modeTrain'].forEach(id => $(id).classList.remove('on')); }); }   // a teacher opening the teachers' link: no welcome window on top
 })();
 
 load(todayIndex(), false);
 markTabs();
 if (FIRST_VISIT) showWelcome();
 if (WANT_TRAIN) pick.game = GAME;
+if (WANT_PICK && !HW) { pick.game = GAME; showPick(); }   // the practice setup was open before a refresh
 if (WANT_TRAIN) { if (store.get('mut-pick', null) && pool().length) startPractice(); else showPick(); }
 if (HW) hwStart();
 })();
