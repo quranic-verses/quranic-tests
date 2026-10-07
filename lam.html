@@ -1016,7 +1016,7 @@ let S;
 // and nothing saved by the old version is read.
 const SK = g => g === 'qabl' ? 'qabl3' : g === 'rattib' ? 'rattib2' : g === 'tartib' ? 'tartib2' : g;   // rattib2: drag and drop
 const dayKey = i => SK(GAME) + '-day-' + i;
-function itemsFor(idx){ return Array.from({length: C.items}, (_, r) => (idx * C.items + r) % N); }
+function itemsFor(idx){ return Array.from({length: C.items}, (_, r) => roundPick(idx * C.items + r, N)); }
 function load(idx, practice, archive, items){
   player.pause(); playing = null;
   let saved = !practice && store.get(dayKey(idx), null);
@@ -1621,12 +1621,10 @@ function hidePick(){ $('pick').hidden = true; document.querySelector('.wrap').cl
 function startPractice(){
   let list = pool();
   if (!list.length) { showPick(); return; }
-  const prev = S && S.practice ? new Set(S.items) : new Set();
-  if (list.length > C.items) list = list.filter(i => !prev.has(i));
-  for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
-  const items = list.slice(0, C.items);
-  while (items.length < C.items) items.push(items[items.length % Math.max(1, list.length)]);   // a short «أخطائي» list repeats
-  load(0, true, false, resumeOr(list, items));
+  const items = resumeOr(list, () => { const it = bagNext(list, C.items);
+    while (it.length < C.items) it.push(it[it.length % Math.max(1, list.length)]);   // a short «أخطائي» list repeats
+    return it; });
+  load(0, true, false, items); bagNote();
   $('pwhat').textContent = pickLabel();
   bring('#stage');
 }
@@ -1935,12 +1933,43 @@ function setHash(h){
   try { history.replaceState(null, '', location.pathname + location.search + h); } catch (e) {}
 }
 // practice: the same question again after a refresh (the first practice of a page opened with #train)
-function resumeOr(list, pickNow){
-  let r = null;
+function resumeOr(list, make){
+  let r = null, pick;
   if (!window.__qtResumed) { window.__qtResumed = true; if (WANT_TRAIN) { try { r = JSON.parse(sessionStorage.getItem('qt-prac-' + GAME)); } catch (e) {} } }
-  if (r !== null && (Array.isArray(r) ? Array.isArray(pickNow) && r.length === pickNow.length && r.every(x => list.includes(x)) : !Array.isArray(pickNow) && list.includes(r))) pickNow = r;
-  try { sessionStorage.setItem('qt-prac-' + GAME, JSON.stringify(pickNow)); } catch (e) {}
-  return pickNow;
+  if (r !== null && (Array.isArray(r) ? r.length && r.every(x => list.includes(x)) : list.includes(r))) pick = r;
+  else pick = typeof make === 'function' ? make() : make;
+  try { sessionStorage.setItem('qt-prac-' + GAME, JSON.stringify(pick)); } catch (e) {}
+  return pick;
+}
+// practice without repeats: every question of the chosen part comes once (shuffled, like a deck of cards) before any comes back
+function bagNext(list, n){
+  const key = 'qt-bag-' + GAME, sig = list.length + ':' + list.slice(0, 4).join(',') + ':' + list[list.length - 1];
+  let b = store.get(key, null);
+  if (!b || b.sig !== sig || !Array.isArray(b.seen)) b = { sig, seen: [] };
+  const seen = new Set(b.seen);
+  let rest = list.filter(x => !seen.has(x));
+  bagNext.wrapped = false;
+  if (rest.length < Math.min(n, list.length)) { bagNext.wrapped = b.seen.length > 0; b.seen = []; rest = list.slice(); }
+  for (let i = rest.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
+  const out = rest.slice(0, n);
+  b.seen = b.seen.concat(out); store.set(key, b);
+  return out;
+}
+// after a full round of practice: say so once, under the new question
+function bagNote(){ if (bagNext.wrapped && $('msg')) { $('msg').textContent = 'أنهيت كل أسئلة ما اخترته، فبدأنا جولة جديدة.'; bagNext.wrapped = false; } }
+// «اختبار اليوم»: one question a day through the whole list; when the list is used up, each new round has its own order
+function roundPick(k, n){
+  const r = Math.floor(k / n), i = k % n;
+  if (r === 0 || n < 2) return i;
+  const c = roundPick.c || (roundPick.c = {}), key = n + ':' + r;
+  if (!c[key]) {
+    const a = Array.from({ length: n }, (_, j) => j);
+    let h = (2166136261 ^ Math.imul(r, 7919) ^ n) >>> 0;
+    const rnd = () => (h = (Math.imul(h, 1103515245) + 12345) >>> 0) / 4294967296;
+    for (let j = n - 1; j > 0; j--) { const t = Math.floor(rnd() * (j + 1)); [a[j], a[t]] = [a[t], a[j]]; }
+    c[key] = a;
+  }
+  return c[key][i];
 }
 // ---------- الحساب والفصول: optional Google sign-in, joining a teacher's class, «تكليفاتي» ----------
 // The data lives in the project's Google Sheet, through its Apps Script web app (API_URL).
